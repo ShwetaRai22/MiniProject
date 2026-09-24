@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page </title>
+    <link rel="stylesheet" href="../css/register.css">
+</head>
+
+<body>
+    <div class="back"></div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="icm">
+                <img src="/Icon.jpeg" alt="icon">
+                <p>ExamSphere</p>
+            </div>
+            <div class="stuff">
+                <div class="img1"><img
+                        src="https://img.freepik.com/premium-vector/diverse-group-students-studying-together_507704-15058.jpg?w=2000"
+                        alt=""></div>
+                <div class="Write">
+                    <p>Register with us, enter your details and click on <br><span>"Register Button"</span></p>
+                </div>
+                <div class="img3">
+                    <img src="https://static.vecteezy.com/system/resources/previews/011/277/840/non_2x/female-school-teacher-in-classroom-smiling-young-woman-standing-beside-blackboard-teaching-lesson-education-knowledge-concept-school-banner-cartoon-illustration-free-vector.jpg"
+                        alt="">
+                </div>
+            </div>
+        </div>
+        <div class="mainside">
+            <div id="stuRegister" class="form1 sform">
+                <h2>Student Registration</h2>
+                <form class="inputgrid">
+                    <input type="text" id="studentUsername" placeholder="User Name" class="sinput">
+                    <input type="email" placeholder="Email" class="sinput"  required>
+                    <input type="tel" placeholder="Contact Number" maxlength="10" class="sinput" required>
+                    <input type="text" placeholder="Address" class="sinput">
+                    <input type="password" placeholder="Password" class="sinput">
+                    <input type="password" placeholder="Confirm Password" class="sinput">
+
+                    <a href="auth.html" class="cancelBut">Cancel</a>
+                    <button type="submit" id="registerBut">Register</button>
+                </form>
+            </div>
+            <div id="adminRegister" class=" form1 form2">
+                <h2>Admin Registration</h2>
+                <form class="inputgrid">
+                    <input type="text"
+                    id="adminUsername" placeholder="User Name" class="sinput">
+                    <input type="email" placeholder="Email" class="sinput" required>
+                    <input type="tel" placeholder="Contact Number" maxlength="10" class="sinput" required>
+                    <input type="text" placeholder="Address" class="sinput">
+                    <input type="password" placeholder="Password" class="sinput">
+                    <input type="password" placeholder="Confirm Password" class="sinput">
+                        <a href="auth.html" class="cancelBut">Cancel</a>
+                    <button type="submit" id="registerBut">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../js/register.js"></script>
+</body>
+
+</html>

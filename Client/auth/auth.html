@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+
+<body>
+    <div class="back"></div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="icm">
+                <img src="/Icon.jpeg" alt="icon">
+                <p>ExamSphere</p>
+            </div>
+            <p class="p2">Login As</p>
+            <div class="buttons">
+                
+                <div class="but active" id="studentBtn">
+                    <img src="https://png.pngtree.com/png-clipart/20230418/original/pngtree-student-line-icon-png-image_9065647.png"
+                        alt="">
+                    <p class="bp">Student</p>
+                </div>
+                <div class="but" id="adminBtn">
+                    <img src="https://png.pngtree.com/png-clipart/20230418/original/pngtree-administrator-line-icon-png-image_9064932.png"
+                        alt="">
+                    <p class="bp">Admin</p>
+                </div>
+            </div>
+            <div class="signup">
+                <p>Don't Have An Account?</p>
+                <div  class="sup">
+                <a href="register.html?role=student" id="signupLink">Sign Up</a></div>
+            </div>
+        </div>
+
+        <div class="mainside">
+            <div class="form1" id="studentForm">
+                <h2>Login To Student's Dashboard</h2>
+                <form id="studentLoginForm">
+                    <input type="text" required placeholder="Username" class="user"><br>
+                    <input type="password" required placeholder="Password" class="user"><br>
+                    <input class="remind" type="checkbox">Remember Me
+                    <br><button type="submit">Sign In</button>
+                    <a href="forgetpassword.html">Forget Password ?</a>
+                </form>
+            </div>
+            <div class=" form1 form2" id="adminForm">
+                <h2>Login To Admin's Dashboard</h2>
+                <form id="adminLoginForm">
+                    <input type="text" required placeholder="Username" class="user2"><br>
+                    <input type="password" required placeholder="Password" class="user2"><br>
+                    <input class="remind" type="checkbox">Remember Me
+                    <br><button type="submit">Sign In</button>
+                    <a href="forgetpassword.html" id="forgotPassword">Forget Password ?</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../js/auth.js"></script>
+</body>
+
+</html>
