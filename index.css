@@ -82,9 +82,10 @@ nav a:hover {
 #home {
     height: 75vh;
     width: 100%;
-    background: linear-gradient(135deg,#dde4fc,#eaeffa,#f5f7fbd0);
+    background: linear-gradient(135deg,#d8e0fa,#eaeffa,#f5f7fbd0);
     padding: 20px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     text-align: center;
@@ -229,8 +230,10 @@ nav a:hover {
     padding: 0;
     margin: 0;
 }
-#feature .griditem .p1 {
-    font-size: 1.1rem;
+#feature .griditem .p1,
+#whychoose .griditem .p1,
+#about .griditem .p1 {
+    font-size: 1.3rem;
     font-weight: 600;
     color: #3346A8;
     margin: 12px 0 8px;
@@ -238,7 +241,6 @@ nav a:hover {
 
 .griditem {
     padding: 18px;
-    margin-top: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(65, 91, 160, 0.10);
     text-align: left;
@@ -256,20 +258,25 @@ nav a:hover {
 
 /* why us */
 #whychoose .gridbox {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
-    gap: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
 }
 
+#whychoose .gridbox .griditem {
+    flex: 0 1 calc(33.333% - 30px);
+}
 .griditem:hover {
     transform: translateY(-5px);
 }
 
 /* about us */
-#about img {
+#about > img {
     float: left;
-    width: 550px;
-    height: 550px;
+    width: 42%;
+    height: auto;
+    margin: 10px 30px 20px 0;
     object-fit: cover;
 }
 
@@ -286,6 +293,9 @@ nav a:hover {
     font-weight: bold;
     padding: 10px;
     font-size: 1.1em;
+   
+   
+    line-height: 1.8;
 }
 
 #about .fet .f1 {
@@ -293,25 +303,26 @@ nav a:hover {
     border: 1px solid #c2b8b8;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0px 0px 15px 2px rgb(182, 209, 232);
+    box-shadow: 0 4px 15px rgba(65, 90, 160, 0.299);
 }
 
-#about .fet p {
-    margin: 0;
-    padding: 0;
-}
+
 
 #about .fet {
-    margin-top: 20px;
+    margin-top: 50px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 #about {
-    height: 550px;
-    border-bottom: none;
+    min-height: 550px;
+    height: auto;
+    border-bottom:1px solid grey;
+    overflow: auto;
 }
 
 /* Quality */
@@ -320,7 +331,6 @@ nav a:hover {
     height: 120px;
     background: linear-gradient(180deg, rgb(11, 40, 147), rgb(62, 91, 196), rgb(78, 109, 223));
     display: flex;
-    margin-top: 70px;
     border-radius: 10px;
     padding: 20px;
     justify-content: space-evenly;
@@ -369,7 +379,7 @@ footer {
     width: 100%;
     height: 250px;
     background-color: #151948;
-    margin-top: 60px;
+    margin: 60px auto;
     border-radius: 10px;
     color: white;
     display: flex;
@@ -408,12 +418,17 @@ footer {
 }
 
 .feet .icm {
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin: 10px 10px;
 }
-
+.feet .icm p{
+    color:white;
+}
+.feet p{
+    text-align:center;
+}
 .copyr {
     margin-top: 10px;
+    text-align: center;
 }
 
 .contact a {
@@ -424,8 +439,23 @@ footer {
 /* =========================
    TABLET
    ========================= */
+@media (min-width: 1001px) {
+    #home {
+        flex-wrap: nowrap;
+    }
 
-@media (max-width: 900px) {
+    .home-content {
+        flex: 1 1 60%;
+        min-width: 0;
+    }
+
+    .home-image {
+        flex: 0 1 40%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 1000px) {
 
     .container {
         width: 95%;
@@ -447,22 +477,48 @@ footer {
     #home {
         height: auto;
         min-height: 600px;
+        padding: 30px 20px;
+        align-items: center;
+        gap: 15px;
+        display:flex;
+        flex-direction: column;
+        
+        justify-content: space-between;
     }
 
     #home h1 {
-        font-size: 3.5em;
+        font-size: clamp(2.2rem, 5vw, 3.2rem);
+        margin: 20px 10px 30px;
+
     }
 
     .fet {
         gap: 40px;
     }
+    .home-content {
+    flex: 1 1 60%;
+    min-width: 0;
+}
 
+.home-image {
+    flex: 0 0 40%;
+
+    min-width: 0;
+    margin-top: 0;
+}
+
+.home-image img {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+}
     .gridbox {
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
     }
 
-    #about img {
+    #about > img {
         width: 45%;
         height: auto;
     }
@@ -526,6 +582,18 @@ footer {
         font-size: 1.1em;
         margin-bottom: 30px;
     }
+    .home-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.home-image img {
+    width: 65%;
+    max-width: 220px;
+    height: auto;
+}
     /* BUTTONS */
     .b1 {
         display: flex;
@@ -571,12 +639,22 @@ footer {
     #about {
         height: auto;
     }
-    #about img {
+    #about > img {
         float: none;
         width: 100%;
         max-width: 500px;
         height: auto;
         margin-bottom: 20px;
+    }
+    #about .fet {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;  
+    }
+
+    #about .fet .f1 {
+    width: 90%;
+    max-width: 300px;
     }
     /* QUALITY */
     .qlty {
@@ -600,5 +678,4 @@ footer {
         padding: 30px 15px;
         text-align: center;
     }
-
 }
