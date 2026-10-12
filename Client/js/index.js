@@ -7,14 +7,15 @@ const exploreBtn = document.querySelector(".b1 button:last-child");
 
 // Get Started → Login page
 getStartedBtn.addEventListener("click", function () {
-    window.location.href = "auth/auth.html";
+    window.location.href = "../Client/auth/auth.html";
 });
 
 
 // Explore Features → Features section
 exploreBtn.addEventListener("click", function () {
     document.querySelector("#feature").scrollIntoView({
-        behavior: "smooth"
+        behavior: "smooth",
+        block:"center"
     });
 });
 
@@ -31,7 +32,8 @@ navLinks.forEach(function (link) {
             event.preventDefault();
 
             document.querySelector(targetId).scrollIntoView({
-                behavior: "smooth"
+                behavior: "smooth",
+                block:"center"
             });
         }
     });
