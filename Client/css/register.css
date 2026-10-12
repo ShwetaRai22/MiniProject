@@ -45,11 +45,11 @@ body {
     min-height: 600px;
     background-color: rgb(255, 255, 254);
     position: absolute;
-    top: 18%;
-    left: 9%;
+    top: 10%;
+    left: 5%;
     z-index: 2;
     border-radius: 15px;
-    box-shadow: 25px 20px 25px 2px rgb(63, 61, 61);
+    box-shadow: 0px 3px 15px rgba(10, 12, 22, 0.647);
     display: flex;}
 .sidebar
 {background-color: #151948;
@@ -113,19 +113,22 @@ body {
 .sinput{
     height:50px ;
     width: 100%;
-    border-radius: 20px;
+    border-radius: 14px;
     padding: 20px;
     font-size: 1.1em;
-    background-color: rgba(179, 180, 181, 0.34);
-    color: blueviolet;
+    background-color: rgba(242, 246, 249, 0.23);
+    color: rgb(57, 63, 192);
+    font-weight: bold;
     border: none;
     border: 2px solid #d5dcff;
     outline: none;
     font-size: larger;
-    box-shadow: 0px 0px 15px 2px rgb(157, 158, 197);
+    box-shadow: 0px 3px 10px rgba(76, 85, 147, 0.2);
 }
 .sinput:focus{
-    border-color: #336ee4;}
+    border-color: #336ee4;
+    box-shadow: 0px 3px 10px rgba(51, 110, 228, 0.20);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;}
 
 .inputgrid{
     display: grid;
@@ -140,10 +143,10 @@ body {
 .form1 button{
     background-color:#151948 ;
     color: white;
-    border-radius: 15px;
+    border-radius: 10px;
     border: none;
-    box-shadow:  0px 0px 10px 1px #5e64a7;
-    transition: transform 0.3s ease-in-out;
+    box-shadow: 0px 4px 10px rgba(21, 25, 72, 0.442);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     width: 120px;
     height: 50px;
     text-decoration: none;
@@ -151,10 +154,12 @@ body {
 .form1 button:hover {
     cursor: pointer;
     transform: translateY(2px);
+    box-shadow: 0px 5px 12px rgba(21, 25, 72, 0.637);
 }
 .cancelBut:hover {
     cursor: pointer;
     transform: translateY(2px);
+    box-shadow: 0px 5px 12px rgba(21, 25, 72, 0.637);
 }
 .form2{
     display: none;

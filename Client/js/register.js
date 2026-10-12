@@ -67,6 +67,6 @@ if (adminInputs[1].value.trim() === "") {
         return;
     }
     alert("Admin registration submitted!");
-    window.location.href = "auth.html";
+    window.location.href = "../admin/dashboard.html";
 });
 
