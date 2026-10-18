@@ -30,11 +30,11 @@ const loginStudent= async (req,res)=>{
             });
         }
         // stores student info on server-side
-        // req.session.student={
-        //     student_id:student.student_id,
-        //     username:student.username,
-        //     email:student.email
-        // };
+        req.session.student={
+            student_id:student.student_id,
+            username:student.username,
+            email:student.email
+        };
         // console.log("Session ID:", req.sessionID);
         // console.log("Session data:", req.session);
 
