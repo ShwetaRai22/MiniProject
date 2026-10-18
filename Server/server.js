@@ -4,6 +4,8 @@ const db = require("./config/db");
 const app = express();
 const path = require("path");
 
+const session = require("express-session");
+
 const authRouter=require('./routes/auth');
 const studentRouter=require('./routes/student');
 
@@ -19,6 +21,19 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, ".."), {
     dotfiles: "deny",
     index: "index.html"
+}));
+
+app.use(session({
+    name:"s_ID",
+    secret:process.env.SESSION_SECRET_CODE,
+    resave:false,
+    saveUninitialized:false,
+    cookie:{
+        httpOnly:true,
+        secure:false,
+        sameSite:"lax",
+        maxAge:60*60*1000 //1hrs
+    }
 }));
 
 app.use('/api/auth',authRouter);
