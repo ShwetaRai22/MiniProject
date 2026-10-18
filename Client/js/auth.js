@@ -6,8 +6,8 @@ const adminForm = document.querySelector("#adminForm");
 const signupLink = document.querySelector("#signupLink");
 const studentLoginForm = document.querySelector("#studentLoginForm");
 const adminLoginForm = document.querySelector("#adminLoginForm");
-const studentPassword = document.querySelector('#stPass');
-const admintPassword = document.querySelector('#adPass');
+const studentPassword = document.querySelector('#studentPassword');
+const admintPassword = document.querySelector('#adminPassword');
 studentBtn.addEventListener("click", function () {
 
     studentForm.style.display = "block";

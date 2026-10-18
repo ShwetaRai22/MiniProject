@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/student-dashboard.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+
+        <div class="logo">
+            <img src="/images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+        </div>
+
+        <div class="navLinks">
+
+            <a href="dashboard.html" class="active">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+
+            <a href="available-exams.html">
+                <i data-lucide="file-text"></i>
+                Available Exams
+            </a>
+
+            <a href="result.html">
+                <i data-lucide="history"></i>
+                Results
+            </a>
+
+        </div>
+
+        <a href="profile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+
+    </nav>
+
+
+    <!-- Main Dashboard -->
+    <main id="dashboardPage">
+
+        <!-- Welcome Section -->
+        <section id="welcomeSection">
+
+            <div>
+                <p class="welcomeText">STUDENT DASHBOARD</p>
+
+                <h1>Welcome back, <span id="studentName">Student Name</span>!</h1>
+
+                <p class="welcomeDescription">
+                    Ready to learn and test your knowledge? Let's get started.
+                </p>
+
+                <p class="studentId">
+                    Student ID: <span id="studentId">STU001</span>
+                </p>
+            </div>
+
+            <div class="welcomeIcon">
+                <i data-lucide="graduation-cap"></i>
+            </div>
+
+        </section>
+
+
+        <!-- Summary Cards -->
+        <section id="summarySection">
+
+            <div class="summaryCard">
+                <div class="summaryIcon availableIcon">
+                    <i data-lucide="file-text"></i>
+                </div>
+
+                <div>
+                    <p>Available Exams</p>
+                    <h2 id="availableExamCount">3</h2>
+                </div>
+            </div>
+
+
+            <div class="summaryCard">
+                <div class="summaryIcon completedIcon">
+                    <i data-lucide="clipboard-check"></i>
+                </div>
+
+                <div>
+                    <p>Completed Exams</p>
+                    <h2 id="completedExamCount">5</h2>
+                </div>
+            </div>
+
+
+            <div class="summaryCard">
+                <div class="summaryIcon scoreIcon">
+                    <i data-lucide="chart-no-axes-column-increasing"></i>
+                </div>
+
+                <div>
+                    <p>Average Score</p>
+                    <h2 id="averageScore">82%</h2>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Available Exams -->
+        <section id="availableExamsSection">
+
+            <div class="sectionHeader">
+                <div>
+                    <h2>Available Exams</h2>
+                    <p>Exams waiting for you to attempt</p>
+                </div>
+
+                <a href="available-exams.html" class="viewAll">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+
+
+            <div id="examList">
+
+                <!-- Exam Card 1 -->
+                <div class="examCard">
+
+                    <div class="examTop">
+                        <div class="examIcon">
+                            <i data-lucide="code"></i>
+                        </div>
+
+                        <span class="examStatus">Available</span>
+                    </div>
+
+                    <h3>Programming Fundamentals</h3>
+
+                    <p class="examDescription">
+                        Test your understanding of basic programming concepts.
+                    </p>
+
+                    <div class="examDetails">
+                        <span>
+                            <i data-lucide="clock"></i>
+                            30 Minutes
+                        </span>
+
+                        <span>
+                            <i data-lucide="list-checks"></i>
+                            20 Questions
+                        </span>
+                    </div>
+
+                    <a href="instruction.html?examId=EX001"
+                        class="startExam">
+                        Start Exam
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- Exam Card 2 -->
+                <div class="examCard">
+
+                    <div class="examTop">
+                        <div class="examIcon">
+                            <i data-lucide="database"></i>
+                        </div>
+
+                        <span class="examStatus">Available</span>
+                    </div>
+
+                    <h3>Database Management</h3>
+
+                    <p class="examDescription">
+                        Evaluate your knowledge of databases and SQL.
+                    </p>
+
+                    <div class="examDetails">
+                        <span>
+                            <i data-lucide="clock"></i>
+                            45 Minutes
+                        </span>
+
+                        <span>
+                            <i data-lucide="list-checks"></i>
+                            30 Questions
+                        </span>
+                    </div>
+
+                    <a href="instruction.html?examId=EX002"
+                        class="startExam">
+                        Start Exam
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- Exam Card 3 -->
+                <div class="examCard">
+
+                    <div class="examTop">
+                        <div class="examIcon">
+                            <i data-lucide="globe"></i>
+                        </div>
+
+                        <span class="examStatus">Available</span>
+                    </div>
+
+                    <h3>Web Development</h3>
+
+                    <p class="examDescription">
+                        Check your knowledge of HTML, CSS and JavaScript.
+                    </p>
+
+                    <div class="examDetails">
+                        <span>
+                            <i data-lucide="clock"></i>
+                            30 Minutes
+                        </span>
+
+                        <span>
+                            <i data-lucide="list-checks"></i>
+                            25 Questions
+                        </span>
+                    </div>
+
+                    <a href="instruction.html?examId=EX003"
+                        class="startExam">
+                        Start Exam
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Recent Results -->
+        <section id="recentResultsSection">
+            <div class="sectionHeader">
+                <div>
+                    <h2>Recent Results</h2>
+                    <p>Check your performance in previous exams</p>
+                </div>
+
+                <a href="result.html" class="viewAll">
+                    View All
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+
+
+            <div class="resultTableWrapper">
+                <table id="resultTable">
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Date</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="resultTableBody">
+                        <tr>
+                            <td>Computer Fundamentals</td>
+                            <td>10 Oct 2026</td>
+                            <td>85/100</td>
+                            <td>
+                                <span class="resultStatus passed">
+                                    Passed
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Basic Mathematics</td>
+                            <td>07 Oct 2026</td>
+                            <td>42/100</td>
+                            <td>
+                                <span class="resultStatus failed">
+                                    Failed
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>English Communication</td>
+                            <td>03 Oct 2026</td>
+                            <td>76/100</td>
+                            <td>
+                                <span class="resultStatus passed">
+                                    Passed
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="../js/student-dashboard.js"></script>
+
+</body>
+</html>

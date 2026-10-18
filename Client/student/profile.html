@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header id="navg">
+
+        <div class="icm">
+            <img src="/images/icon.jpeg" alt="ExamSphere Logo">
+            <p>ExamSphere</p>
+        </div>
+
+        <nav>
+            <div class="navDiv">
+                <i data-lucide="layout-dashboard" class="navIcon"></i>
+                <a href="dashboard.html">Dashboard</a>
+            </div>
+
+            <div class="navDiv">
+                <i data-lucide="file-text" class="navIcon"></i>
+                <a href="available-exams.html">Available Exams</a>
+            </div>
+
+            <div class="navDiv">
+                <i data-lucide="history" class="navIcon"></i>
+                <a href="results.html">Results</a>
+            </div>
+        </nav>
+
+        <div id="profile">
+            <a href="profile.html" class="active">
+                <i data-lucide="circle-user-round" id="profileIcon"></i>
+            </a>
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <div class="container">
+
+            <div id="heading">
+
+                <div id="headingIcon">
+                    <i data-lucide="user-round"></i>
+                </div>
+
+                <div>
+                    <h1>My Profile</h1>
+                    <p>View and manage your personal information.</p>
+                </div>
+
+            </div>
+
+
+            <section id="profileCard">
+
+                <div id="profileTop">
+
+                    <div id="userIcon">
+                        <i data-lucide="user-round"></i>
+                    </div>
+
+                    <div id="userDetails">
+                        <h2 id="profileUsername">Student Name</h2>
+                        <p>Student ID: STU001</p>
+                    </div>
+
+                </div>
+
+
+                <div id="studentInfo">
+
+                    <div id="infoHeading">
+                        <h2>Personal Information</h2>
+                        <p>Your registered student details</p>
+                    </div>
+
+
+                    <div class="infoGrid">
+
+                        <div class="infoBox">
+
+                            <div class="infoIcon">
+                                <i data-lucide="user-round"></i>
+                            </div>
+
+                            <div class="infoContent">
+                                <p>Username</p>
+
+                                <h3 class="viewValue">Student Name</h3>
+
+                                <input type="text" class="editFields"
+                                    id="usernameInput" value="Student Name"
+                                    required>
+                            </div>
+
+                        </div>
+
+
+                        <div class="infoBox">
+
+                            <div class="infoIcon">
+                                <i data-lucide="mail"></i>
+                            </div>
+
+                            <div class="infoContent">
+                                <p>Email Address</p>
+
+                                <h3 class="viewValue">student@example.com</h3>
+
+                                <input type="email" class="editFields"
+                                    id="emailInput" value="student@example.com"
+                                    required>
+                            </div>
+
+                        </div>
+
+
+                        <div class="infoBox">
+
+                            <div class="infoIcon">
+                                <i data-lucide="phone"></i>
+                            </div>
+
+                            <div class="infoContent">
+                                <p>Contact Number</p>
+
+                                <h3 class="viewValue">9876543210</h3>
+
+                                <input type="tel" class="editFields"
+                                    id="contactInput" value="9876543210"
+                                    required>
+                            </div>
+
+                        </div>
+
+
+                        <div class="infoBox">
+
+                            <div class="infoIcon">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+
+                            <div class="infoContent">
+                                <p>Address</p>
+
+                                <h3 class="viewValue">Enter your address here</h3>
+
+                                <input type="text" class="editFields"
+                                    id="addressInput" value="Enter your address here"
+                                    required>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="profileActions">
+                        <button type="button" id="logOut">
+                            <i data-lucide="power"></i>
+                            Log Out
+                        </button>
+
+                        <button type="button" id="editProfile">
+                            <i data-lucide="pencil"></i>
+                            Edit Profile
+                        </button>
+
+                        <button type="button" id="saveProfile">
+                            <i data-lucide="save"></i>
+                            Save Changes
+                        </button>
+
+                        <button type="button" id="cancelEdit">
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <script src="../js/profile.js"></script>
+
+</body>
+</html>
