@@ -41,20 +41,24 @@
             <div class="form1" id="studentForm">
                 <h2>Login To Student's Dashboard</h2>
                 <form id="studentLoginForm">
-                    <input type="text" required placeholder="Username" class="user" ><br>
-                    <input type="password" required placeholder="Password" class="user" id="stPass"><br>
-                    <input class="remind" type="checkbox">Remember Me
-                    <br><button type="submit">Sign In</button>
+                    <input type="text" required placeholder="Username" class="user" id="studentUsername"
+                    name="username"><br>
+                    <input type="password" required placeholder="Password" class="user" id="studentPassword"
+                    name="password"><br>
+                    <input class="remind" type="checkbox" id="rememberMe">Remember Me
+                    <br><button type="submit" id="studentLoginButton">Sign In</button>
                     <a href="forgetpassword.html">Forget Password ?</a>
                 </form>
             </div>
             <div class=" form1 form2" id="adminForm">
                 <h2>Login To Admin's Dashboard</h2>
                 <form id="adminLoginForm">
-                    <input type="text" required placeholder="Username" class="user2"><br>
-                    <input type="password" required placeholder="Password" class="user2" id="adPAss"><br>
-                    <input class="remind" type="checkbox">Remember Me
-                    <br><button type="submit">Sign In</button>
+                    <input type="text" required placeholder="Username" class="user2" id="adminUsername"
+                    name="username"><br>
+                    <input type="password" required placeholder="Password" class="user2" id="adminPassword"
+                    name="password"><br>
+                    <input class="remind" type="checkbox" id="adminRemember">Remember Me
+                    <br><button type="submit" id="adminLoginButton">Sign In</button>
                     <a href="forgetpassword.html" id="forgotPassword">Forget Password ?</a>
                 </form>
             </div>
