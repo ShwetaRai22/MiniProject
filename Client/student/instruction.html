@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Instuctions</title>
+    <title>Exam Instructions</title>
     <link rel="stylesheet" href="../css/instruction.css">
 </head>
+
 <body>
     <div id="navg">
         <div class="icm">
@@ -13,17 +15,179 @@
             <p>ExamSphere</p>
         </div>
         <nav>
-            <a href="#home" class="active">Home</a>
-            <a href="#feature">Features</a>
-            <a href="#whychoose">Why Us?</a>
-            <a href="#about">About</a>
+            <div class="navDiv">
+                <i data-lucide="home" class="navIcon"></i>
+                <a href="dashboard.html">Home</a>
+            </div>
+            <div class="navDiv">
+                <i data-lucide="clipboard-list" class="navIcon"></i>
+                <a href="available-exams.html">My Exams</a>
+            </div>
+            <div class="navDiv">
+                <i data-lucide="star" class="navIcon"></i>
+                <a href="result.html">Result</a>
+            </div>
         </nav>
         <div id="profile">
-            <i data-lucide="user"></i>
+            <a href="../Student/profile.html"><i data-lucide="circle-user" id="profileIcon" class="icons"></i>
+                <p>Hi, UserName</p>
+            </a>
         </div>
     </div>
+    <main>
+        <div class="container">
+            <div id="instructionPart">
+                <div id="heading">
+                    <div class="icons">
+                        <i data-lucide="clipboard-list" id="headingIcon"></i>
+                    </div>
+                    <div class="content">
+                        <h1>Exam Instructions</h1>
+                        <p>Please read the following instructions carefully before starting the exam.</p>
+                    </div>
+                </div>
+
+                <div id="summary1">
+                    <div id="card1" class="cards">
+                        <div id="examIcon" class="icons">
+                            <i data-lucide="file-text"></i>
+                        </div>
+                        <div class="content">
+                            <p>Exam Name</p>
+                            <strong>Data Sturctures & Algorithms</strong>
+                        </div>
+                    </div>
+                    <div id="card2" class="cards">
+                        <div id="listIcon" class="icons">
+                            <i data-lucide="list"></i>
+                        </div>
+                        <div class="content">
+                            <p>Total Questions</p>
+                            <strong>15</strong>
+                        </div>
+                    </div>
+                    <div id="card3" class="cards">
+                        <div id="timeIcon" class="icons">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <div class="content">
+                            <p>Time Duration</p>
+                            <strong>25 Minutes</strong>
+                        </div>
+                    </div>
+                    <div id="card4" class="cards">
+                        <div id="marksIcon" class="icons">
+                            <i data-lucide="star"></i>
+                        </div>
+                        <div class="content">
+                            <p>Total Marks</p>
+                            <strong>30</strong>
+                        </div>
+                    </div>
+                </div>
+                <div id="rules">
+                    <div class="cards">
+                        <div class="ruleNum">1</div>
+                        <div class="content">
+                            <strong>Read the instruction carefully.</strong>
+                            <p>Make sure you understand the rules and format of exam carefully.</p>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum">2</div>
+                        <div class="content">
+                            <strong>Attempt all the questions.</strong>
+                            <p>The exam consist of 15 MCQs.Each question carries 2 marks.</p>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum">3</div>
+                        <div class="content">
+                            <strong>No negative marking.</strong>
+                            <p>There is no negative marking for incorrect answers.</p>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum">4</div>
+                        <div class="content">
+                            <strong>Do not refresh or close the page.</strong>
+                            <p>If you close or refresh the page, your response may be submitted automatically.</p>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum">5</div>
+                        <div class="content">
+                            <strong>Submit before time.</strong>
+                            <p>Make sure to click on the Submit button before the time runs out.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="confirm">
+                    <input type="checkbox" id="checkbox">
+                    I have read and understood the instructions. I am ready to start the exam.
+                </div>
+            </div>
+            <div id="quickSummary">
+                <div id="heading2">
+                    <div id="summaryExamIcon" class="icons">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <strong>Exam Summary</strong>
+                </div>
+                <div id="summary2">
+                    <div class="cards">
+                        <div class="ruleNum"><i data-lucide="list"></i></div>
+                        <div class="content">
+                            <p>Total Questions</p>
+                            <strong>15</strong>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum"><i data-lucide="clock"></i></div>
+                        <div class="content">
+                            <p>Time Duration</p>
+                            <strong>25 Minutes</strong>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum">
+                            <i data-lucide="star"></i>
+                        </div>
+                        <div class="content">
+                            <p>Total Marks</p>
+                            <strong>30</strong>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum"><i data-lucide="circle-help"></i></div>
+                        <div class="content">
+                            <p>Question Type</p>
+                            <strong>Multiple Choice (MCQ)</strong>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <div class="ruleNum"><i data-lucide="circle-minus"></i></div>
+                        <div class="content">
+                            <p>Negative Marking</p>
+                            <strong>No</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="warningBox">
+                    <div id="warningIcon"><i data-lucide="info"></i></div>
+                    <p>Once you click Start Exam, the timer will begin and you cannot pause the exam.</p>
+                </div>
+                <div id="start">
+                    <button id="startbut">Start Exam</button>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="../js/instruction.js"></script>
 </body>
+
 </html>
