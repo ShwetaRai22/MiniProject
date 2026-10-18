@@ -3,7 +3,9 @@ const cors = require("cors");
 const db = require("./config/db");
 const app = express();
 const path = require("path");
+
 const authRouter=require('./routes/auth');
+const studentRouter=require('./routes/student');
 
 app.use(cors(
     {origin:"https://legendary-space-couscous-4qwjv65pj5j9hgv4-5501.app.github.dev",
@@ -18,8 +20,9 @@ app.use(express.static(path.join(__dirname, ".."), {
     dotfiles: "deny",
     index: "index.html"
 }));
-app.use('/api/auth',authRouter);
 
+app.use('/api/auth',authRouter);
+app.use('/api/student',studentRouter);
 
 
 
