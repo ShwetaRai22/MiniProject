@@ -18,30 +18,75 @@ else if (role === "admin") {
     stuRegister.style.display = "none";
     adminRegister.style.display = "block";
 }
-studentForm.addEventListener("submit", function (event) {
+studentForm.addEventListener("submit", async function (event) {
     event.preventDefault();
-    if (studentUsername.value.trim() === "") {
-    alert("Please enter a username!");
-    return;
+
+    const username = studentUsername.value.trim();
+    const email = studentForm.querySelector('[name="email"]').value.trim();
+    const contact = studentContact.value.trim();
+    const address = studentForm.querySelector('[name="address"]').value.trim();
+    const password = studentInputs[0].value;
+    const confirmPassword = studentInputs[1].value;
+
+    if (!username || !email || !contact || !address || !password || !confirmPassword) {
+        alert("Please fill in all fields!");
+        return;
     }
-    if (!/^\d{10}$/.test(studentContact.value)) {
-    alert("Please enter a valid 10-digit contact number!");
-    return;
-}
-if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/.test(studentInputs[0].value)) {
-    alert("Password must be at least 8 characters and contain uppercase, lowercase, and a number.");
-    return;
-}
-if (studentInputs[1].value.trim() === "") {
-    alert("Please confirm your password!");
-    return;
-}
-    if (studentInputs[0].value !== studentInputs[1].value) {
+
+    if (!/^[0-9]{10}$/.test(contact)) {
+        alert("Please enter a valid 10-digit contact number!");
+        return;
+    }
+
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
+        alert("Password must be at least 8 characters and contain uppercase, lowercase, and a number.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
         alert("Passwords do not match!");
         return;
     }
-    alert("Student registration submitted!");
-    window.location.href = "auth.html";
+    const registerButton = studentForm.querySelector('button[type="submit"]');
+    registerButton.disabled = true;
+    registerButton.textContent = "Registering...";
+
+    try {
+        const response = await fetch(
+            "/api/auth/student/signup",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    contact,
+                    address,
+                    password,
+                    confirmPassword
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Registration failed. Please try again.");
+            return;
+        }
+
+        alert("Student registration successful!");
+        window.location.href = "auth.html";
+
+    } catch (error) {
+        console.error("Registration request failed:", error);
+        alert("Could not connect to the server. Please make sure the backend is running.");
+    } finally {
+        registerButton.disabled = false;
+        registerButton.textContent = "Register";
+    }
 });
 
 adminForm.addEventListener("submit", function (event) {
