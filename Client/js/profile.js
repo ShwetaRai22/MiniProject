@@ -13,12 +13,39 @@ const addressInput = document.getElementById("addressInput");
 const viewValues = document.querySelectorAll(".viewValue");
 
 const profileUsername = document.getElementById("profileUsername");
+let oldUsername;
+let oldEmail;
+let oldContact;
+let oldAddress;
+document.addEventListener('DOMContentLoaded',async(req,res)=>{
+    try {
+        const response= await fetch(
+            '/api/student/profile',
+            {
+                method:'GET',
+                credentials :"include"
+            }
+        );
+        const data= response.json();
+        if(!response){
+            res.status(401).json({
+                success:false,
+                msg:"Unable to load profile page."
+            });
+            window.location.href="../student/dashboard.html";
+            return;
+        }
 
-
-let oldUsername = usernameInput.value;
-let oldEmail = emailInput.value;
-let oldContact = contactInput.value;
-let oldAddress = addressInput.value;
+        profileUsername.textContent=data.student.username;
+        
+        oldUsername = usernameInput.value;
+        oldEmail = emailInput.value;
+        oldContact = contactInput.value;
+        oldAddress = addressInput.value;
+    } catch (error) {
+        
+    }
+});
 
 editButton.addEventListener('click', () => {
 

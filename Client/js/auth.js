@@ -8,7 +8,8 @@ const studentLoginForm = document.querySelector("#studentLoginForm");
 const adminLoginForm = document.querySelector("#adminLoginForm");
 const studentPassword = document.querySelector('#studentPassword');
 const admintPassword = document.querySelector('#adminPassword');
-const rememberMe = document.querySelector("#rememberMe").checked;
+
+
 studentBtn.addEventListener("click", function () {
 
     studentForm.style.display = "block";
@@ -23,6 +24,7 @@ studentLoginForm.addEventListener("submit", async function (event) {
      const username = document.querySelector("#studentUsername").value.trim();
     const password = document.querySelector("#studentPassword").value;
     const button = document.querySelector("#studentLoginButton");
+    const rememberMe = document.querySelector("#rememberMe").checked;
 
     if (!username || !password) {
         alert("Please enter your username and password.");
@@ -33,6 +35,7 @@ studentLoginForm.addEventListener("submit", async function (event) {
     button.textContent = "Signing In...";
 
     try {
+       
         const response = await fetch(
             "/api/auth/student/signin",
             {

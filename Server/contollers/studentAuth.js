@@ -43,7 +43,7 @@ const loginStudent= async (req,res)=>{
             req.session.cookie.maxAge=7*24*60*60*1000;
         }
         else{
-            req.session.maxAge=null;
+            req.session.cookie.expires=false;
         }
 
         return res.status(200).json({
