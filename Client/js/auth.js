@@ -8,6 +8,7 @@ const studentLoginForm = document.querySelector("#studentLoginForm");
 const adminLoginForm = document.querySelector("#adminLoginForm");
 const studentPassword = document.querySelector('#studentPassword');
 const admintPassword = document.querySelector('#adminPassword');
+const rememberMe = document.querySelector("#rememberMe").checked;
 studentBtn.addEventListener("click", function () {
 
     studentForm.style.display = "block";
@@ -42,7 +43,8 @@ studentLoginForm.addEventListener("submit", async function (event) {
                 credentials: "include",
                 body: JSON.stringify({
                     username: username,
-                    password: password
+                    password: password,
+                    rememberMe:rememberMe
                 })
             }
         );

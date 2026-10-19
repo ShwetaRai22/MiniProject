@@ -37,6 +37,14 @@ const loginStudent= async (req,res)=>{
         };
         // console.log("Session ID:", req.sessionID);
         // console.log("Session data:", req.session);
+        
+        const rememberMe=req.body.rememberMe===true;
+        if(rememberMe){
+            req.session.cookie.maxAge=7*24*60*60*1000;
+        }
+        else{
+            req.session.maxAge=null;
+        }
 
         return res.status(200).json({
             success:true,
