@@ -7,7 +7,7 @@ const exploreBtn = document.querySelector(".b1 button:last-child");
 
 // Get Started → Login page
 getStartedBtn.addEventListener("click", function () {
-    window.location.href = "../Client/auth/auth.html";
+    window.location.href = "./Client/auth/auth.html";
 });
 
 
