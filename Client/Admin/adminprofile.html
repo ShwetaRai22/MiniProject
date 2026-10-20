@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/adminprofile.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+        <div class="logo">
+            <img src="/images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+        </div>
+
+        <div class="navLinks">
+            <a href="./dashboard.html">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+
+            <a href="manage-exams.html">
+                <i data-lucide="file-text"></i>
+                Manage Exams
+            </a>
+
+            <a href="manage-students.html">
+                <i data-lucide="users"></i>
+                Students
+            </a>
+
+            <a href="admin-results.html">
+                <i data-lucide="chart-no-axes-column"></i>
+                Results
+            </a>
+        </div>
+
+        <a href="admin-profile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main id="adminProfilePage">
+
+        <div class="pageHeading">
+            <div class="headingIcon">
+                <i data-lucide="shield-check"></i>
+            </div>
+
+            <div>
+                <h1>Admin Profile</h1>
+                <p>View and manage your administrator information.</p>
+            </div>
+        </div>
+
+
+        <!-- Profile Card -->
+        <section id="profileCard">
+
+            <div class="profileHeader">
+                <div class="adminAvatar">
+                    <i data-lucide="shield-check"></i>
+                </div>
+
+                <div>
+                    <h2 id="profileUsername">Admin Name</h2>
+                    <p>Admin ID: <span id="adminId">ADM001</span></p>
+                    <span class="adminBadge">Administrator</span>
+                </div>
+            </div>
+
+
+            <!-- Personal Information -->
+            <div class="profileBody">
+
+                <div class="sectionHeading">
+                    <h2>Personal Information</h2>
+                    <p>Your registered administrator details</p>
+                </div>
+
+
+                <div class="infoGrid">
+
+                    <!-- Username -->
+                    <div class="infoBox">
+                        <div class="infoIcon">
+                            <i data-lucide="user-round"></i>
+                        </div>
+
+                        <div class="infoContent">
+                            <p>Username</p>
+                            <h3 class="viewValue">Admin Name</h3>
+                            <input type="text" id="usernameInput"
+                                class="editFields" value="Admin Name"
+                                placeholder="Enter username">
+                        </div>
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="infoBox">
+                        <div class="infoIcon">
+                            <i data-lucide="mail"></i>
+                        </div>
+
+                        <div class="infoContent">
+                            <p>Email Address</p>
+                            <h3 class="viewValue">admin@example.com</h3>
+                            <input type="email" id="emailInput"
+                                class="editFields" value="admin@example.com"
+                                placeholder="Enter email address">
+                        </div>
+                    </div>
+
+
+                    <!-- Contact -->
+                    <div class="infoBox">
+                        <div class="infoIcon">
+                            <i data-lucide="phone"></i>
+                        </div>
+
+                        <div class="infoContent">
+                            <p>Contact Number</p>
+                            <h3 class="viewValue">9876543210</h3>
+                            <input type="tel" id="contactInput"
+                                class="editFields" value="9876543210"
+                                placeholder="Enter contact number">
+                        </div>
+                    </div>
+
+
+                    <!-- Address -->
+                    <div class="infoBox">
+                        <div class="infoIcon">
+                            <i data-lucide="map-pin"></i>
+                        </div>
+
+                        <div class="infoContent">
+                            <p>Address</p>
+                            <h3 class="viewValue">Enter your address here</h3>
+                            <input type="text" id="addressInput"
+                                class="editFields"
+                                value="Enter your address here"
+                                placeholder="Enter address">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Action Buttons -->
+                <div id="profileActions">
+                    <button type="button" id="logOut">
+                            <i data-lucide="power"></i>
+                            Log Out
+                    </button>
+                    <button id="editProfile" type="button">
+                        <i data-lucide="pencil"></i>
+                        Edit Profile
+                    </button>
+
+                    <button id="saveProfile" type="button">
+                        <i data-lucide="save"></i>
+                        Save Changes
+                    </button>
+
+                    <button id="cancelEdit" type="button">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="../js/adminprofile.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
