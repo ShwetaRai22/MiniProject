@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+
+        <div class="logo">
+            <img src="/images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+            <span class="adminLabel">ADMIN</span>
+        </div>
+
+        <div class="navLinks">
+
+            <a href="admin-dashboard.html" class="active">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+
+            <a href="manage-exams.html">
+                <i data-lucide="file-text"></i>
+                Manage Exams
+            </a>
+
+            <a href="manage-students.html">
+                <i data-lucide="users"></i>
+                Students
+            </a>
+
+            <a href="admin-result.html">
+                <i data-lucide="chart-no-axes-column"></i>
+                Results
+            </a>
+
+        </div>
+
+        <a href="adminprofile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+
+    </nav>
+
+
+    <!-- Main Dashboard -->
+    <main id="adminDashboardPage">
+
+        <!-- Welcome Section -->
+        <section id="welcomeSection">
+
+            <div>
+                <p class="welcomeText">ADMINISTRATOR DASHBOARD</p>
+
+                <h1>Welcome back, <span id="adminName">Admin Name</span>!</h1>
+
+                <p class="welcomeDescription">
+                    Manage examinations, students and results from one place.
+                </p>
+
+                <p class="adminId">
+                    Admin ID: <span id="adminId">ADM001</span>
+                </p>
+            </div>
+
+            <div class="welcomeIcon">
+                <i data-lucide="shield-check"></i>
+            </div>
+
+        </section>
+
+
+        <!-- Summary Cards -->
+        <section id="summarySection">
+
+            <div class="summaryCard">
+
+                <div class="summaryIcon studentsIcon">
+                    <i data-lucide="users"></i>
+                </div>
+
+                <div>
+                    <p>Total Students</p>
+                    <h2 id="totalStudents">120</h2>
+                </div>
+
+            </div>
+
+
+            <div class="summaryCard">
+
+                <div class="summaryIcon examsIcon">
+                    <i data-lucide="file-text"></i>
+                </div>
+
+                <div>
+                    <p>Total Exams</p>
+                    <h2 id="totalExams">15</h2>
+                </div>
+
+            </div>
+
+
+            <div class="summaryCard">
+
+                <div class="summaryIcon publishedIcon">
+                    <i data-lucide="send"></i>
+                </div>
+
+                <div>
+                    <p>Published Exams</p>
+                    <h2 id="publishedExams">8</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Quick Actions -->
+        <section id="quickActionsSection">
+
+            <div class="sectionHeading">
+                <h2>Quick Actions</h2>
+                <p>Frequently used administrator tools</p>
+            </div>
+
+
+            <div id="quickActionsList">
+
+                <a href="create-exams.html" class="actionCard">
+
+                    <div class="actionIcon">
+                        <i data-lucide="plus-circle"></i>
+                    </div>
+
+                    <div>
+                        <h3>Create New Exam</h3>
+                        <p>Set up a new examination</p>
+                    </div>
+
+                    <i data-lucide="arrow-up-right" class="actionArrow"></i>
+
+                </a>
+
+
+                <a href="manage-students.html" class="actionCard">
+
+                    <div class="actionIcon">
+                        <i data-lucide="user-round-plus"></i>
+                    </div>
+
+                    <div>
+                        <h3>Manage Students</h3>
+                        <p>View and manage student records</p>
+                    </div>
+
+                    <i data-lucide="arrow-up-right" class="actionArrow"></i>
+
+                </a>
+
+
+                <a href="admin-result.html" class="actionCard">
+
+                    <div class="actionIcon">
+                        <i data-lucide="chart-no-axes-column"></i>
+                    </div>
+
+                    <div>
+                        <h3>View Results</h3>
+                        <p>Check examination performance</p>
+                    </div>
+
+                    <i data-lucide="arrow-up-right" class="actionArrow"></i>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- Recent Exams -->
+        <section id="recentExamsSection">
+
+            <div class="sectionHeader">
+
+                <div>
+                    <h2>Recent Exams</h2>
+                    <p>Overview of recently created examinations</p>
+                </div>
+
+                <a href="manage-exams.html" class="viewAll">
+                    Manage All
+                    <i data-lucide="arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <div class="tableWrapper">
+
+                <table id="examTable">
+
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Date</th>
+                            <th>Questions</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="examTableBody">
+
+                        <tr>
+                            <td>Programming Fundamentals</td>
+                            <td>20 Oct 2026</td>
+                            <td>30</td>
+                            <td>
+                                <span class="statusBadge published">
+                                    Published
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Database Management</td>
+                            <td>22 Oct 2026</td>
+                            <td>25</td>
+                            <td>
+                                <span class="statusBadge draft">
+                                    Draft
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Web Development</td>
+                            <td>25 Oct 2026</td>
+                            <td>40</td>
+                            <td>
+                                <span class="statusBadge published">
+                                    Published
+                                </span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Recent Student Activity -->
+        <section id="recentActivitySection">
+
+            <div class="sectionHeader">
+
+                <div>
+                    <h2>Recent Student Activity</h2>
+                    <p>Latest examination attempts submitted by students</p>
+                </div>
+
+                <a href="admin-result.html" class="viewAll">
+                    View Results
+                    <i data-lucide="arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <div class="tableWrapper">
+
+                <table id="activityTable">
+
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Exam</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="activityTableBody">
+
+                        <tr>
+                            <td>STU001</td>
+                            <td>Student One</td>
+                            <td>Programming Fundamentals</td>
+                            <td>85/100</td>
+                            <td>
+                                <span class="statusBadge completed">
+                                    Completed
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>STU002</td>
+                            <td>Student Two</td>
+                            <td>Database Management</td>
+                            <td>72/100</td>
+                            <td>
+                                <span class="statusBadge completed">
+                                    Completed
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>STU003</td>
+                            <td>Student Three</td>
+                            <td>Web Development</td>
+                            <td>--</td>
+                            <td>
+                                <span class="statusBadge pending">
+                                    In Progress
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="../js/admin-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F5F7F6;
+    color: #202B2C;
+}
+
+
+/* Navbar */
+#navg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 80px;
+    padding: 0 5%;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E1E9E6;
+    box-shadow: 0 3px 12px #202B2C12;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.logo h3 {
+    color: #202B2C;
+    font-size: 1.25rem;
+}
+
+.adminLabel {
+    padding: 4px 7px;
+    background: #DDF1EB;
+    color: #168C83;
+    border-radius: 5px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+}
+
+.navLinks a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #687675;
+    font-size: 0.87rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.navLinks a:hover,
+.navLinks a.active {
+    color: #168C83;
+}
+
+.navLinks i {
+    width: 21px;
+    height: 21px;
+}
+
+.profileIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border: 2px solid #168C83;
+    border-radius: 50%;
+    color: #202B2C;
+    background: #E4F5F0;
+}
+
+.profileIcon i {
+    width: 25px;
+    height: 25px;
+}
+
+
+/* Main Dashboard */
+#adminDashboardPage {
+    padding: 35px 5%;
+    min-height: calc(100vh - 80px);
+}
+
+
+/* Welcome Section */
+#welcomeSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 30px;
+    margin-bottom: 28px;
+    background: linear-gradient(120deg, #DDF1EB, #EDF7F3, #F5FAF8);
+    border: 1px solid #D9EBE4;
+    border-radius: 18px;
+}
+
+.welcomeText {
+    color: #168C83;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+#welcomeSection h1 {
+    color: #202B2C;
+    font-size: 1.8rem;
+    line-height: 1.4;
+}
+
+#welcomeSection h1 span {
+    color: #168C83;
+}
+
+.welcomeDescription {
+    color: #71807D;
+    font-size: 0.92rem;
+    margin-top: 8px;
+}
+
+.adminId {
+    color: #647573;
+    font-size: 0.85rem;
+    margin-top: 12px;
+}
+
+#adminId {
+    color: #168C83;
+    font-weight: 600;
+}
+
+.welcomeIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    background: #FFFFFF;
+    border: 1px solid #CDE8DF;
+    border-radius: 25px;
+    color: #168C83;
+}
+
+.welcomeIcon i {
+    width: 55px;
+    height: 55px;
+}
+
+
+/* Summary Cards */
+#summarySection {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 35px;
+}
+
+.summaryCard {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 23px;
+    background: #FFFFFF;
+    border: 1px solid #E5ECE8;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px #202B2C08;
+    transition: 0.3s ease;
+}
+
+.summaryCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px #202B2C12;
+}
+
+.summaryIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    border-radius: 14px;
+}
+
+.summaryIcon i {
+    width: 27px;
+    height: 27px;
+}
+
+.studentsIcon {
+    background: #DDF1EB;
+    color: #168C83;
+}
+
+.examsIcon {
+    background: #E6EBF8;
+    color: #5267A8;
+}
+
+.publishedIcon {
+    background: #FFF1D9;
+    color: #BD851A;
+}
+
+.summaryCard p {
+    color: #71807D;
+    font-size: 0.85rem;
+}
+
+.summaryCard h2 {
+    color: #202B2C;
+    font-size: 1.65rem;
+    margin-top: 5px;
+}
+
+
+/* Section Headings */
+.sectionHeading {
+    margin-bottom: 20px;
+}
+
+.sectionHeading h2,
+.sectionHeader h2 {
+    color: #202B2C;
+    font-size: 1.3rem;
+}
+
+.sectionHeading p,
+.sectionHeader p {
+    color: #71807D;
+    font-size: 0.87rem;
+    margin-top: 5px;
+}
+
+#quickActionsSection,
+#recentExamsSection,
+#recentActivitySection {
+    margin-bottom: 38px;
+}
+
+
+/* Quick Actions */
+#quickActionsList {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.actionCard {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 20px;
+    min-width: 0;
+    background: #FFFFFF;
+    border: 1px solid #E5ECE8;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.actionCard:hover {
+    transform: translateY(-3px);
+    border-color: #B5DCD1;
+    box-shadow: 0 7px 20px #202B2C0D;
+}
+
+.actionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background: #DDF1EB;
+    color: #168C83;
+    border-radius: 12px;
+}
+
+.actionIcon i {
+    width: 25px;
+    height: 25px;
+}
+
+.actionCard h3 {
+    color: #202B2C;
+    font-size: 0.92rem;
+}
+
+.actionCard p {
+    color: #71807D;
+    font-size: 0.77rem;
+    line-height: 1.5;
+    margin-top: 5px;
+}
+
+.actionArrow {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-left: auto;
+    color: #168C83;
+}
+
+
+/* Table Section Headers */
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.viewAll {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #168C83;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.viewAll:hover {
+    color: #202B2C;
+}
+
+.viewAll i {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* Tables */
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: #FFFFFF;
+    border: 1px solid #E5ECE8;
+    border-radius: 14px;
+}
+
+#examTable,
+#activityTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+#examTable th,
+#examTable td,
+#activityTable th,
+#activityTable td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #EAF0ED;
+    white-space: nowrap;
+}
+
+#examTable th,
+#activityTable th {
+    background: #F4F8F6;
+    color: #647573;
+    font-size: 0.81rem;
+    font-weight: 600;
+}
+
+#examTable td,
+#activityTable td {
+    color: #40504E;
+    font-size: 0.83rem;
+}
+
+#examTable tbody tr:last-child td,
+#activityTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#examTable tbody tr:hover,
+#activityTable tbody tr:hover {
+    background: #FAFCFB;
+}
+
+
+/* Status Badges */
+.statusBadge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.73rem;
+    font-weight: 600;
+}
+
+.published,
+.completed {
+    background: #DDF4E9;
+    color: #167B55;
+}
+
+.draft {
+    background: #FFF0D5;
+    color: #A87516;
+}
+
+.pending {
+    background: #E8EDF8;
+    color: #5267A8;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+    #navg {
+        padding: 0 3%;
+    }
+
+    .navLinks {
+        gap: 13px;
+    }
+
+    .navLinks a {
+        font-size: 0.8rem;
+    }
+
+    #adminDashboardPage {
+        padding: 30px 3%;
+    }
+
+    #quickActionsList {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 700px) {
+    #navg {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px 4%;
+    }
+
+    .navLinks {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .navLinks a {
+        font-size: 0.72rem;
+        gap: 5px;
+    }
+
+    .navLinks i {
+        width: 18px;
+        height: 18px;
+    }
+
+    .adminLabel {
+        font-size: 0.6rem;
+    }
+
+    #adminDashboardPage {
+        padding: 25px 4%;
+    }
+
+    #welcomeSection {
+        padding: 23px;
+    }
+
+    #welcomeSection h1 {
+        font-size: 1.5rem;
+    }
+
+    .welcomeIcon {
+        width: 75px;
+        height: 75px;
+    }
+
+    .welcomeIcon i {
+        width: 40px;
+        height: 40px;
+    }
+
+    #summarySection {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .summaryCard {
+        padding: 18px;
+    }
+
+    .sectionHeader h2,
+    .sectionHeading h2 {
+        font-size: 1.15rem;
+    }
+
+    #examTable th,
+    #examTable td,
+    #activityTable th,
+    #activityTable td {
+        padding: 13px 15px;
+    }
+}
+
+
+@media (max-width: 420px) {
+    .logo h3 {
+        font-size: 1.05rem;
+    }
+
+    #welcomeSection {
+        padding: 18px;
+    }
+
+    #welcomeSection h1 {
+        font-size: 1.25rem;
+    }
+
+    .welcomeDescription {
+        font-size: 0.82rem;
+    }
+
+    .welcomeIcon {
+        width: 55px;
+        height: 55px;
+        border-radius: 15px;
+    }
+
+    .welcomeIcon i {
+        width: 30px;
+        height: 30px;
+    }
+
+    .sectionHeader {
+        align-items: flex-start;
+    }
+
+    .sectionHeader h2,
+    .sectionHeading h2 {
+        font-size: 1.05rem;
+    }
+
+    .sectionHeader p,
+    .sectionHeading p {
+        font-size: 0.78rem;
+    }
+
+    .viewAll {
+        font-size: 0.76rem;
+    }
+
+    .actionCard {
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .actionCard h3 {
+        font-size: 0.85rem;
+    }
+}

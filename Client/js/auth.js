@@ -77,11 +77,11 @@ adminBtn.addEventListener("click", function () {
     adminForm.style.display = "block";
     adminBtn.classList.add("active");
     studentBtn.classList.remove("active");
-     signupLink.href = "register.html?role=admin";
+    signupLink.href = "register.html?role=admin";
 });
 adminLoginForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     alert("Admin login submitted!");
-    window.location.href = "../admin/dashboard.html";
+    window.location.href = "../Admin/dashboard.html";
 });
