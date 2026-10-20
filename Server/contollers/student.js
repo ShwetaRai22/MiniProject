@@ -148,5 +148,23 @@ const updateProfile = async (req, res) => {
         });
     }
 };
+const studentLogout=(req,res) => {
+    req.session.destroy((error)=>{
+        if(error){
+            console.error("Logout error:",error);
 
-module.exports={displayDashboard,displayProfile,updateProfile};
+            return res.status(500).json({
+                success:false,
+                msg:"Unable to logout. Please try after some time."
+            });
+        }
+
+        res.clearCookie("examsphere.sid");
+        
+        return res.status(200).json({
+            success:true,
+            msg:"Logged out successfully."
+        });
+    });
+}
+module.exports={displayDashboard,displayProfile,updateProfile,studentLogout};

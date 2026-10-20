@@ -4,6 +4,8 @@ const profileCard = document.getElementById("profileCard");
 const editButton = document.getElementById("editProfile");
 const saveButton = document.getElementById("saveProfile");
 const cancelButton = document.getElementById("cancelEdit");
+const logoutButton = document.getElementById("logOut");
+
 
 const usernameInput = document.getElementById("usernameInput");
 const emailInput = document.getElementById("emailInput");
@@ -21,9 +23,9 @@ let oldEmail = "";
 let oldContact = "";
 let oldAddress = "";
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log("Profile JS started");
+   
     try {
-        console.log("Starting profile fetch...");
+        
         const response = await fetch(
             '/api/student/profile',
             {
@@ -31,10 +33,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 credentials: "include"
             }
         );
-        console.log("Fetch completed");
-        console.log("Response status:", response.status);
+    
         const data = await response.json();
-        console.log("Backend data:", data);
+        
         if (response.status === 401) {
             window.location.href = "../auth/auth.html";
             return;
@@ -44,7 +45,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const student = data.student;
-        console.log("Student data:", student);
         document.querySelectorAll(".profileUsername").forEach(element => {
             element.textContent = student.username;
         });
@@ -160,4 +160,30 @@ cancelButton.addEventListener('click', () => {
 
     profileCard.classList.remove("editMode");
 
+});
+
+logoutButton.addEventListener('click', async()=>{
+    console.log("button clicked");
+    try {
+        const response= await fetch(
+            '/api/student/logout',
+            {
+                method:'POST',
+                credentials:'include'
+
+            }
+        );
+
+        const data= await response.json();
+        console.log("Logout status:", response.status);
+        console.log("Logout response:", data);
+        if(!response.ok){
+            throw new Error(data.msg||"logout failed")
+        }
+        alert("Logout successful!");
+        window.location.href='../auth/auth.html';
+    } catch (error) {
+        console.error("Logout error:", error);
+       alert(error.message || "Unable to logout. Please try again.");
+    }
 });
