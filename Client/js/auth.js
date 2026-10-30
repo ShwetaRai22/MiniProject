@@ -83,5 +83,6 @@ adminLoginForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     alert("Admin login submitted!");
-    window.location.href = "../Admin/dashboard.html";
+    window.location.href = "../Admin/admin-dashboard.html";
+
 });

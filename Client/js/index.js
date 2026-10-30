@@ -51,4 +51,3 @@ navLinks.forEach(function (link) {
         link.classList.add("active");
     });
 });
-
