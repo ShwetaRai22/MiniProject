@@ -10,7 +10,7 @@ const authRouter=require('./routes/auth');
 const studentRouter=require('./routes/student');
 
 app.use(cors(
-    {origin:"https://legendary-space-couscous-4qwjv65pj5j9hgv4-5501.app.github.dev",
+    {origin:["https://legendary-space-couscous-4qwjv65pj5j9hgv4-5501.app.github.dev","https://shwetarai22.github.io"],
     credentials:true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, ".."), {
     index: "index.html"
 }));
 
+app.set("trust proxy", 1);
 app.use(session({
     name:"s_ID",
     secret:process.env.SESSION_SECRET_CODE,
@@ -30,8 +31,8 @@ app.use(session({
     saveUninitialized:false,
     cookie:{
         httpOnly:true,
-        secure:false,
-        sameSite:"lax",
+        secure:true,
+        sameSite:"none",
         // maxAge:60*60*1000 //1hrs
     }
 }));
