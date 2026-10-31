@@ -16,11 +16,25 @@ const submitModal = document.getElementById("submitModal");
 
 const cancelSubmit = document.getElementById("cancelSubmit");
 const confirmSubmit = document.getElementById("confirmSubmit");
+const resultModal = document.getElementById("resultModal");
 
+const resultScore = document.getElementById("resultScore");
+const resultPercentage = document.getElementById("resultPercentage");
+const resultStatus = document.getElementById("resultStatus");
+
+const resultCorrect = document.getElementById("resultCorrect");
+const resultIncorrect = document.getElementById("resultIncorrect");
+const resultUnanswered = document.getElementById("resultUnanswered");
+const resultTotal = document.getElementById("resultTotal");
+
+const answerReviewContainer =
+    document.getElementById("answerReviewContainer");
+
+const resultDone = document.getElementById("resultDone");
 let currentQuestion = 0;
 let remainingTime = 30 * 60;
 let timerInterval;
-
+let examSubmitted = false;
 
 // Sample Questions
 
@@ -34,7 +48,8 @@ const questions = [
             "JavaScript",
             "Python"
         ],
-        marks: 1
+        marks: 1,
+        correctAnswer:1
     },
 
     {
@@ -45,7 +60,8 @@ const questions = [
             "<a>",
             "<hyperlink>"
         ],
-        marks: 1
+        marks: 1,
+        correctAnswer: 2
     },
 
     {
@@ -56,7 +72,8 @@ const questions = [
             "color",
             "text-decoration"
         ],
-        marks: 1
+        marks: 1,
+     correctAnswer: 2
     },
 
     {
@@ -67,7 +84,8 @@ const questions = [
             "int",
             "string"
         ],
-        marks: 1
+        marks: 1,
+         correctAnswer: 0
     },
 
     {
@@ -78,7 +96,8 @@ const questions = [
             "##",
             "**"
         ],
-        marks: 1
+        marks: 1,
+         correctAnswer: 1
     },
 
     {
@@ -89,7 +108,8 @@ const questions = [
             "src",
             "alt"
         ],
-        marks: 1
+        marks: 1,
+         correctAnswer: 2
     },
 
     {
@@ -100,7 +120,8 @@ const questions = [
             "Float",
             "Position"
         ],
-        marks: 1
+        marks: 1,
+         correctAnswer: 1
     },
 
     {
@@ -111,7 +132,8 @@ const questions = [
             "queryAll()",
             "selectId()"
         ],
-        marks: 1
+        marks: 1,
+         correctAnswer: 0
     },
 
     {
@@ -122,7 +144,8 @@ const questions = [
             "Cascading Style Sheets",
             "Colorful Style Sheets"
         ],
-        marks: 1
+        marks: 1,
+         correctAnswer: 2
     },
 
     {
@@ -133,7 +156,8 @@ const questions = [
             "<li>",
             "<list>"
         ],
-        marks: 1
+        marks: 1,
+         correctAnswer: 1
     }
 
 ];
@@ -301,9 +325,6 @@ function startTimer() {
         if (remainingTime <= 0) {
 
             clearInterval(timerInterval);
-
-            alert("Time is over! Your examination will be submitted.");
-
             finishExam();
         }
 
@@ -365,26 +386,113 @@ confirmSubmit.addEventListener("click", () => {
 
 // Finish Examination
 
+
 function finishExam() {
+
+    // Prevent the exam from being submitted more than once
+    if (examSubmitted) return;
+
+    examSubmitted = true;
 
     clearInterval(timerInterval);
 
     submitModal.hidden = true;
 
-    const answered = answers.filter(
-        answer => answer !== null
-    ).length;
+    let correct = 0;
+    let incorrect = 0;
+    let unanswered = 0;
+    let obtainedMarks = 0;
 
-    alert(
-        `Examination submitted successfully!\n\n` +
-        `Total Questions: ${questions.length}\n` +
-        `Answered: ${answered}\n` +
-        `Unanswered: ${questions.length - answered}`
+    answerReviewContainer.innerHTML = "";
+
+    questions.forEach((question, index) => {
+
+        const selectedAnswer = answers[index];
+        const correctAnswer = question.correctAnswer;
+
+        let status = "";
+
+        if (selectedAnswer === null) {
+            unanswered++;
+            status = "Unanswered";
+        }
+        else if (selectedAnswer === correctAnswer) {
+            correct++;
+            obtainedMarks += question.marks;
+            status = "Correct";
+        }
+        else {
+            incorrect++;
+            status = "Incorrect";
+        }
+
+        const reviewItem = document.createElement("div");
+        reviewItem.className = "reviewItem";
+
+        const questionHeading = document.createElement("h4");
+        questionHeading.textContent =
+            `Question ${index + 1}: ${question.question}`;
+
+        const selectedText = document.createElement("p");
+        selectedText.textContent =
+            `Your Answer: ${
+                selectedAnswer === null
+                    ? "Not Answered"
+                    : question.options[selectedAnswer]
+            }`;
+
+        const correctText = document.createElement("p");
+        correctText.textContent =
+            `Correct Answer: ${question.options[correctAnswer]}`;
+
+        const statusText = document.createElement("strong");
+        statusText.textContent = status;
+
+        statusText.className =
+            status.toLowerCase();
+
+        reviewItem.append(
+            questionHeading,
+            selectedText,
+            correctText,
+            statusText
+        );
+
+        answerReviewContainer.appendChild(reviewItem);
+
+    });
+
+    const totalMarks = questions.reduce(
+        (total, question) => total + question.marks,
+        0
     );
 
-    // Backend submission and result saving will be connected later.
+    const percentage = totalMarks > 0
+        ? (obtainedMarks / totalMarks) * 100
+        : 0;
+
+    resultScore.textContent =
+        `${obtainedMarks} / ${totalMarks}`;
+
+    resultPercentage.textContent =
+        `${percentage.toFixed(2)}%`;
+
+    resultStatus.textContent =
+        percentage >= 40 ? "Passed" : "Failed";
+
+    resultCorrect.textContent = correct;
+    resultIncorrect.textContent = incorrect;
+    resultUnanswered.textContent = unanswered;
+    resultTotal.textContent = questions.length;
+
+    resultModal.hidden = false;
+
+    lucide.createIcons();
 }
 
+resultDone.addEventListener("click", () => {
+    window.location.href = "dashboard.html";
+});
 
 // Initial Setup
 
@@ -394,4 +502,3 @@ displayQuestion();
 
 startTimer();
 
-lucide.createIcons();

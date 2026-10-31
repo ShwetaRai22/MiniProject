@@ -142,6 +142,44 @@
 
     </div>
 
+    
+<!-- Result Popup -->
+<div class="modalOverlay" id="resultModal" hidden>
+    <div class="modalBox resultModalBox">
+
+        <div class="modalIcon">
+            <i data-lucide="award"></i>
+        </div>
+
+        <h2>Examination Result</h2>
+        <p>Your examination has been submitted successfully!</p>
+
+        <div class="resultSummary">
+            <h1 id="resultScore">0 / 0</h1>
+            <span id="resultPercentage">0%</span>
+            <h3 id="resultStatus">Result</h3>
+        </div>
+
+        <div class="resultStats">
+            <p>Correct Answers: <strong id="resultCorrect">0</strong></p>
+            <p>Incorrect Answers: <strong id="resultIncorrect">0</strong></p>
+            <p>Unanswered: <strong id="resultUnanswered">0</strong></p>
+            <p>Total Questions: <strong id="resultTotal">0</strong></p>
+        </div>
+
+        <div class="answerReview">
+            <h3>Answer Review</h3>
+            <div id="answerReviewContainer"></div>
+        </div>
+
+        <div class="modalActions">
+            <button type="button" id="resultDone" class="confirmBtn">
+                Back to Dashboard
+            </button>
+        </div>
+
+    </div>
+</div>
 
     <script src="../js/exam.js"></script>
 

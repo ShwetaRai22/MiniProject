@@ -431,6 +431,87 @@ body {
     background: #11776F;
 }
 
+.resultModalBox {
+    max-width: 650px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.resultSummary {
+    text-align: center;
+    background: #DDF1EB;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.resultSummary h1 {
+    color: #168C83;
+    font-size: 32px;
+    margin: 0;
+}
+
+.resultSummary span {
+    color: #52615E;
+}
+
+.resultSummary h3 {
+    color: #168C83;
+    margin-bottom: 0;
+}
+
+.resultStats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.resultStats p {
+    background: #F5F7F6;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.answerReview {
+    margin-top: 20px;
+}
+
+.reviewItem {
+    border: 1px solid #E1E9E6;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 12px 0;
+}
+
+.reviewItem h4 {
+    margin: 0 0 12px;
+}
+
+.reviewItem p {
+    margin: 8px 0;
+    color: #52615E;
+}
+
+.reviewItem .correct {
+    color: #168C83;
+}
+
+.reviewItem .incorrect {
+    color: #D64545;
+}
+
+.reviewItem .unanswered {
+    color: #B7791F;
+}
+
+@media (max-width: 500px) {
+    .resultStats {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* Responsive */
 
