@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Exam | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/create-exams.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+
+        <div class="logo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+            <span class="adminLabel">ADMIN</span>
+        </div>
+
+        <div class="navLinks">
+
+            <a href="admin-dashboard.html">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+
+            <a href="manage-exams.html" class="active">
+                <i data-lucide="file-text"></i>
+                Manage Exams
+            </a>
+
+            <a href="manage-students.html">
+                <i data-lucide="users"></i>
+                Students
+            </a>
+
+            <a href="admin-result.html">
+                <i data-lucide="chart-no-axes-column"></i>
+                Results
+            </a>
+
+        </div>
+
+        <a href="adminprofile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+
+    </nav>
+
+
+    <!-- Create Exam Page -->
+    <main id="createExamPage">
+
+        <!-- Page Heading -->
+        <section id="pageHeading">
+
+            <div>
+                <p class="headingText">EXAM MANAGEMENT</p>
+
+                <h1>Create New Exam</h1>
+
+                <p class="headingDescription">
+                    Set up a new examination by providing its details, schedule and evaluation criteria.
+                </p>
+            </div>
+
+            <div class="headingIcon">
+                <i data-lucide="file-plus-2"></i>
+            </div>
+
+        </section>
+
+
+        <!-- Exam Form -->
+        <form id="examForm">
+
+
+            <!-- Basic Information -->
+            <section class="formSection">
+
+                <div class="sectionHeading">
+
+                    <div class="sectionIcon">
+                        <i data-lucide="file-text"></i>
+                    </div>
+
+                    <div>
+                        <h2>Basic Information</h2>
+                        <p>Enter the basic details of the examination</p>
+                    </div>
+
+                </div>
+
+
+                <div class="formGrid">
+
+                    <div class="formGroup">
+                        <label for="examTitle">Exam Title</label>
+
+                        <input type="text" id="examTitle"
+                            placeholder="Enter exam title" required>
+                    </div>
+
+
+                    <div class="formGroup">
+                        <label for="subject">Subject</label>
+
+                        <input type="text" id="subject"
+                            placeholder="Enter subject name" required>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- Exam Schedule -->
+            <section class="formSection">
+
+                <div class="sectionHeading">
+
+                    <div class="sectionIcon scheduleIcon">
+                        <i data-lucide="calendar-clock"></i>
+                    </div>
+
+                    <div>
+                        <h2>Exam Schedule</h2>
+                        <p>Set the date, timing and duration of the examination</p>
+                    </div>
+
+                </div>
+
+
+                <div class="formGrid">
+
+                    <div class="formGroup">
+                        <label for="examDate">Exam Date</label>
+
+                        <input type="date" id="examDate" required>
+                    </div>
+
+
+                    <div class="formGroup">
+                        <label for="duration">Duration (Minutes)</label>
+
+                        <input type="number" id="duration"
+                            min="1" placeholder="e.g. 60" required>
+                    </div>
+
+
+                    <div class="formGroup">
+                        <label for="startTime">Start Time</label>
+
+                        <input type="time" id="startTime" required>
+                    </div>
+
+
+                    <div class="formGroup">
+                        <label for="endTime">End Time</label>
+
+                        <input type="time" id="endTime" required>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Marks and Evaluation -->
+            <section class="formSection">
+
+                <div class="sectionHeading">
+
+                    <div class="sectionIcon marksIcon">
+                        <i data-lucide="clipboard-check"></i>
+                    </div>
+
+                    <div>
+                        <h2>Marks & Evaluation</h2>
+                        <p>Define the marking and passing criteria</p>
+                    </div>
+
+                </div>
+
+
+                <div class="formGrid">
+
+                    <div class="formGroup">
+                        <label for="totalMarks">Total Marks</label>
+
+                        <input type="number" id="totalMarks"
+                            min="1" placeholder="e.g. 100" required>
+                    </div>
+
+
+                    <div class="formGroup">
+                        <label for="passingMarks">Passing Marks</label>
+
+                        <input type="number" id="passingMarks"
+                            min="0" placeholder="e.g. 40" required>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Form Actions -->
+            <section id="formActions">
+
+                <button type="reset" class="resetBtn">
+                    <i data-lucide="rotate-ccw"></i>
+                    Reset
+                </button>
+
+                <button type="submit" class="createBtn">
+                    <i data-lucide="plus-circle"></i>
+                    Create Exam
+                </button>
+
+            </section>
+
+
+        </form>
+
+    </main>
+
+
+    <script src="../js/create-exams.js"></script>
+
+</body>
+</html>

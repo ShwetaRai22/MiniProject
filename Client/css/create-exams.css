@@ -1,0 +1,461 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F5F7F6;
+    color: #202B2C;
+}
+
+
+/* Navbar */
+#navg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 80px;
+    padding: 0 5%;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E1E9E6;
+    box-shadow: 0 3px 12px #202B2C12;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.logo h3 {
+    color: #202B2C;
+    font-size: 1.25rem;
+}
+
+.adminLabel {
+    padding: 4px 7px;
+    background: #DDF1EB;
+    color: #168C83;
+    border-radius: 5px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+}
+
+.navLinks a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #687675;
+    font-size: 0.87rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.navLinks a:hover,
+.navLinks a.active {
+    color: #168C83;
+}
+
+.navLinks i {
+    width: 21px;
+    height: 21px;
+}
+
+.profileIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border: 2px solid #168C83;
+    border-radius: 50%;
+    color: #202B2C;
+    background: #E4F5F0;
+}
+
+.profileIcon i {
+    width: 25px;
+    height: 25px;
+}
+
+
+/* Main Create Exam Page */
+#createExamPage {
+    padding: 35px 5%;
+    min-height: calc(100vh - 80px);
+}
+
+
+/* Page Heading */
+#pageHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 27px 30px;
+    margin-bottom: 28px;
+    background: linear-gradient(120deg, #DDF1EB, #EDF7F3, #F5FAF8);
+    border: 1px solid #D9EBE4;
+    border-radius: 18px;
+}
+
+.headingText {
+    color: #168C83;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+#pageHeading h1 {
+    color: #202B2C;
+    font-size: 1.8rem;
+    line-height: 1.4;
+}
+
+.headingDescription {
+    color: #71807D;
+    font-size: 0.92rem;
+    margin-top: 8px;
+}
+
+.headingIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    height: 85px;
+    flex-shrink: 0;
+    background: #FFFFFF;
+    border: 1px solid #CDE8DF;
+    border-radius: 22px;
+    color: #168C83;
+}
+
+.headingIcon i {
+    width: 43px;
+    height: 43px;
+}
+
+
+/* Form Sections */
+.formSection {
+    padding: 27px 30px;
+    margin-bottom: 22px;
+    background: #FFFFFF;
+    border: 1px solid #E5ECE8;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px #202B2C08;
+}
+
+
+/* Section Headings */
+.sectionHeading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #EAF0ED;
+}
+
+.sectionIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background: #DDF1EB;
+    color: #168C83;
+    border-radius: 12px;
+}
+
+.sectionIcon i {
+    width: 25px;
+    height: 25px;
+}
+
+.scheduleIcon {
+    background: #E6EBF8;
+    color: #5267A8;
+}
+
+.marksIcon {
+    background: #FFF1D9;
+    color: #BD851A;
+}
+
+.sectionHeading h2 {
+    color: #202B2C;
+    font-size: 1.15rem;
+}
+
+.sectionHeading p {
+    color: #71807D;
+    font-size: 0.82rem;
+    margin-top: 4px;
+}
+
+
+/* Form Grid */
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 23px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.formGroup label {
+    color: #40504E;
+    font-size: 0.87rem;
+    font-weight: 600;
+}
+
+.formGroup input,
+.formGroup textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #DCE6E1;
+    border-radius: 8px;
+    outline: none;
+    background: #FFFFFF;
+    color: #40504E;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    transition: 0.3s ease;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    border-color: #168C83;
+    box-shadow: 0 0 0 3px #168C8318;
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+    color: #A0ADAA;
+}
+
+.formGroup textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+
+/* Form Actions */
+#formActions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 13px;
+    margin-top: 25px;
+}
+
+#formActions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.87rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#formActions button i {
+    width: 18px;
+    height: 18px;
+}
+
+.resetBtn {
+    border: 1px solid #DCE6E1;
+    background: #FFFFFF;
+    color: #687675;
+}
+
+.resetBtn:hover {
+    background: #EDF3F0;
+    border-color: #BFCFC8;
+}
+
+.createBtn {
+    border: 1px solid #168C83;
+    background: #168C83;
+    color: #FFFFFF;
+}
+
+.createBtn:hover {
+    background: #11776F;
+    border-color: #11776F;
+    box-shadow: 0 5px 14px #168C8325;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+    #navg {
+        padding: 0 3%;
+    }
+
+    .navLinks {
+        gap: 13px;
+    }
+
+    .navLinks a {
+        font-size: 0.8rem;
+    }
+
+    #createExamPage {
+        padding: 30px 3%;
+    }
+}
+
+
+@media (max-width: 700px) {
+    #navg {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px 4%;
+    }
+
+    .navLinks {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .navLinks a {
+        font-size: 0.72rem;
+        gap: 5px;
+    }
+
+    .navLinks i {
+        width: 18px;
+        height: 18px;
+    }
+
+    .adminLabel {
+        font-size: 0.6rem;
+    }
+
+    #createExamPage {
+        padding: 25px 4%;
+    }
+
+    #pageHeading {
+        padding: 23px;
+    }
+
+    #pageHeading h1 {
+        font-size: 1.5rem;
+    }
+
+    .headingIcon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .headingIcon i {
+        width: 38px;
+        height: 38px;
+    }
+
+    .formSection {
+        padding: 22px;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .fullWidth {
+        grid-column: auto;
+    }
+}
+
+
+@media (max-width: 420px) {
+    .logo h3 {
+        font-size: 1.05rem;
+    }
+
+    #pageHeading {
+        padding: 18px;
+    }
+
+    #pageHeading h1 {
+        font-size: 1.25rem;
+    }
+
+    .headingDescription {
+        font-size: 0.82rem;
+    }
+
+    .headingIcon {
+        width: 55px;
+        height: 55px;
+        border-radius: 15px;
+    }
+
+    .headingIcon i {
+        width: 30px;
+        height: 30px;
+    }
+
+    .formSection {
+        padding: 18px;
+    }
+
+    .sectionHeading h2 {
+        font-size: 1.05rem;
+    }
+
+    .sectionHeading p {
+        font-size: 0.76rem;
+    }
+
+    #formActions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    #formActions button {
+        width: 100%;
+    }
+}
