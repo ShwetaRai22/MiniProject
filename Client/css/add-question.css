@@ -1,0 +1,454 @@
+
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F5F7F6;
+    color: #202B2C;
+}
+
+
+/* Navbar */
+#navg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 80px;
+    padding: 0 5%;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E1E9E6;
+    box-shadow: 0 3px 12px #202B2C12;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.logo h3 {
+    color: #202B2C;
+    font-size: 1.25rem;
+}
+
+.adminLabel {
+    padding: 4px 7px;
+    background: #DDF1EB;
+    color: #168C83;
+    border-radius: 5px;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+}
+
+.navLinks a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #687675;
+    font-size: .87rem;
+    font-weight: 500;
+    transition: .3s ease;
+}
+
+.navLinks a:hover,
+.navLinks a.active {
+    color: #168C83;
+}
+
+.navLinks i {
+    width: 21px;
+    height: 21px;
+}
+
+.profileIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border: 2px solid #168C83;
+    border-radius: 50%;
+    color: #202B2C;
+    background: #E4F5F0;
+}
+
+.profileIcon i {
+    width: 25px;
+    height: 25px;
+}
+
+
+/* Main Container */
+.mainContainer {
+    width: 90%;
+    max-width: 1100px;
+    margin: 35px auto;
+}
+
+
+/* Page Header */
+.pageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.pageHeader h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #202B2C;
+}
+
+.pageHeader p {
+    color: #71807D;
+    font-size: .9rem;
+    margin-top: 5px;
+}
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid #D8E5DF;
+    border-radius: 7px;
+    background: #FFFFFF;
+    color: #52615D;
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 500;
+    transition: .3s ease;
+}
+
+.backBtn:hover {
+    color: #168C83;
+    border-color: #168C83;
+}
+
+
+/* Question Container */
+.questionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+/* Exam Selection */
+.examSelection {
+    background: #FFFFFF;
+    padding: 23px 25px;
+    border: 1px solid #E5ECE8;
+    border-radius: 10px;
+}
+
+.examSelection label,
+.formGroup label,
+.optionGroup label {
+    display: block;
+    font-size: .88rem;
+    font-weight: 500;
+    color: #354441;
+    margin-bottom: 9px;
+}
+
+.examSelection select {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #DCE6E1;
+    border-radius: 6px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: .88rem;
+    color: #202B2C;
+    outline: none;
+}
+
+.examSelection select:focus,
+.formGroup input:focus,
+.formGroup textarea:focus,
+.optionInput input[type="text"]:focus {
+    border-color: #168C83;
+    box-shadow: 0 0 0 3px #168C8315;
+}
+
+.examSelection small {
+    display: block;
+    color: #899591;
+    font-size: .75rem;
+    margin-top: 8px;
+}
+
+
+/* Question Card */
+.questionCard {
+    background: #FFFFFF;
+    border: 1px solid #E5ECE8;
+    border-radius: 10px;
+    padding: 27px;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #EAF0ED;
+}
+
+.cardHeader h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.cardHeader p {
+    color: #899591;
+    font-size: .8rem;
+    margin-top: 4px;
+}
+
+.questionBadge {
+    padding: 5px 11px;
+    background: #DDF1EB;
+    color: #168C83;
+    border-radius: 5px;
+    font-size: .72rem;
+    font-weight: 600;
+}
+
+
+/* Form Groups */
+.formGroup {
+    margin-bottom: 25px;
+}
+
+.formGroup textarea,
+.formGroup input {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #DCE6E1;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: .87rem;
+    color: #202B2C;
+    outline: none;
+    transition: .3s ease;
+}
+
+.formGroup textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.formGroup textarea::placeholder,
+.formGroup input::placeholder,
+.optionInput input::placeholder {
+    color: #A0AAA6;
+}
+
+
+/* Answer Options */
+.optionsSection {
+    margin-bottom: 25px;
+}
+
+.sectionHeading {
+    margin-bottom: 18px;
+}
+
+.sectionHeading h3 {
+    font-size: .98rem;
+    font-weight: 600;
+}
+
+.sectionHeading p {
+    color: #899591;
+    font-size: .78rem;
+    margin-top: 4px;
+}
+
+.optionGroup {
+    margin-bottom: 17px;
+}
+
+.optionInput {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.optionInput input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #168C83;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.optionInput input[type="text"] {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #DCE6E1;
+    border-radius: 6px;
+    outline: none;
+    font-family: inherit;
+    font-size: .85rem;
+    transition: .3s ease;
+}
+
+
+/* Marks */
+.marksGroup {
+    max-width: 250px;
+    margin-bottom: 0;
+}
+
+
+/* Action Buttons */
+.formActions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.addBtn,
+.saveBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 12px 19px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: .85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.addBtn {
+    color: #168C83;
+    background: #FFFFFF;
+    border: 1px solid #168C83;
+}
+
+.addBtn:hover {
+    background: #DDF1EB;
+}
+
+.saveBtn {
+    color: #FFFFFF;
+    background: #168C83;
+    border: 1px solid #168C83;
+}
+
+.saveBtn:hover {
+    background: #11756E;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+    #navg {
+        padding: 0 3%;
+    }
+
+    .navLinks {
+        gap: 14px;
+    }
+}
+
+@media (max-width: 700px) {
+    #navg {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 13px 4%;
+    }
+
+    .navLinks {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .navLinks a {
+        font-size: .75rem;
+        gap: 5px;
+    }
+
+    .navLinks i {
+        width: 17px;
+        height: 17px;
+    }
+
+    .mainContainer {
+        width: 92%;
+        margin: 25px auto;
+    }
+
+    .pageHeader {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .questionCard {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 420px) {
+    .logo img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .logo h3 {
+        font-size: 1.05rem;
+    }
+
+    .navLinks a {
+        flex-direction: column;
+        font-size: .68rem;
+    }
+
+    .formActions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .addBtn,
+    .saveBtn {
+        width: 100%;
+    }
+
+    .cardHeader h2 {
+        font-size: 1rem;
+    }
+}

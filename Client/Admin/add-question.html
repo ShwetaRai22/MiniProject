@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/add-question.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+        <div class="logo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+            <span class="adminLabel">ADMIN</span>
+        </div>
+
+        <div class="navLinks">
+            <a href="admin-dashboard.html">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+
+            <a href="manage-exams.html" class="active">
+                <i data-lucide="file-text"></i> Manage Exams
+            </a>
+
+            <a href="manage-students.html">
+                <i data-lucide="users"></i> Students
+            </a>
+
+            <a href="admin-result.html">
+                <i data-lucide="chart-no-axes-column"></i> Results
+            </a>
+        </div>
+
+        <a href="adminprofile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="mainContainer">
+
+        <!-- Page Heading -->
+        <section class="pageHeader">
+            <div>
+                <h1>Add Questions</h1>
+                <p>Add MCQ questions to your selected examination.</p>
+            </div>
+
+            <a href="manage-exams.html" class="backBtn">
+                <i data-lucide="arrow-left"></i>
+                Back to Exams
+            </a>
+        </section>
+
+
+        <!-- Question Form -->
+        <section class="questionContainer">
+
+            <!-- Exam Selection -->
+            <div class="examSelection">
+                <label for="examSelect">Select Examination</label>
+
+               <select id="examSelect" required>
+    <option value="">Choose an examination</option>
+    <option value="1">Sample Examination</option>
+</select>
+
+                <small>Select the exam to which you want to add questions.</small>
+            </div>
+
+
+            <!-- Question Card -->
+            <div class="questionCard">
+
+                <div class="cardHeader">
+                    <div>
+                        <h2>Question 1</h2>
+                        <p>Enter the question and its answer options.</p>
+                    </div>
+
+                    <span class="questionBadge">MCQ</span>
+                </div>
+
+
+                <!-- Question Text -->
+                <div class="formGroup">
+                    <label for="questionText">Question</label>
+
+                    <textarea
+                        id="questionText"
+                        placeholder="Enter your question here..."
+                        rows="4"
+                        required
+                    ></textarea>
+                </div>
+
+
+                <!-- Answer Options -->
+                <div class="optionsSection">
+                    <div class="sectionHeading">
+                        <h3>Answer Options</h3>
+                        <p>Select the radio button next to the correct answer.</p>
+                    </div>
+
+                    <div class="optionGroup">
+                        <label for="optionA">Option A</label>
+                        <div class="optionInput">
+                            <input type="radio" name="correctAnswer" value="A" required>
+                            <input type="text" id="optionA" placeholder="Enter option A" required>
+                        </div>
+                    </div>
+
+                    <div class="optionGroup">
+                        <label for="optionB">Option B</label>
+                        <div class="optionInput">
+                            <input type="radio" name="correctAnswer" value="B">
+                            <input type="text" id="optionB" placeholder="Enter option B" required>
+                        </div>
+                    </div>
+
+                    <div class="optionGroup">
+                        <label for="optionC">Option C</label>
+                        <div class="optionInput">
+                            <input type="radio" name="correctAnswer" value="C">
+                            <input type="text" id="optionC" placeholder="Enter option C" required>
+                        </div>
+                    </div>
+
+                    <div class="optionGroup">
+                        <label for="optionD">Option D</label>
+                        <div class="optionInput">
+                            <input type="radio" name="correctAnswer" value="D">
+                            <input type="text" id="optionD" placeholder="Enter option D" required>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Marks -->
+                <div class="formGroup marksGroup">
+                    <label for="questionMarks">Marks for this question</label>
+
+                    <input
+                        type="number"
+                        id="questionMarks"
+                        min="1"
+                        placeholder="Enter marks"
+                        required
+                    >
+                </div>
+
+            </div>
+
+
+            <!-- Action Buttons -->
+            <div class="formActions">
+                <button type="button" class="addBtn" id="addQuestionBtn">
+                    <i data-lucide="plus"></i>
+                    Add Another Question
+                </button>
+
+                <button type="button" class="saveBtn" id="saveQuestionsBtn">
+                    <i data-lucide="save"></i>
+                    Save Questions
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="../js/add-question.js"></script>
+</body>
+</html>
