@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         
         const response = await fetch(
-            '/api/student/profile',
+            `${API_BASE_URL}/api/student/profile`,
             {
                 method: 'GET',
                 credentials: "include"

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded',async(req,res)=>{
     const studentId = document.getElementById("studentId");
     try {
         const response= await fetch(
-            "/api/student/dashboard",
+            `${API_BASE_URL}/api/student/dashboard`,
             {
                 method:"GET",
                 credentials:"include"

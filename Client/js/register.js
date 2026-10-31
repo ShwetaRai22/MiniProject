@@ -53,7 +53,7 @@ studentForm.addEventListener("submit", async function (event) {
 
     try {
         const response = await fetch(
-            "/api/auth/student/signup",
+            `${API_BASE_URL}/api/auth/student/signup`,
             {
                 method: "POST",
                 headers: {
