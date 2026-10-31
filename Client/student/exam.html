@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attempt Exam | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/exam.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <header class="examHeader">
+
+        <div class="examLogo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h2>ExamSphere</h2>
+        </div>
+
+        <div class="examTitle">
+            <h3>Programming Fundamentals</h3>
+            <p>Online Examination</p>
+        </div>
+
+        <div class="timerBox">
+            <i data-lucide="clock"></i>
+            <div>
+                <span>Time Remaining</span>
+                <h3 id="timer">30:00</h3>
+            </div>
+        </div>
+
+        <button type="button" class="submitBtn" id="submitExam">
+            Submit Exam
+        </button>
+
+    </header>
+
+
+    <main class="examContainer">
+
+        <section class="questionSection">
+
+            <div class="questionTop">
+                <h2 id="questionNumber">Question 1</h2>
+                <span id="questionMarks">1 Mark</span>
+            </div>
+
+            <div class="questionContent">
+
+                <h3 id="questionText">
+                    Loading question...
+                </h3>
+
+                <div class="optionsContainer" id="optionsContainer">
+                    <!-- Options added through JavaScript -->
+                </div>
+
+            </div>
+
+
+            <div class="questionActions">
+
+                <button type="button" id="previousBtn" class="previousBtn">
+                    <i data-lucide="arrow-left"></i>
+                    Previous
+                </button>
+
+                <button type="button" id="nextBtn" class="nextBtn">
+                    Next
+                    <i data-lucide="arrow-right"></i>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Question Navigation -->
+
+        <aside class="questionNavigation">
+
+            <h3>Questions</h3>
+
+            <p>Choose a question to navigate directly.</p>
+
+            <div class="questionGrid" id="questionGrid">
+                <!-- Numbered buttons added through JavaScript -->
+            </div>
+
+            <div class="navigationInfo">
+                <p>Total Questions: <strong id="totalQuestions">0</strong></p>
+                <p>Answered: <strong id="answeredQuestions">0</strong></p>
+            </div>
+
+        </aside>
+
+    </main>
+
+
+    <!-- Submit Confirmation Modal -->
+
+    <div class="modalOverlay" id="submitModal" hidden>
+
+        <div class="modalBox">
+
+            <div class="modalIcon">
+                <i data-lucide="file-check"></i>
+            </div>
+
+            <h2>Submit Examination?</h2>
+
+            <p>Are you sure you want to submit your examination?</p>
+
+            <div class="submissionInfo">
+                <p>Total Questions: <strong id="modalTotal">0</strong></p>
+                <p>Answered Questions: <strong id="modalAnswered">0</strong></p>
+                <p>Unanswered Questions: <strong id="modalUnanswered">0</strong></p>
+            </div>
+
+            <div class="modalActions">
+
+                <button type="button" id="cancelSubmit" class="cancelBtn">
+                    Go Back
+                </button>
+
+                <button type="button" id="confirmSubmit" class="confirmBtn">
+                    Confirm Submit
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/exam.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
