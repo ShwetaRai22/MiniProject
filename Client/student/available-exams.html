@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Exams | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/available-exams.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+
+        <div class="logo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+        </div>
+
+        <div class="navLinks">
+
+            <a href="dashboard.html">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+
+            <a href="available-exams.html" class="active">
+                <i data-lucide="file-text"></i>
+                Available Exams
+            </a>
+
+            <a href="result.html">
+                <i data-lucide="history"></i>
+                Results
+            </a>
+
+        </div>
+
+        <a href="profile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="examContainer">
+
+        <section class="pageHeading">
+            <div>
+                <h1>Available Exams</h1>
+                <p>Explore and participate in your scheduled examinations.</p>
+            </div>
+        </section>
+
+
+        <!-- Exam Filters -->
+        <section class="filterSection">
+
+            <div class="filterButtons">
+                <button class="filterBtn active" data-filter="all">All Exams</button>
+                <button class="filterBtn" data-filter="live">Live</button>
+                <button class="filterBtn" data-filter="upcoming">Upcoming</button>
+                <button class="filterBtn" data-filter="completed">Completed</button>
+            </div>
+
+        </section>
+
+
+        <!-- Exam Cards -->
+        <section class="examGrid" id="examGrid">
+
+            <!-- Cards will be generated using JavaScript -->
+
+        </section>
+
+        <p id="noExams" class="noExams" hidden>
+            No exams available in this category.
+        </p>
+
+    </main>
+
+
+    <script src="../js/available-exams.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
