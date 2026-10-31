@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Results | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/admin-result.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+        <div class="logo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+            <span class="adminLabel">ADMIN</span>
+        </div>
+
+        <div class="navLinks">
+            <a href="admin-dashboard.html">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+
+            <a href="create-exams.html">
+                <i data-lucide="plus-circle"></i> Create Exam
+            </a>
+
+            <a href="manage-exams.html">
+                <i data-lucide="file-text"></i> Manage Exams
+            </a>
+
+            <a href="manage-students.html">
+                <i data-lucide="users"></i> Students
+            </a>
+
+            <a href="admin-result.html" class="active">
+                <i data-lucide="chart-no-axes-column"></i> Results
+            </a>
+        </div>
+
+        <a href="adminprofile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+    </nav>
+
+
+    <main class="resultsContainer">
+
+        <!-- Page Heading -->
+        <section class="pageHeader">
+            <div>
+                <h1>Student Results</h1>
+                <p>View and monitor examination performance of students.</p>
+            </div>
+        </section>
+
+
+        <!-- Summary Cards -->
+        <section class="summaryCards">
+
+            <div class="summaryCard">
+                <div class="cardIcon totalIcon">
+                    <i data-lucide="clipboard-list"></i>
+                </div>
+                <div>
+                    <p>Total Attempts</p>
+                    <h2 id="totalAttempts">0</h2>
+                </div>
+            </div>
+
+            <div class="summaryCard">
+                <div class="cardIcon completedIcon">
+                    <i data-lucide="check-circle"></i>
+                </div>
+                <div>
+                    <p>Completed</p>
+                    <h2 id="completedAttempts">0</h2>
+                </div>
+            </div>
+
+            <div class="summaryCard">
+                <div class="cardIcon progressIcon">
+                    <i data-lucide="clock"></i>
+                </div>
+                <div>
+                    <p>In Progress</p>
+                    <h2 id="progressAttempts">0</h2>
+                </div>
+            </div>
+
+            <div class="summaryCard">
+                <div class="cardIcon averageIcon">
+                    <i data-lucide="chart-no-axes-combined"></i>
+                </div>
+                <div>
+                    <p>Average Score</p>
+                    <h2 id="averageScore">0%</h2>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Results Section -->
+        <section class="resultsSection">
+
+            <div class="sectionHeading">
+                <div>
+                    <h2>Examination Results</h2>
+                    <p>Complete list of student examination attempts.</p>
+                </div>
+            </div>
+
+
+            <!-- Search and Filters -->
+            <div class="filterSection">
+
+                <div class="searchBox">
+                    <i data-lucide="search"></i>
+                    <input
+                        type="text"
+                        id="searchResult"
+                        placeholder="Search student, ID or exam..."
+                    >
+                </div>
+
+                <select id="examFilter">
+                    <option value="all">All Exams</option>
+                </select>
+
+                <select id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="completed">Completed</option>
+                    <option value="in-progress">In Progress</option>
+                </select>
+
+            </div>
+
+
+            <!-- Results Table -->
+            <div class="tableContainer">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Exam</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="resultsTableBody">
+                        <!-- Data added through JavaScript -->
+                    </tbody>
+                </table>
+
+                <p id="noResultsMessage" hidden>
+                    No examination results found.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Result Details Modal -->
+    <div class="modalOverlay" id="resultModal" hidden>
+
+        <div class="modalBox">
+
+            <div class="modalHeader">
+                <div>
+                    <h2>Result Details</h2>
+                    <p>Detailed examination performance</p>
+                </div>
+
+                <button id="closeModal" class="closeBtn" type="button">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div id="resultDetails" class="resultDetails">
+                <!-- Details added through JavaScript -->
+            </div>
+
+            <div class="modalFooter">
+                <button type="button" id="closeModalBottom" class="secondaryBtn">
+                    Close
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/admin-result.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>
