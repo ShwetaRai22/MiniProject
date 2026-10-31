@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Results | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/student-result.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+
+        <div class="logo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+        </div>
+
+        <div class="navLinks">
+
+            <a href="dashboard.html">
+                <i data-lucide="layout-dashboard"></i>
+                Dashboard
+            </a>
+
+            <a href="available-exams.html">
+                <i data-lucide="file-text"></i>
+                Available Exams
+            </a>
+
+            <a href="result.html" class="active">
+                <i data-lucide="history"></i>
+                Results
+            </a>
+
+        </div>
+
+        <a href="profile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="resultContainer">
+
+        <!-- Page Heading -->
+        <section class="pageHeading">
+
+            <div>
+                <h1>My Results</h1>
+                <p>Track your examination performance and results.</p>
+            </div>
+
+        </section>
+
+
+        <!-- Result Summary -->
+        <section class="summarySection">
+
+            <div class="summaryCard">
+
+                <div class="summaryIcon totalIcon">
+                    <i data-lucide="clipboard-list"></i>
+                </div>
+
+                <div>
+                    <h2 id="totalExams">0</h2>
+                    <p>Total Results</p>
+                </div>
+
+            </div>
+
+
+            <div class="summaryCard">
+
+                <div class="summaryIcon passIcon">
+                    <i data-lucide="check-circle"></i>
+                </div>
+
+                <div>
+                    <h2 id="passedExams">0</h2>
+                    <p>Passed</p>
+                </div>
+
+            </div>
+
+
+            <div class="summaryCard">
+
+                <div class="summaryIcon failIcon">
+                    <i data-lucide="x-circle"></i>
+                </div>
+
+                <div>
+                    <h2 id="failedExams">0</h2>
+                    <p>Failed</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Filters -->
+        <section class="filterSection">
+
+            <div class="sectionHeading">
+                <h2>Examination History</h2>
+            </div>
+
+            <div class="filterButtons">
+
+                <button class="filterBtn active" data-filter="all">
+                    All Results
+                </button>
+
+                <button class="filterBtn" data-filter="passed">
+                    Passed
+                </button>
+
+                <button class="filterBtn" data-filter="failed">
+                    Failed
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Result Cards -->
+        <section class="resultGrid" id="resultGrid">
+
+            <!-- Result cards generated using JavaScript -->
+
+        </section>
+
+
+        <!-- Empty State -->
+        <p id="noResults" class="noResults" hidden>
+            No results available in this category.
+        </p>
+
+    </main>
+
+
+    <script src="../js/student-result.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+
+</html>
