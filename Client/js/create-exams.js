@@ -84,5 +84,5 @@ examForm.addEventListener("submit", (event) => {
     console.log("Exam Details:", examData);
 
     alert("Exam details validated successfully! Backend connection is pending.");
-
+    window.location.href = "add-question.html";
 });
