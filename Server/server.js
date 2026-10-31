@@ -10,7 +10,8 @@ const authRouter=require('./routes/auth');
 const studentRouter=require('./routes/student');
 
 app.use(cors(
-    {origin:["https://legendary-space-couscous-4qwjv65pj5j9hgv4-5501.app.github.dev","https://shwetarai22.github.io"],
+    {origin:["https://legendary-space-couscous-4qwjv65pj5j9hgv4-5501.app.github.dev","https://shwetarai22.github.io", "http://127.0.0.1:5501",
+    "http://localhost:5500"],
     credentials:true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
