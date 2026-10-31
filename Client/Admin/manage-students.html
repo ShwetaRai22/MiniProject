@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/manage-students.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+        <div class="logo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+            <span class="adminLabel">ADMIN</span>
+        </div>
+
+        <div class="navLinks">
+            <a href="admin-dashboard.html">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+
+            <a href="manage-exams.html">
+                <i data-lucide="file-text"></i> Manage Exams
+            </a>
+
+            <a href="manage-students.html" class="active">
+                <i data-lucide="users"></i> Students
+            </a>
+
+            <a href="admin-result.html">
+                <i data-lucide="chart-no-axes-column"></i> Results
+            </a>
+        </div>
+
+        <a href="adminprofile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="mainContainer">
+
+        <!-- Page Header -->
+        <section class="pageHeader">
+            <div>
+                <h1>Manage Students</h1>
+                <p>View and manage registered student accounts.</p>
+            </div>
+        </section>
+
+
+        <!-- Student Summary -->
+        <section class="summaryCard">
+            <div class="summaryIcon">
+                <i data-lucide="users"></i>
+            </div>
+
+            <div>
+                <p>Total Registered Students</p>
+                <h2 id="totalStudents">3</h2>
+            </div>
+        </section>
+
+
+        <!-- Students Section -->
+        <section class="studentsSection">
+
+            <div class="sectionHeader">
+                <div>
+                    <h2>Student Records</h2>
+                    <p>View student information and account details.</p>
+                </div>
+            </div>
+
+
+            <!-- Search Bar -->
+            <div class="searchContainer">
+                <i data-lucide="search"></i>
+
+                <input
+                    type="text"
+                    id="searchStudent"
+                    placeholder="Search by name, email or student ID..."
+                >
+            </div>
+
+
+            <!-- Students Table -->
+            <div class="tableContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>Registration Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="studentTableBody">
+
+                        <tr>
+                            <td>#1001</td>
+                            <td>Rahul Sharma</td>
+                            <td>rahul@example.com</td>
+                            <td>9876543210</td>
+                            <td>12 Oct 2026</td>
+                            <td>
+                                <div class="actionButtons">
+                                    <button class="viewBtn" title="View Details">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+
+                                    <button class="deleteBtn" title="Delete Student">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>#1002</td>
+                            <td>Priya Verma</td>
+                            <td>priya@example.com</td>
+                            <td>9876501234</td>
+                            <td>15 Oct 2026</td>
+                            <td>
+                                <div class="actionButtons">
+                                    <button class="viewBtn" title="View Details">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+
+                                    <button class="deleteBtn" title="Delete Student">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>#1003</td>
+                            <td>Aman Gupta</td>
+                            <td>aman@example.com</td>
+                            <td>9876512340</td>
+                            <td>18 Oct 2026</td>
+                            <td>
+                                <div class="actionButtons">
+                                    <button class="viewBtn" title="View Details">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+
+                                    <button class="deleteBtn" title="Delete Student">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <p id="noStudents" class="noStudents" hidden>
+                    No students found.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Student Details Modal -->
+    <div class="modalOverlay" id="studentModal">
+        <div class="modalBox">
+
+            <div class="modalHeader">
+                <h2>Student Details</h2>
+
+                <button id="closeModal" class="closeBtn">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="studentDetails">
+                <div>
+                    <span>Student ID</span>
+                    <p id="detailId"></p>
+                </div>
+
+                <div>
+                    <span>Student Name</span>
+                    <p id="detailName"></p>
+                </div>
+
+                <div>
+                    <span>Email Address</span>
+                    <p id="detailEmail"></p>
+                </div>
+
+                <div>
+                    <span>Contact Number</span>
+                    <p id="detailContact"></p>
+                </div>
+
+                <div>
+                    <span>Registration Date</span>
+                    <p id="detailDate"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="../js/manage-students.js"></script>
+</body>
+</html>
