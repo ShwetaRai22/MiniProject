@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Exams | ExamSphere</title>
+
+    <link rel="stylesheet" href="../css/manage-exams.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="navg">
+        <div class="logo">
+            <img src="../../images/icon.jpeg" alt="ExamSphere Logo">
+            <h3>ExamSphere</h3>
+            <span class="adminLabel">ADMIN</span>
+        </div>
+
+        <div class="navLinks">
+            <a href="admin-dashboard.html">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+
+            <a href="create-exams.html">
+                <i data-lucide="plus-circle"></i> Create Exam
+            </a>
+
+            <a href="manage-exams.html" class="active">
+                <i data-lucide="file-text"></i> Manage Exams
+            </a>
+
+            <a href="manage-students.html">
+                <i data-lucide="users"></i> Students
+            </a>
+
+            <a href="admin-result.html">
+                <i data-lucide="chart-no-axes-column"></i> Results
+            </a>
+        </div>
+
+        <a href="adminprofile.html" class="profileIcon">
+            <i data-lucide="circle-user-round"></i>
+        </a>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="mainContainer">
+
+        <!-- Page Heading -->
+        <section class="pageHeader">
+            <div>
+                <h1>Manage Exams</h1>
+                <p>Monitor, schedule and manage all your examinations.</p>
+            </div>
+
+            <a href="create-exams.html" class="createBtn">
+                <i data-lucide="plus"></i>
+                Create New Exam
+            </a>
+        </section>
+
+
+        <!-- Summary Cards -->
+        <section class="summaryCards">
+
+            <div class="summaryCard">
+                <div class="summaryIcon totalIcon">
+                    <i data-lucide="file-text"></i>
+                </div>
+                <div>
+                    <p>Total Exams</p>
+                    <h2 id="totalExams">0</h2>
+                </div>
+            </div>
+
+            <div class="summaryCard">
+                <div class="summaryIcon scheduledIcon">
+                    <i data-lucide="calendar-clock"></i>
+                </div>
+                <div>
+                    <p>Scheduled</p>
+                    <h2 id="scheduledExams">0</h2>
+                </div>
+            </div>
+
+            <div class="summaryCard">
+                <div class="summaryIcon liveIcon">
+                    <i data-lucide="radio"></i>
+                </div>
+                <div>
+                    <p>Live / In Progress</p>
+                    <h2 id="liveExams">0</h2>
+                </div>
+            </div>
+
+            <div class="summaryCard">
+                <div class="summaryIcon completedIcon">
+                    <i data-lucide="check-circle"></i>
+                </div>
+                <div>
+                    <p>Completed</p>
+                    <h2 id="completedExams">0</h2>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Exam Management Section -->
+        <section class="examSection">
+
+            <div class="sectionHeading">
+                <div>
+                    <h2>All Examinations</h2>
+                    <p>View and control the status of your examinations.</p>
+                </div>
+            </div>
+
+
+            <!-- Search and Filter -->
+            <div class="filterBar">
+
+                <div class="searchBox">
+                    <i data-lucide="search"></i>
+                    <input
+                        type="text"
+                        id="searchExam"
+                        placeholder="Search by exam title or subject..."
+                    >
+                </div>
+
+                <select id="statusFilter">
+                    <option value="all">All Statuses</option>
+                    <option value="draft">Draft</option>
+                    <option value="scheduled">Scheduled</option>
+                    <option value="live">Live</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+
+            </div>
+
+
+            <!-- Exams Table -->
+            <div class="tableContainer">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exam ID</th>
+                            <th>Exam Details</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="examTableBody">
+                        <!-- Exam records will be added here using JavaScript -->
+                    </tbody>
+                </table>
+
+                <p id="noExamsMessage" class="noDataMessage">
+                    No examinations found.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Exam Details Modal -->
+    <div class="modalOverlay" id="examModal">
+
+        <div class="modalContent">
+
+            <div class="modalHeader">
+                <h2>Exam Details</h2>
+                <button type="button" id="closeModal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div id="examDetails">
+                <!-- Exam details will appear here -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/manage-exams.js"></script>
+
+</body>
+</html>
