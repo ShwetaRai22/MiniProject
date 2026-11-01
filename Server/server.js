@@ -8,6 +8,7 @@ const session = require("express-session");
 
 const authRouter=require('./routes/auth');
 const studentRouter=require('./routes/student');
+const adminRouter=require('./routes/admin');
 
 app.use(cors(
     {origin:["https://legendary-space-couscous-4qwjv65pj5j9hgv4-5501.app.github.dev","https://shwetarai22.github.io", "http://127.0.0.1:5501",
@@ -40,6 +41,7 @@ app.use(session({
 
 app.use('/api/auth',authRouter);
 app.use('/api/student',studentRouter);
+app.use('/api/admin',adminRouter);
 
 
 
