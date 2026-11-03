@@ -147,4 +147,24 @@ const updateProfile = async (req, res) => {
     }
 }
 
-module.exports={displayDashboard, displayProfile,updateProfile};
+const adminLogout=(req,res) => {
+    req.session.destroy((error)=>{
+        if(error){
+            console.error("Logout error:",error);
+
+            return res.status(500).json({
+                success:false,
+                msg:"Unable to logout. Please try after some time."
+            });
+        }
+
+        res.clearCookie("s_ID");
+
+        return res.status(200).json({
+            success:true,
+            msg:"Logged out successfully."
+        });
+    });
+}
+
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout};

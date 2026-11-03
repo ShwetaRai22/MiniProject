@@ -3,7 +3,7 @@ const profileCard = document.getElementById("profileCard");
 const editButton = document.getElementById("editProfile");
 const saveButton = document.getElementById("saveProfile");
 const cancelButton = document.getElementById("cancelEdit");
-
+const logoutButton = document.getElementById("logOut");
 const usernameInput = document.getElementById("usernameInput");
 const emailInput = document.getElementById("emailInput");
 const contactInput = document.getElementById("contactInput");
@@ -104,12 +104,13 @@ saveButton.addEventListener('click', async () => {
                 })
             });
 
-        const data = await response.json();
+       
 
         if (response.status === 401) {
             window.location.href = "../auth/auth.html";
             return;
         }
+         const data = await response.json();
         if (!response.ok) {
             throw new Error(data.msg || data.message || "Unable to update profile.");
         }
@@ -151,4 +152,30 @@ cancelButton.addEventListener("click", () => {
     addressInput.value = oldAddress;
 
     profileCard.classList.remove("editMode");
+});
+
+logoutButton.addEventListener('click', async()=>{
+    console.log("button clicked");
+    try {
+        const response= await fetch(
+            `${API_BASE_URL}/api/admin/logout`,
+            {
+                method:'POST',
+                credentials:'include'
+
+            }
+        );
+
+        const data= await response.json();
+        console.log("Logout status:", response.status);
+        console.log("Logout response:", data);
+        if(!response.ok){
+            throw new Error(data.msg||"logout failed")
+        }
+        alert("Logout successful!");
+        window.location.href='../auth/auth.html';
+    } catch (error) {
+        console.error("Logout error:", error);
+       alert(error.message || "Unable to logout. Please try again.");
+    }
 });
