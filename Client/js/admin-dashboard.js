@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded',async(req,res)=>{
             }
         );
         const data=await response.json();
-        if(!response){
-            res.status(401).json({
-                success:false,
-                msg:"Unable to load dashboard."
-            });
+        if(!response.ok){
+            // res.status(401).json({
+            //     success:false,
+            //     msg:"Unable to load dashboard."
+            // });
             window.location.href="../auth/auth.html";
             return;
         }
