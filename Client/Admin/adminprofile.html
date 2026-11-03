@@ -70,8 +70,8 @@
                 </div>
 
                 <div>
-                    <h2 id="profileUsername">Admin Name</h2>
-                    <p>Admin ID: <span id="adminId">ADM001</span></p>
+                    <h2 id="profileUsername"></h2>
+                    <p>Admin ID: <span id="adminId"></span></p>
                     <span class="adminBadge">Administrator</span>
                 </div>
             </div>
@@ -96,7 +96,7 @@
 
                         <div class="infoContent">
                             <p>Username</p>
-                            <h3 class="viewValue">Admin Name</h3>
+                            <h3 class="viewValue profileUsername" ></h3>
                             <input type="text" id="usernameInput"
                                 class="editFields" value="Admin Name"
                                 placeholder="Enter username">
@@ -112,7 +112,7 @@
 
                         <div class="infoContent">
                             <p>Email Address</p>
-                            <h3 class="viewValue">admin@example.com</h3>
+                            <h3 class="viewValue" id="adminEmail"></h3>
                             <input type="email" id="emailInput"
                                 class="editFields" value="admin@example.com"
                                 placeholder="Enter email address">
@@ -128,7 +128,7 @@
 
                         <div class="infoContent">
                             <p>Contact Number</p>
-                            <h3 class="viewValue">9876543210</h3>
+                            <h3 class="viewValue" id="adminContact"></h3>
                             <input type="tel" id="contactInput"
                                 class="editFields" value="9876543210"
                                 placeholder="Enter contact number">
@@ -144,7 +144,7 @@
 
                         <div class="infoContent">
                             <p>Address</p>
-                            <h3 class="viewValue">Enter your address here</h3>
+                            <h3 class="viewValue" id="adminAddress"></h3>
                             <input type="text" id="addressInput"
                                 class="editFields"
                                 value="Enter your address here"
@@ -183,7 +183,7 @@
 
     </main>
 
-
+    <script src="../js/config.js"></script>
     <script src="../js/adminprofile.js"></script>
     <script>
         lucide.createIcons();

@@ -8,17 +8,61 @@ const usernameInput = document.getElementById("usernameInput");
 const emailInput = document.getElementById("emailInput");
 const contactInput = document.getElementById("contactInput");
 const addressInput = document.getElementById("addressInput");
-
+const adminId = document.getElementById("adminId");
 const viewValues = document.querySelectorAll(".viewValue");
 
-const profileUsername = document.getElementById("profileUsername");
+let oldUsername = "";
+let oldEmail = "";
+let oldContact = "";
+let oldAddress = "";
+document.addEventListener('DOMContentLoaded', async () => {
+   
+    try {
+        
+        const response = await fetch(
+            `${API_BASE_URL}/api/admin/profile`,
+            {
+                method: 'GET',
+                credentials: "include"
+            }
+        );
+    
+        const data = await response.json();
+        
+        if (response.status === 401) {
+            window.location.href = "../auth/auth.html";
+            return;
+        }
+        if (!response.ok) {
+            throw new Error(data.msg || data.message || "Unable to load profile.");
+        }
 
-let oldUsername = usernameInput.value;
-let oldEmail = emailInput.value;
-let oldContact = contactInput.value;
-let oldAddress = addressInput.value;
+        const admin = data.admin;
+        document.querySelectorAll(".profileUsername").forEach(element => {
+            element.textContent = admin.username;
+        });
+        adminId.textContent = `Admin ID: ADM00${admin.admin_id}`;
+        document.getElementById("adminContact").textContent = admin.contact;
+        document.getElementById("adminEmail").textContent = admin.email;
+        document.getElementById("adminAddress").textContent = admin.address;
 
+        usernameInput.value = admin.username;
+        emailInput.value = admin.email;
+        contactInput.value = admin.contact;
+        addressInput.value = admin.address;
 
+        saveOldValues();
+    } catch (error) {
+        console.error("Profile loading error:", error);
+        alert("Unable to load your profile. Please try again.");
+    }
+});
+function saveOldValues() {
+    oldUsername = usernameInput.value;
+    oldEmail = emailInput.value;
+    oldContact = contactInput.value;
+    oldAddress = addressInput.value;
+}
 // Edit Profile
 editButton.addEventListener("click", () => {
     profileCard.classList.add("editMode");
