@@ -97,7 +97,7 @@ saveButton.addEventListener('click', async () => {
     try {
         saveButton.disabled = true;
 
-        const response = await fetch('/api/student/profile',
+        const response = await fetch(`${API_BASE_URL}/api/student/profile`,
             {
                 method: 'PUT',
                 credentials: "include",
@@ -166,7 +166,7 @@ logoutButton.addEventListener('click', async()=>{
     console.log("button clicked");
     try {
         const response= await fetch(
-            '/api/student/logout',
+            `${API_BASE_URL}/api/student/logout`,
             {
                 method:'POST',
                 credentials:'include'

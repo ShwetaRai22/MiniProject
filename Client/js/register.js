@@ -89,28 +89,73 @@ studentForm.addEventListener("submit", async function (event) {
     }
 });
 
-adminForm.addEventListener("submit", function (event) {
+adminForm.addEventListener("submit", async function (event) {
     event.preventDefault();
-    if (adminUsername.value.trim() === "") {
-    alert("Please enter a username!");
-    return;
-}
-    if (!/^\d{10}$/.test(adminContact.value)) {
-    alert("Please enter a valid 10-digit contact number!");
-    return;
-}
-if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/.test(adminInputs[0].value)) {
-    alert("Password must be at least 8 characters and contain uppercase, lowercase, and a number.");
-    return;
-}
-if (adminInputs[1].value.trim() === "") {
-    alert("Please confirm your password!");
-    return;
-}
-    if (adminInputs[0].value !== adminInputs[1].value) {
+
+    const username = adminUsername.value.trim();
+    const email = adminForm.querySelector('[name="email"]').value.trim();
+    const contact = adminContact.value.trim();
+    const address = adminForm.querySelector('[name="address"]').value.trim();
+    const password = adminInputs[0].value;
+    const confirmPassword = adminInputs[1].value;
+
+    if (!username || !email || !contact || !address || !password || !confirmPassword) {
+        alert("Please fill in all fields!");
+        return;
+    }
+
+    if (!/^[0-9]{10}$/.test(contact)) {
+        alert("Please enter a valid 10-digit contact number!");
+        return;
+    }
+
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
+        alert("Password must be at least 8 characters and contain uppercase, lowercase, and a number.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
         alert("Passwords do not match!");
         return;
     }
-    alert("Admin registration submitted!");
-    window.location.href = "../Admin/dashboard.html";
+    const registerButton = adminForm.querySelector('button[type="submit"]');
+    registerButton.disabled = true;
+    registerButton.textContent = "Registering...";
+
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/auth/admin/signup`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    contact,
+                    address,
+                    password,
+                    confirmPassword
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Registration failed. Please try again.");
+            return;
+        }
+
+        alert("Admin registration successful!");
+        window.location.href = "auth.html";
+
+    } catch (error) {
+        console.error("Registration request failed:", error);
+        alert("Could not connect to the server. Please make sure the backend is running.");
+    } finally {
+        registerButton.disabled = false;
+        registerButton.textContent = "Register";
+    }
 });

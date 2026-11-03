@@ -1,14 +1,10 @@
 const studentBtn = document.querySelector("#studentBtn");
 const adminBtn = document.querySelector("#adminBtn");
-
 const studentForm = document.querySelector("#studentForm");
 const adminForm = document.querySelector("#adminForm");
 const signupLink = document.querySelector("#signupLink");
 const studentLoginForm = document.querySelector("#studentLoginForm");
 const adminLoginForm = document.querySelector("#adminLoginForm");
-const studentPassword = document.querySelector('#studentPassword');
-const admintPassword = document.querySelector('#adminPassword');
-
 
 studentBtn.addEventListener("click", function () {
 
@@ -79,10 +75,56 @@ adminBtn.addEventListener("click", function () {
     studentBtn.classList.remove("active");
     signupLink.href = "register.html?role=admin";
 });
-adminLoginForm.addEventListener("submit", function (event) {
+adminLoginForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    alert("Admin login submitted!");
-    window.location.href = "../Admin/admin-dashboard.html";
+     const username = document.querySelector("#adminUsername").value.trim();
+    const password = document.querySelector("#adminPassword").value;
+    const button = document.querySelector("#adminLoginButton");
+    const rememberMe = document.querySelector("#adminRemember").checked;
 
+    if (!username || !password) {
+        alert("Please enter your username and password.");
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Signing In...";
+
+    try {
+       
+        const response = await fetch(
+            `${API_BASE_URL}/api/auth/admin/signin`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    rememberMe:rememberMe
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || data.msg || "Login failed.");
+            return;
+        }
+
+        alert("Login successful!");
+
+        window.location.href = "../admin/admin-dashboard.html";
+
+    } catch (error) {
+        console.error("Login error:", error);
+        alert("Unable to connect to the server. Please try again.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Sign In";
+    }
 });
