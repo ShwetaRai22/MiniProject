@@ -7,6 +7,6 @@ const {displayDashboard,displayProfile, updateProfile,adminLogout}=require('../c
 
 router.get('/dashboard',checkAdminAuth,displayDashboard);
 router.get('/profile',checkAdminAuth,displayProfile);
-// router.put('/profile',checkAdminAuth,updateProfile);
+router.put('/profile',checkAdminAuth,updateProfile);
 // router.post('/logout',adminLogout);
 module.exports=router;
