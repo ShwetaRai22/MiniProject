@@ -69,15 +69,14 @@ editButton.addEventListener("click", () => {
 });
 
 
-// Save Changes
-saveButton.addEventListener("click", () => {
+saveButton.addEventListener('click', async () => {
 
-    if (
-        usernameInput.value.trim() === "" ||
-        emailInput.value.trim() === "" ||
-        contactInput.value.trim() === "" ||
-        addressInput.value.trim() === ""
-    ) {
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const contact = contactInput.value.trim();
+    const address = addressInput.value.trim();
+
+    if(!username || !email || !contact || !address){
         alert("Please fill in all the fields.");
         return;
     }
@@ -87,21 +86,59 @@ saveButton.addEventListener("click", () => {
         return;
     }
 
-    viewValues[0].textContent = usernameInput.value.trim();
-    viewValues[1].textContent = emailInput.value.trim();
-    viewValues[2].textContent = contactInput.value.trim();
-    viewValues[3].textContent = addressInput.value.trim();
+    try {
+        saveButton.disabled = true;
 
-    profileUsername.textContent = usernameInput.value.trim();
+        const response = await fetch(`${API_BASE_URL}/api/admin/profile`,
+            {
+                method: 'PUT',
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    contact,
+                    address
+                })
+            });
 
-    oldUsername = usernameInput.value.trim();
-    oldEmail = emailInput.value.trim();
-    oldContact = contactInput.value.trim();
-    oldAddress = addressInput.value.trim();
+        const data = await response.json();
 
-    profileCard.classList.remove("editMode");
+        if (response.status === 401) {
+            window.location.href = "../auth/auth.html";
+            return;
+        }
+        if (!response.ok) {
+            throw new Error(data.msg || data.message || "Unable to update profile.");
+        }
 
-    alert("Admin profile updated successfully!");
+        const admin = data.admin;
+
+        document.querySelectorAll(".profileUsername").forEach(element => {
+            element.textContent = admin.username;
+        });
+        adminId.textContent = `Admin ID: ADM00${admin.admin_id}`;
+        adminContact.textContent = admin.contact;
+        adminEmail.textContent=admin.email;
+        adminAddress.textContent = admin.address;
+
+        usernameInput.value = admin.username;
+        emailInput.value = admin.email;
+        contactInput.value = admin.contact;
+        addressInput.value = admin.address;
+        saveOldValues();
+
+        profileCard.classList.remove("editMode");
+
+        alert(data.msg || data.message || "Profile updated successfully!");
+    } catch (error) {
+        console.error("Profile update error:", error);
+        alert(error.message || "Unable to update your profile.");
+    } finally {
+        saveButton.disabled = false;
+    }
 });
 
 
