@@ -69,7 +69,7 @@ examForm.addEventListener("submit", (event) => {
 
     // Prepare Exam Data
     const examData = {
-        examTitle: title,
+        title: title,
         subject: subjectName,
         examDate: examDate.value,
         startTime: start,
@@ -80,9 +80,26 @@ examForm.addEventListener("submit", (event) => {
     };
 
 
-    // Display Exam Data
-    console.log("Exam Details:", examData);
+    fetch(`${API_BASE_URL}/api/admin/createExams`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    credentials: "include",
+    body: JSON.stringify(examData)
+})
+.then(async response => {
+    const data = await response.json();
 
-    alert("Exam details validated successfully! Backend connection is pending.");
+    if (!response.ok) {
+        throw new Error(data.msg || "Unable to create exam.");
+    }
+
+    alert(data.msg);
     window.location.href = "add-question.html";
+})
+.catch(error => {
+    console.error("Create exam error:", error);
+    alert(error.message);
 });
+})

@@ -2,9 +2,9 @@ const db = require('../config/db');
 
 const displayDashboard=async(req,res)=>{
     try {
-        const sid=req.session.admin.admin_id;
+        const adminId=req.session.admin.admin_id;
 
-        const [admins]= await db.query(`select admin_id,username,email,contact,address from admins where admin_id=? limit 1`,[sid]);
+        const [admins]= await db.query(`select admin_id,username,email,contact,address from admins where admin_id=? limit 1`,[adminId]);
 
         if(admins.length===0){
             return res.status(404).json({
@@ -33,9 +33,9 @@ const displayDashboard=async(req,res)=>{
 
 const displayProfile= async (req,res) => {
     try {
-        const sid=req.session.admin.admin_id;
+        const adminId=req.session.admin.admin_id;
 
-        const [admins]= await db.query(`select admin_id,username,email,contact,address from admins where admin_id=? limit 1`,[sid]);
+        const [admins]= await db.query(`select admin_id,username,email,contact,address from admins where admin_id=? limit 1`,[adminId]);
         if(admins.length===0){
             return res.status(404).json({
                 success:false,
@@ -57,7 +57,7 @@ const displayProfile= async (req,res) => {
 }
 const updateProfile = async (req, res) => {
     try {
-        const sid = req.session.admin.admin_id;
+        const adminId = req.session.admin.admin_id;
 
         const { username, email, contact, address } = req.body;
 
@@ -84,7 +84,7 @@ const updateProfile = async (req, res) => {
              WHERE (username = ? OR email = ?)
              AND admin_id != ?
              LIMIT 1`,
-            [cleanUsername, cleanEmail, sid]
+            [cleanUsername, cleanEmail, adminId]
         );
 
         if (existing.length > 0) {
@@ -98,13 +98,13 @@ const updateProfile = async (req, res) => {
             `UPDATE admins
              SET username = ?, email = ?, contact = ?, address = ?
              WHERE admin_id = ?`,
-            [cleanUsername, cleanEmail, cleanContact, cleanAddress, sid]
+            [cleanUsername, cleanEmail, cleanContact, cleanAddress, adminId]
         );
 
         if (result.affectedRows === 0) {
             const [admins] = await db.query(
                 `SELECT admin_id FROM admins WHERE admin_id = ?`,
-                [sid]
+                [adminId]
             );
 
             if (admins.length === 0) {
@@ -122,7 +122,7 @@ const updateProfile = async (req, res) => {
             success: true,
             msg: "Profile updated successfully.",
             admin:{
-                admin_id: sid,
+                admin_id: adminId,
                 username: cleanUsername,
                 email: cleanEmail,
                 contact: cleanContact,
@@ -167,4 +167,108 @@ const adminLogout=(req,res) => {
     });
 }
 
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout};
+const createExam = async (req, res) => {
+    try {
+        adminId=req.session.admin.admin_id;
+        const {  title,
+            subject,
+            examDate,
+            duration,
+            startTime,
+            endTime,
+            totalMarks,
+            passingMarks } = req.body;
+
+             if (
+            typeof title !== "string" || !title.trim() ||
+            typeof subject !== "string" || !subject.trim() ||
+            !examDate ||
+            !startTime ||
+            !endTime ||
+            duration === undefined ||
+            totalMarks === undefined ||
+            passingMarks === undefined
+        ){
+            return res.status(400).json({
+                success: false,
+                msg: "Please fill in all required fields."
+            });
+        }
+
+        const cleanTitle = title.trim();
+        const cleanSubject = subject.trim();
+
+         const examDuration = Number(duration);
+        const marks = Number(totalMarks);
+        const passMarks = Number(passingMarks);
+
+        if (
+            !Number.isInteger(examDuration) || examDuration <= 0 ||
+            !Number.isInteger(marks) || marks <= 0 ||
+            !Number.isInteger(passMarks) ||
+            passMarks < 0 || passMarks > marks
+        ) {
+            return res.status(400).json({
+                success: false,
+                msg: "Please enter valid values for exam duration and marks."
+            });
+        }
+
+        const startDateTime = `${examDate} ${startTime}:00`;
+        const endDateTime = `${examDate} ${endTime}:00`;
+
+        if(endDateTime <= startDateTime){
+            return res.status(400).json({
+                success: false,
+                msg: "End time must be after start time."
+            });
+        }
+
+        const [existingSubjects] = await db.query(
+            `SELECT subject_id
+             FROM subjects
+             WHERE LOWER(TRIM(name)) = LOWER(?)
+             LIMIT 1`,
+            [cleanSubject]
+        );
+
+        let subjectId;
+        if (existingSubjects.length > 0) {
+            subjectId = existingSubjects[0].subject_id;
+        } else {
+                    const [subjectResult] = await db.query(
+                `INSERT INTO subjects (name)
+                 VALUES (?)`,
+                [cleanSubject]
+            );
+            subjectId = subjectResult.insertId;
+        }
+
+        const [examResult] = await db.query(
+            `INSERT INTO exams (admin_id, subject_id, title, start_time, end_time, duration, total_marks, passing_marks)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [ adminId,
+                subjectId,
+                cleanTitle,
+                startDateTime,
+                endDateTime,
+                examDuration,
+                marks,
+                passMarks]
+        );
+         return res.status(201).json({
+            success: true,
+            msg: "Exam created successfully.",
+            exam_id: examResult.insertId
+        });
+        }
+
+    catch (error) {
+        console.error("Create exam error:", error);
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to create exam."
+        });
+    }
+}
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam};
