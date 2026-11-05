@@ -13,9 +13,10 @@ const noExamsMessage = document.getElementById("noExamsMessage");
 const examModal = document.getElementById("examModal");
 const examDetails = document.getElementById("examDetails");
 const closeModal = document.getElementById("closeModal");
-
 examModal.hidden = true;
+
 async function loadExams() {
+    
     try {
         const response = await fetch(
             `${API_BASE_URL}/api/admin/displayExams`,
@@ -44,14 +45,14 @@ async function loadExams() {
                 ? "scheduled"
                 : exam.status
         }));
-
-        loadExams();
+        displayExams();
 
     } catch (error) {
         console.error("Fetch exams error:", error);
         alert(error.message);
     }
 }
+loadExams();
 function getStatusLabel(status) {
 
     const labels = {
@@ -249,7 +250,7 @@ function viewExam(id) {
 }
 
 
-function changeExamStatus(id) {
+async function changeExamStatus(id) {
 
     const exam = exams.find(exam => exam.id === id);
 
@@ -273,17 +274,44 @@ function changeExamStatus(id) {
         "4": "in-progress",
         "5": "completed"
     };
+     const selectedStatus = statusOptions[newStatus.trim()];
 
-    if (!statusOptions[newStatus.trim()]) {
+    if (!selectedStatus) {
         alert("Invalid status selection.");
         return;
     }
 
-    exam.status = statusOptions[newStatus.trim()];
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/admin/updateExamStatus`,
+            {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    examId: id,
+                    status: selectedStatus
+                })
+            }
+        );
 
-    displayExams();
+        const data = await response.json();
 
-    alert("Exam status updated successfully.");
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to update exam status.");
+        }
+
+        exam.status = selectedStatus;
+        displayExams();
+
+        alert("Exam status updated successfully.");
+
+    } catch (error) {
+        console.error("Update exam status error:", error);
+        alert(error.message);
+    }
 }
 
 function deleteExam(id) {
@@ -350,5 +378,3 @@ examModal.addEventListener("click", function(event) {
     }
 
 });
-
-displayExams();

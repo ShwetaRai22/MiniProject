@@ -433,5 +433,56 @@ const displayAdminExams = async (req, res) => {
             msg: "Unable to fetch examinations."
         });
     }
-};
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams};
+}
+
+
+const updateExamStatus = async (req, res) => {
+    try {
+        const adminId = req.session.admin.admin_id;
+        const { examId, status } = req.body;
+
+        const allowedStatuses = [
+            "draft",
+            "scheduled",
+            "live",
+            "in-progress",
+            "completed"
+        ];
+
+        if (!examId || !allowedStatuses.includes(status)) {
+            return res.status(400).json({
+                success: false,
+                msg: "Invalid exam ID or status."
+            });
+        }
+
+        const [result] = await db.query(
+            `UPDATE exams
+             SET status = ?
+             WHERE exam_id = ? AND admin_id = ?`,
+            [status, examId, adminId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "Exam not found."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: "Exam status updated successfully."
+        });
+
+    } catch (error) {
+        console.error("Update exam status error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to update exam status."
+        });
+    }
+}
+
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus};

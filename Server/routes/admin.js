@@ -3,7 +3,7 @@ const express= require("express");
 const router=express.Router();
 
 const {checkAdminAuth}=require('../middleware/authMiddleware');
-const {displayDashboard,displayProfile, updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams}=require('../controllers/admin');
+const {displayDashboard,displayProfile, updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus}=require('../controllers/admin');
 
 router.get('/dashboard',checkAdminAuth,displayDashboard);
 router.get('/profile',checkAdminAuth,displayProfile);
@@ -13,4 +13,5 @@ router.post('/createExams',checkAdminAuth,createExam);
 router.post('/addQuestion',checkAdminAuth,addQuestion);
 router.get('/getAdminExams', checkAdminAuth, getAdminExams);
 router.get('/displayExams',checkAdminAuth,displayAdminExams);
+router.put('/updateExamStatus/:examId',checkAdminAuth,updateExamStatus);
 module.exports=router;
