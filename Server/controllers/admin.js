@@ -537,6 +537,7 @@ const getAllStudents = async (req, res) => {
                 contact,
                 created_at
              FROM students
+              WHERE is_active = 1
              ORDER BY created_at DESC`
         );
 
@@ -554,6 +555,44 @@ const getAllStudents = async (req, res) => {
         });
     }
 };
+const deleteStudent = async (req, res) => {
+    try {
+        const { studentId } = req.body;
 
+        if (!studentId) {
+            return res.status(400).json({
+                success: false,
+                msg: "Student ID is required."
+            });
+        }
+
+        const [result] = await db.query(
+            `UPDATE students
+             SET is_active = 0
+             WHERE student_id = ? AND is_active = 1`,
+            [studentId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "Student not found or already deactivated."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: "Student deactivated successfully."
+        });
+
+    } catch (error) {
+        console.error("Delete student error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to deactivate student."
+        });
+    }
+};
     
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam,getAllStudents};
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam,getAllStudents,deleteStudent};

@@ -107,46 +107,91 @@ function displayStudents() {
 
 searchStudent.addEventListener("input", displayStudents);
 
-studentTableBody.addEventListener("click", event => {
+studentTableBody.addEventListener("click", async event => {
 
+    // VIEW STUDENT
     const viewButton = event.target.closest(".viewBtn");
 
-    if (!viewButton) return;
+    if (viewButton) {
 
-    const studentId = Number(viewButton.dataset.id);
+        const studentId = Number(viewButton.dataset.id);
 
-    const student = students.find(
-        student => student.student_id === studentId
+        const student = students.find(
+            student => Number(student.student_id) === studentId
+        );
+
+        if (!student) return;
+
+        document.getElementById("detailId").textContent =
+            `#${student.student_id}`;
+
+        document.getElementById("detailName").textContent =
+            student.username;
+
+        document.getElementById("detailEmail").textContent =
+            student.email;
+
+        document.getElementById("detailContact").textContent =
+            student.contact;
+
+        document.getElementById("detailDate").textContent =
+            formatDate(student.created_at);
+
+        studentModal.classList.add("show");
+        return;
+    }
+
+
+    // DELETE STUDENT
+    const deleteButton = event.target.closest(".deleteBtn");
+
+    if (!deleteButton) return;
+
+    const studentId = Number(deleteButton.dataset.id);
+
+    const confirmDelete = confirm(
+        "Are you sure you want to deactivate this student?"
     );
 
-    if (!student) return;
+    if (!confirmDelete) return;
 
-    document.getElementById("detailId").textContent =
-        `#${student.student_id}`;
+    try {
 
-    document.getElementById("detailName").textContent =
-        student.username;
+        const response = await fetch(
+            `${API_BASE_URL}/api/admin/deleteStudent`,
+            {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    studentId: studentId
+                })
+            }
+        );
 
-    document.getElementById("detailEmail").textContent =
-        student.email;
+        const data = await response.json();
 
-    document.getElementById("detailContact").textContent =
-        student.contact;
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to deactivate student.");
+        }
 
-    document.getElementById("detailDate").textContent =
-        formatDate(student.created_at);
+        // Remove student from frontend array
+        students = students.filter(
+            student => Number(student.student_id) !== studentId
+        );
 
-    studentModal.classList.add("show");
-});
+        // Refresh table and count
+        displayStudents();
 
-closeModal.addEventListener("click", () => {
-    studentModal.classList.remove("show");
-});
+        alert("Student deactivated successfully.");
 
-studentModal.addEventListener("click", event => {
+    } catch (error) {
 
-    if (event.target === studentModal) {
-        studentModal.classList.remove("show");
+        console.error("Delete student error:", error);
+        alert(error.message);
+
     }
 
 });
