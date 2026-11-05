@@ -334,8 +334,8 @@ const addQuestion = async (req, res) => {
             const[questionResult] = await db.query(
                 `INSERT INTO questions (exam_id, question_text, type,marks)
                  VALUES (?, ?, ?, ?)`,
-                [selectedExamId, question.question.trim(), "MCQ", question.Number(question.marks)]
-            );
+                [selectedExamId, question.question.trim(), "MCQ", Number(question.marks)]
+            );  
             const questionId = questionResult.insertId;
 
             for (const letter of validLetters) {

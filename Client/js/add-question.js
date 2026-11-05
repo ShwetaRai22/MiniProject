@@ -148,8 +148,27 @@ saveQuestionsBtn.addEventListener("click", () => {
         questions: questionsData
     };
 
-    console.log("Questions Data:", examData);
+    try {
+        fetch(`${API_BASE_URL}/api/admin/addQuestion`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify(examData)
+        })
+        .then(async response => {
+    const data = await response.json();
 
-    alert("All questions are validated. Backend integration is pending.");
+    if (!response.ok) {
+        throw new Error(data.msg || "Unable to save questions.");
+    }
 
+    alert(data.msg);
+})
+        
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while adding questions.");
+    }
 });
