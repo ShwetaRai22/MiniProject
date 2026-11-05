@@ -485,4 +485,45 @@ const updateExamStatus = async (req, res) => {
     }
 }
 
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus};
+
+const deleteExam = async (req, res) => {
+    try {
+        const adminId = req.session.admin.admin_id;
+        const { examId } = req.body;
+
+        if (!examId) {
+            return res.status(400).json({
+                success: false,
+                msg: "Exam ID is required."
+            });
+        }
+
+        const [result] = await db.query(
+            `DELETE FROM exams
+             WHERE exam_id = ? AND admin_id = ?`,
+            [examId, adminId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "Exam not found."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: "Exam deleted successfully."
+        });
+
+    } catch (error) {
+        console.error("Delete exam error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to delete exam."
+        });
+    }
+};
+    
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam};

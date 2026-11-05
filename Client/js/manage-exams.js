@@ -314,10 +314,9 @@ async function changeExamStatus(id) {
     }
 }
 
-function deleteExam(id) {
 
+async function deleteExam(id) {
     const exam = exams.find(exam => exam.id === id);
-
     if (!exam) return;
 
     const confirmDelete = confirm(
@@ -326,12 +325,38 @@ function deleteExam(id) {
 
     if (!confirmDelete) return;
 
-    exams = exams.filter(exam => exam.id !== id);
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/admin/deleteExam`,
+            {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    examId: id
+                })
+            }
+        );
 
-    displayExams();
+        const data = await response.json();
 
-    alert("Exam deleted successfully.");
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to delete exam.");
+        }
+
+        exams = exams.filter(exam => exam.id !== id);
+        displayExams();
+
+        alert("Exam deleted successfully.");
+
+    } catch (error) {
+        console.error("Delete exam error:", error);
+        alert(error.message);
+    }
 }
+
 
 examTableBody.addEventListener("click", function(event) {
 
