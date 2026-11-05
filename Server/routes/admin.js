@@ -13,5 +13,5 @@ router.post('/createExams',checkAdminAuth,createExam);
 router.post('/addQuestion',checkAdminAuth,addQuestion);
 router.get('/getAdminExams', checkAdminAuth, getAdminExams);
 router.get('/displayExams',checkAdminAuth,displayAdminExams);
-router.put('/updateExamStatus/:examId',checkAdminAuth,updateExamStatus);
+router.put('/updateExamStatus',checkAdminAuth,updateExamStatus);
 module.exports=router;
