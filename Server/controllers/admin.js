@@ -340,7 +340,7 @@ const addQuestion = async (req, res) => {
 
             for (const letter of validLetters) {
 
-                await connection.query(
+                await db.query(
                     `INSERT INTO options
                      (question_id, option_text, is_correct)
                      VALUES (?, ?, ?)`,
