@@ -141,7 +141,17 @@ studentTableBody.addEventListener("click", async event => {
         return;
     }
 
+closeModal.addEventListener("click", () => {
+    studentModal.classList.remove("show");
+});
 
+studentModal.addEventListener("click", event => {
+
+    if (event.target === studentModal) {
+        studentModal.classList.remove("show");
+    }
+
+});
     // DELETE STUDENT
     const deleteButton = event.target.closest(".deleteBtn");
 
