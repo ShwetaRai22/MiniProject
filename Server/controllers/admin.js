@@ -393,4 +393,45 @@ const getAdminExams = async (req, res) => {
         });
     }
 };
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams};
+const displayAdminExams = async (req, res) => {
+    try {
+        const adminId = req.session.admin.admin_id;
+
+        const [exams] = await db.query(
+            `SELECT
+                e.exam_id,
+                e.title,
+                s.name AS subject,
+                DATE_FORMAT(e.start_time, '%Y-%m-%d') AS exam_date,
+                e.end_time,
+                e.duration,
+                e.total_marks,
+                e.passing_marks,
+                e.status,
+                COUNT(q.question_id) AS total_questions
+            FROM exams e
+            JOIN subjects s
+                ON e.subject_id = s.subject_id
+            LEFT JOIN questions q
+                ON e.exam_id = q.exam_id
+            WHERE e.admin_id = ?
+            GROUP BY e.exam_id
+            ORDER BY e.created_at DESC`,
+            [adminId]
+        );
+
+        return res.status(200).json({
+            success: true,
+            exams: exams
+        });
+
+    } catch (error) {
+        console.error("Fetch admin exams error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to fetch examinations."
+        });
+    }
+};
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams};

@@ -1,71 +1,4 @@
-
-/* =====================================
-   SAMPLE EXAMINATION DATA
-===================================== */
-
-let exams = [
-    {
-        id: 101,
-        title: "Mathematics Mid-Term",
-        subject: "Mathematics",
-        date: "2026-11-15",
-        duration: 60,
-        questions: 30,
-        totalMarks: 60,
-        passingMarks: 24,
-        status: "scheduled"
-    },
-    {
-        id: 102,
-        title: "Computer Science Test",
-        subject: "Computer Science",
-        date: "2026-11-10",
-        duration: 90,
-        questions: 40,
-        totalMarks: 100,
-        passingMarks: 40,
-        status: "live"
-    },
-    {
-        id: 103,
-        title: "English Grammar Exam",
-        subject: "English",
-        date: "2026-11-05",
-        duration: 45,
-        questions: 25,
-        totalMarks: 50,
-        passingMarks: 20,
-        status: "completed"
-    },
-    {
-        id: 104,
-        title: "Physics Practice Test",
-        subject: "Physics",
-        date: "2026-11-20",
-        duration: 60,
-        questions: 0,
-        totalMarks: 50,
-        passingMarks: 20,
-        status: "draft"
-    },
-    {
-        id: 105,
-        title: "Database Management Exam",
-        subject: "Computer Science",
-        date: "2026-11-12",
-        duration: 75,
-        questions: 35,
-        totalMarks: 70,
-        passingMarks: 28,
-        status: "in-progress"
-    }
-];
-
-
-/* =====================================
-   GET HTML ELEMENTS
-===================================== */
-
+let exams = [];
 const examTableBody = document.getElementById("examTableBody");
 
 const totalExams = document.getElementById("totalExams");
@@ -81,11 +14,44 @@ const examModal = document.getElementById("examModal");
 const examDetails = document.getElementById("examDetails");
 const closeModal = document.getElementById("closeModal");
 
-
-
-// Make sure modal stays hidden on page load.
 examModal.hidden = true;
+async function loadExams() {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/admin/displayExams`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
 
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to fetch exams.");
+        }
+
+        exams = data.exams.map(exam => ({
+            id: exam.exam_id,
+            title: exam.title,
+            subject: exam.subject,
+            date: exam.exam_date,
+            duration: Number(exam.duration),
+            questions: Number(exam.total_questions),
+            totalMarks: Number(exam.total_marks),
+            passingMarks: Number(exam.passing_marks),
+            status: exam.status === "upcoming"
+                ? "scheduled"
+                : exam.status
+        }));
+
+        loadExams();
+
+    } catch (error) {
+        console.error("Fetch exams error:", error);
+        alert(error.message);
+    }
+}
 function getStatusLabel(status) {
 
     const labels = {
