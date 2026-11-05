@@ -524,6 +524,36 @@ const deleteExam = async (req, res) => {
             msg: "Unable to delete exam."
         });
     }
+}
+
+
+const getAllStudents = async (req, res) => {
+    try {
+        const [students] = await db.query(
+            `SELECT
+                student_id,
+                username,
+                email,
+                contact,
+                created_at
+             FROM students
+             ORDER BY created_at DESC`
+        );
+
+        return res.status(200).json({
+            success: true,
+            students: students
+        });
+
+    } catch (error) {
+        console.error("Fetch students error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to fetch students."
+        });
+    }
 };
+
     
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam};
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam,getAllStudents};
