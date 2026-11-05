@@ -95,8 +95,8 @@ examForm.addEventListener("submit", (event) => {
         throw new Error(data.msg || "Unable to create exam.");
     }
 
-    alert(data.msg);
-    window.location.href = "add-question.html";
+    alert("Exam created successfully!");
+    examForm.reset();
 })
 .catch(error => {
     console.error("Create exam error:", error);
