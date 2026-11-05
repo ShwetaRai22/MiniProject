@@ -366,4 +366,31 @@ const addQuestion = async (req, res) => {
     }
 }
 
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion};
+const getAdminExams = async (req, res) => {
+    try {
+        const adminId = req.session.admin.admin_id;
+
+        const [exams] = await db.query(
+            `SELECT e.exam_id, e.title, s.name AS subject
+             FROM exams e
+             JOIN subjects s ON e.subject_id = s.subject_id
+             WHERE e.admin_id = ?
+             ORDER BY e.created_at DESC`,
+            [adminId]
+        );
+
+        return res.status(200).json({
+            success: true,
+            exams: exams
+        });
+
+    } catch (error) {
+        console.error("Fetch exams error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to fetch exams."
+        });
+    }
+};
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams};

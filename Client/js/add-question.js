@@ -1,5 +1,42 @@
 lucide.createIcons();
+// Fetch exams for dropdown
+const examSelect = document.getElementById("examSelect");
 
+async function loadExams() {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/admin/getAdminExams`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to fetch exams.");
+        }
+
+        examSelect.innerHTML =
+            '<option value="">Choose an examination</option>';
+
+        data.exams.forEach(exam => {
+            const option = document.createElement("option");
+
+            option.value = exam.exam_id;
+            option.textContent = `${exam.title} - ${exam.subject}`;
+
+            examSelect.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error("Fetch exams error:", error);
+        alert(error.message);
+    }
+}
+
+loadExams();
 const addQuestionBtn = document.getElementById("addQuestionBtn");
 const questionContainer = document.querySelector(".questionContainer");
 
