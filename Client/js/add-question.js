@@ -1,24 +1,26 @@
-
-// Initialize Lucide Icons
 lucide.createIcons();
 
-
-// Add Question
 const addQuestionBtn = document.getElementById("addQuestionBtn");
 const questionContainer = document.querySelector(".questionContainer");
 
 let questionCount = 1;
 
-
-// Create New Question
 addQuestionBtn.addEventListener("click", () => {
 
-    const firstQuestion = document.querySelector(".questionCard");
+    const existingQuestions = document.querySelectorAll(".questionCard");
 
-    if (!validateQuestion(firstQuestion)) {
-        alert("Please complete the current question before adding another.");
+for (const card of existingQuestions) {
+    if (!validateQuestion(card)) {
+        alert("Please complete all existing questions before adding another.");
+        card.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
         return;
     }
+}
+
+const firstQuestion = document.querySelector(".questionCard");
 
     questionCount++;
 
@@ -65,8 +67,6 @@ addQuestionBtn.addEventListener("click", () => {
 
 });
 
-
-// Validate a Question
 function validateQuestion(card) {
 
     const question = card.querySelector("textarea").value.trim();
@@ -94,8 +94,6 @@ function validateQuestion(card) {
     return true;
 }
 
-
-// Save Questions
 const saveQuestionsBtn = document.getElementById("saveQuestionsBtn");
 
 saveQuestionsBtn.addEventListener("click", () => {

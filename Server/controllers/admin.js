@@ -271,4 +271,99 @@ const createExam = async (req, res) => {
         });
     }
 }
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam};
+
+const addQuestion = async (req, res) => {
+    try {
+        const adminId = req.session.admin.admin_id;
+        const { examId, questions } = req.body;
+
+        const selectedExamId = Number(examId);
+
+        if (
+            !Number.isInteger(selectedExamId) ||
+            selectedExamId <= 0 ||
+            !Array.isArray(questions) ||
+            questions.length === 0
+        ) {
+            return res.status(400).json({
+                success: false,
+                msg: "Please select an exam and add at least one question."
+            });
+        }
+
+          const validLetters = ["A", "B", "C", "D"];
+
+        for (const question of questions) {
+            if (
+                typeof question.question !== "string" ||
+                !question.question.trim() ||
+                !question.options ||
+                !Number.isInteger(Number(question.marks)) ||
+                Number(question.marks) <= 0 ||
+                !validLetters.includes(question.correctAnswer)
+            ) {
+                return res.status(400).json({
+                    success: false,
+                    msg: "Invalid question details."
+                });
+            }
+        
+        for (const letter of validLetters) {
+                if (
+                    typeof question.options[letter] !== "string" ||
+                    !question.options[letter].trim()
+                ) {
+                    return res.status(400).json({
+                        success: false,
+                        msg: "All four options are required."
+                    });
+                }
+            }
+        }
+        
+        const [exams]= await db.query(`SELECT exam_id FROM exams WHERE exam_id=? AND admin_id=? LIMIT 1`,[selectedExamId,adminId]);
+
+        if(exams.length===0){
+            return res.status(404).json({
+                success:false,
+                msg:"Exam not found or you do not have permission to add questions to this exam."
+            });
+        }
+
+        for (const question of questions) {
+            const[questionResult] = await db.query(
+                `INSERT INTO questions (exam_id, question_text, type,marks)
+                 VALUES (?, ?, ?, ?)`,
+                [selectedExamId, question.question.trim(), "MCQ", question.Number(question.marks)]
+            );
+            const questionId = questionResult.insertId;
+
+            for (const letter of validLetters) {
+
+                await connection.query(
+                    `INSERT INTO options
+                     (question_id, option_text, is_correct)
+                     VALUES (?, ?, ?)`,
+                    [
+                        questionId,
+                        question.options[letter].trim(),
+                        question.correctAnswer === letter ? 1 : 0
+                    ]
+                );
+            }
+        }
+
+        return res.status(201).json({
+            success: true,
+            msg: "Questions added successfully."
+        });
+    } catch (error) {
+        console.error("Add question error:", error);
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to add question."
+        });
+    }
+}
+
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion};
