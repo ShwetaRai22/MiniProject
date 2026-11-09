@@ -167,4 +167,74 @@ const studentLogout=(req,res) => {
         });
     });
 }
-module.exports={displayDashboard,displayProfile,updateProfile,studentLogout};
+
+const displayAvailableExams = async (req, res) => {
+    try {
+        const sid = req.session.student.student_id;
+
+        const [exams] = await db.query(
+            `SELECT
+                e.exam_id,
+                e.title,
+                s.name AS subject,
+                DATE_FORMAT(e.start_time, '%Y-%m-%d') AS exam_date,
+                DATE_FORMAT(e.start_time, '%h:%i %p') AS exam_time,
+                e.duration,
+                e.total_marks,
+
+                CASE
+                    WHEN EXISTS (
+                        SELECT 1
+                        FROM exam_attempts ea
+                        JOIN results r
+                            ON ea.attempt_id = r.attempt_id
+                        WHERE ea.exam_id = e.exam_id
+                        AND ea.student_id = ?
+                    ) THEN 'completed'
+
+                    WHEN NOW() BETWEEN e.start_time AND e.end_time
+                        THEN 'live'
+
+                    ELSE 'upcoming'
+                END AS status
+
+            FROM exams e
+            JOIN subjects s
+                ON e.subject_id = s.subject_id
+
+            WHERE e.status IS NOT NULL
+            AND e.status != 'draft'
+
+            AND (
+                NOW() <= e.end_time
+                OR EXISTS (
+                    SELECT 1
+                    FROM exam_attempts ea
+                    JOIN results r
+                        ON ea.attempt_id = r.attempt_id
+                    WHERE ea.exam_id = e.exam_id
+                    AND ea.student_id = ?
+                )
+            )
+
+            ORDER BY e.start_time ASC`,
+            [sid, sid]
+        );
+
+        return res.status(200).json({
+            success: true,
+            msg: "Available examinations retrieved successfully.",
+            exams: exams
+        });
+
+    } catch (error) {
+        console.error("Available exams error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to retrieve available examinations."
+        });
+    }
+};
+
+module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams};
