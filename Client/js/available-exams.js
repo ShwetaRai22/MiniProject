@@ -14,7 +14,7 @@ async function loadExams() {
         );
 
         const data = await response.json();
-
+console.log("Available Exams API Response:", data);
         if (!response.ok) {
             if (response.status === 401 || response.status === 403) {
                 window.location.href = "../auth/auth.html";

@@ -9,5 +9,5 @@ router.get('/dashboard',checkStudentAuth,displayDashboard);
 router.get('/profile',checkStudentAuth,displayProfile);
 router.put('/profile',checkStudentAuth,updateProfile);
 router.post('/logout',studentLogout);
-router.get('/exams',checkStudentAuth,displayAvailableExams);
+router.get('/availableExams',checkStudentAuth,displayAvailableExams);
 module.exports=router;
