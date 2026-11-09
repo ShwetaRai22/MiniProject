@@ -1,24 +1,51 @@
 const db = require('../config/db');
 
-const displayDashboard=async(req,res)=>{
+
+const displayDashboard = async (req, res) => {
     try {
-        const adminId=req.session.admin.admin_id;
+        const adminId = req.session.admin.admin_id;
+        const [admins] = await db.query(
+            `SELECT admin_id, username, email, contact, address
+             FROM admins
+             WHERE admin_id = ?
+             LIMIT 1`,
+            [adminId]
+        );
 
-        const [admins]= await db.query(`select admin_id,username,email,contact,address from admins where admin_id=? limit 1`,[adminId]);
-
-        if(admins.length===0){
+        if (admins.length === 0) {
             return res.status(404).json({
-                success:false,
-                msg:"Admin not found."
+                success: false,
+                msg: "Admin not found."
             });
         }
+        const [[studentCount]] = await db.query(
+            `SELECT COUNT(*) AS totalStudents
+             FROM students
+             WHERE is_active = 1`
+        );
+
+        const [[examCount]] = await db.query(
+            `SELECT COUNT(*) AS totalExams
+             FROM exams
+             WHERE admin_id = ?`,
+            [adminId]
+        );
+
+        const [[publishedCount]] = await db.query(
+            `SELECT COUNT(*) AS publishedExams
+             FROM exams
+             WHERE admin_id = ? AND status = 'published'`,
+            [adminId]
+        );
 
         return res.status(200).json({
-            success:true,
-            msg:"Admin dashboard data retrieved successfully.",
-            admin:admins[0]
+            success: true,
+            msg: "Admin dashboard data retrieved successfully.",
+            admin: admins[0],
+            totalStudents: studentCount.totalStudents,
+            totalExams: examCount.totalExams,
+            publishedExams: publishedCount.publishedExams
         });
-
 
     } catch (error) {
         console.error("Dashboard error:", error.message);
@@ -28,7 +55,6 @@ const displayDashboard=async(req,res)=>{
             msg: "Unable to load admin dashboard."
         });
     }
-
 }
 
 const displayProfile= async (req,res) => {

@@ -21,6 +21,12 @@ document.addEventListener('DOMContentLoaded',async(req,res)=>{
         }
         adminName.textContent=data.admin.username;
         adminId.textContent=`ADM00${data.admin.admin_id}`;
+        document.getElementById("totalStudents").textContent =
+    data.totalStudents;
+
+document.getElementById("totalExams").textContent =data.totalExams;
+
+document.getElementById("publishedExams").textContent =data.publishedExams;
     } catch (error) {
     console.error("Dashboard loading error:", error);
     adminName.textContent = "Unable to load";
