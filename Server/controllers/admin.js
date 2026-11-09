@@ -38,15 +38,56 @@ const displayDashboard = async (req, res) => {
             [adminId]
         );
 
+        const [recentExams] = await db.query(
+    `SELECT
+        e.exam_id,
+        e.title,
+        DATE_FORMAT(e.start_time, '%Y-%m-%d') AS exam_date,
+        e.status,
+        COUNT(q.question_id) AS total_questions
+     FROM exams e
+     LEFT JOIN questions q
+        ON e.exam_id = q.exam_id
+     WHERE e.admin_id = ?
+     GROUP BY e.exam_id
+     ORDER BY e.created_at DESC
+     LIMIT 5`,
+    [adminId]
+);
+const [recentActivity] = await db.query(
+    `SELECT
+        ea.attempt_id,
+        s.student_id,
+        s.username AS student_name,
+        e.title AS exam_title,
+        r.obtained_marks,
+        r.total_marks,
+        r.percentage,
+        ea.status
+    FROM exam_attempts ea
+    JOIN students s
+        ON ea.student_id = s.student_id
+    JOIN exams e
+        ON ea.exam_id = e.exam_id
+    LEFT JOIN results r
+        ON ea.attempt_id = r.attempt_id
+    WHERE e.admin_id = ?
+    ORDER BY ea.created_at DESC
+    LIMIT 5`,
+    [adminId]
+);
         return res.status(200).json({
             success: true,
             msg: "Admin dashboard data retrieved successfully.",
             admin: admins[0],
             totalStudents: studentCount.totalStudents,
             totalExams: examCount.totalExams,
-            publishedExams: publishedCount.publishedExams
+            publishedExams: publishedCount.publishedExams,
+            recentExams: recentExams,
+            recentActivity: recentActivity
         });
 
+        
     } catch (error) {
         console.error("Dashboard error:", error.message);
 
