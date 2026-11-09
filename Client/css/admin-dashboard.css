@@ -434,6 +434,15 @@ body {
     background: #E8EDF8;
     color: #5267A8;
 }
+.upcoming {
+    background: #E8EDF8;
+    color: #5267A8;
+}
+
+.in_progress {
+    background: #DCEEFF;
+    color: #2463A6;
+}
 
 
 /* Responsive Design */

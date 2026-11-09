@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', async (req, res) => {
             <td>${new Date(exam.exam_date + "T00:00:00").toLocaleDateString("en-GB")}</td>
             <td>${exam.total_questions}</td>
             <td>
-                <span class="statusBadge">
-                    ${exam.status.charAt(0).toUpperCase() + exam.status.slice(1)}
-                </span>
+                <span class="statusBadge ${exam.status}">
+    ${exam.status.charAt(0).toUpperCase() + exam.status.slice(1)}
+</span>
             </td>
         </tr>
     `).join("");
@@ -70,7 +70,7 @@ if (data.recentActivity.length === 0) {
                     : "Not evaluated"}
             </td>
             <td>
-                <span class="statusBadge">
+                <span class="statusBadge ${activity.status}">
                     ${activity.status
                         ? activity.status.charAt(0).toUpperCase() + activity.status.slice(1)
                         : "Unknown"}
