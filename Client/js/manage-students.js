@@ -143,6 +143,7 @@ studentTableBody.addEventListener("click", async event => {
 
 
 closeModal.addEventListener("click", () => {
+     console.log("Close button clicked");
     studentModal.classList.remove("show");
 });
 
