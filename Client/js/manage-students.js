@@ -141,6 +141,7 @@ studentTableBody.addEventListener("click", async event => {
         return;
     }
 
+
 closeModal.addEventListener("click", () => {
     studentModal.classList.remove("show");
 });
