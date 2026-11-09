@@ -141,19 +141,6 @@ studentTableBody.addEventListener("click", async event => {
         return;
     }
 
-
-closeModal.addEventListener("click", () => {
-     console.log("Close button clicked");
-    studentModal.classList.remove("show");
-});
-
-studentModal.addEventListener("click", event => {
-
-    if (event.target === studentModal) {
-        studentModal.classList.remove("show");
-    }
-
-});
     // DELETE STUDENT
     const deleteButton = event.target.closest(".deleteBtn");
 
@@ -207,5 +194,15 @@ studentModal.addEventListener("click", event => {
     }
 
 });
+closeModal.addEventListener("click", () => {
+     console.log("Close button clicked");
+    studentModal.classList.remove("show");
+});
+studentModal.addEventListener("click", event => {
 
+    if (event.target === studentModal) {
+        studentModal.classList.remove("show");
+    }
+
+});
 loadStudents();
