@@ -237,4 +237,61 @@ const displayAvailableExams = async (req, res) => {
     }
 };
 
-module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams};
+
+const displayExamInstructions = async (req, res) => {
+    try {
+        const sid = req.session.student.student_id;
+        const examId = req.query.exam_id;
+
+        if (!examId) {
+            return res.status(400).json({
+                success: false,
+                msg: "Exam ID is required."
+            });
+        }
+
+        const [exams] = await db.query(
+            `SELECT
+                e.exam_id,
+                e.title,
+                e.duration,
+                e.total_marks,
+                COUNT(q.question_id) AS totalQuestions
+            FROM exams e
+            LEFT JOIN questions q
+                ON e.exam_id = q.exam_id
+            WHERE e.exam_id = ?
+                AND e.status != 'draft'
+                AND NOW() BETWEEN e.start_time AND e.end_time
+            GROUP BY
+                e.exam_id,
+                e.title,
+                e.duration,
+                e.total_marks`,
+            [examId]
+        );
+
+        if (exams.length === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "Exam not found or is not currently live."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            msg: "Exam instructions retrieved successfully.",
+            exam: exams[0]
+        });
+
+    } catch (error) {
+        console.error("Exam instructions error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to retrieve exam instructions."
+        });
+    }
+};
+
+module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions};
