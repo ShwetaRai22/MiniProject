@@ -122,4 +122,17 @@ filterButtons.forEach(button => {
     });
 
 });
+examGrid.addEventListener("click", (event) => {
+
+    const startButton = event.target.closest(".startBtn");
+
+    if (!startButton || startButton.disabled) {
+        return;
+    }
+
+    const examId = startButton.dataset.examId;
+
+    window.location.href = `instruction.html?exam_id=${examId}`;
+
+});
 loadExams();
