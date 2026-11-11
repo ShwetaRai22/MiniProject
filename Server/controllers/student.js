@@ -294,4 +294,98 @@ const displayExamInstructions = async (req, res) => {
     }
 };
 
-module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions};
+
+const displayExamQuestions = async (req, res) => {
+    try {
+        const examId = Number(req.query.exam_id);
+
+        if (!Number.isInteger(examId) || examId <= 0) {
+            return res.status(400).json({
+                success: false,
+                msg: "Valid exam ID is required."
+            });
+        }
+
+        // Check whether the exam is currently live
+        const [exams] = await db.query(
+            `SELECT exam_id, duration
+             FROM exams
+             WHERE exam_id = ?
+             AND status != 'draft'
+             AND NOW() BETWEEN start_time AND end_time
+             LIMIT 1`,
+            [examId]
+        );
+
+        if (exams.length === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "Exam not found or is not currently live."
+            });
+        }
+
+        // Fetch questions and their options
+        const [questions] = await db.query(
+            `SELECT
+                q.question_id,
+                q.question_text,
+                q.marks,
+                o.option_id,
+                o.option_text
+             FROM questions q
+             JOIN options o ON q.question_id = o.question_id
+             WHERE q.exam_id = ?
+             ORDER BY q.question_id, o.option_id`,
+            [examId]
+        );
+
+        if (questions.length === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "No questions are available for this exam."
+            });
+        }
+
+        // Group options under their respective questions
+        const formattedQuestions = [];
+
+        questions.forEach(row => {
+            let question = formattedQuestions.find(
+                q => q.question_id === row.question_id
+            );
+
+            if (!question) {
+                question = {
+                    question_id: row.question_id,
+                    question_text: row.question_text,
+                    marks: row.marks,
+                    options: []
+                };
+
+                formattedQuestions.push(question);
+            }
+
+            question.options.push({
+                option_id: row.option_id,
+                option_text: row.option_text
+            });
+        });
+
+        return res.status(200).json({
+            success: true,
+            msg: "Exam questions retrieved successfully.",
+            duration: exams[0].duration,
+            questions: formattedQuestions
+        });
+
+    } catch (error) {
+        console.error("Display exam questions error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to retrieve exam questions."
+        });
+    }
+};
+
+module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions,displayExamQuestions};
