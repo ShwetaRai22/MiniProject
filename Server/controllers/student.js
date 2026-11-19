@@ -256,6 +256,11 @@ const displayExamInstructions = async (req, res) => {
                 e.title,
                 e.duration,
                 e.total_marks,
+                (
+    SELECT COUNT(*)
+    FROM questions q
+    WHERE q.exam_id = e.exam_id
+) AS totalQuestions,
                 COUNT(q.question_id) AS totalQuestions
             FROM exams e
             LEFT JOIN questions q

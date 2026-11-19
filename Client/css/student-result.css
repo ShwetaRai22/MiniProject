@@ -284,12 +284,12 @@ body {
     white-space: nowrap;
 }
 
-.resultStatus.passed {
+.resultStatus.pass {
     background: #E4F8EE;
     color: #16864C;
 }
 
-.resultStatus.failed {
+.resultStatus.fail {
     background: #FDEAEA;
     color: #D94343;
 }
@@ -337,11 +337,11 @@ body {
     border-radius: 10px;
 }
 
-.progressFill.passed {
+.progressFill.pass {
     background: #20B36B;
 }
 
-.progressFill.failed {
+.progressFill.fail{
     background: #E15B5B;
 }
 
