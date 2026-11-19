@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async (req, res) => {
         studentName.textContent = "Unable to load";
     }
 await loadAvailableExams();
+await loadRecentResults();
 });
 async function loadAvailableExams() {
     const examList = document.getElementById("examList");
@@ -41,7 +42,11 @@ async function loadAvailableExams() {
         );
 
         const data = await response.json();
-console.log("First exam details:", data.exams[0]);
+        const availableExamCount = document.getElementById("availableExamCount");
+
+availableExamCount.textContent = data.exams.filter(
+    exam => exam.status !== "completed"
+).length;
         if (!response.ok) {
             throw new Error(data.msg || "Unable to load exams.");
         }
@@ -94,5 +99,72 @@ console.log("First exam details:", data.exams[0]);
     } catch (error) {
         console.error("Available exams loading error:", error);
         examList.innerHTML = "<p>Unable to load available exams.</p>";
+    }
+}
+
+async function loadRecentResults() {
+
+    const resultTableBody = document.getElementById("resultTableBody");
+
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/student/results`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+
+        const data = await response.json();
+        const completedExamCount = document.getElementById("completedExamCount");
+const averageScore = document.getElementById("averageScore");
+
+completedExamCount.textContent = data.results.length;
+
+const average = data.results.length > 0
+    ? data.results.reduce((sum, result) => sum + Number(result.percentage), 0) / data.results.length
+    : 0;
+
+averageScore.textContent = `${average.toFixed(1)}%`;
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to load results.");
+        }
+
+        if (data.results.length === 0) {
+            resultTableBody.innerHTML = `
+                <tr>
+                    <td colspan="4">No results available yet.</td>
+                </tr>
+            `;
+            return;
+        }
+
+        resultTableBody.innerHTML = data.results.slice(0, 3).map(result => {
+
+            const passed = result.status.toLowerCase() === "pass";
+
+            return `
+                <tr>
+                    <td>${result.examName}</td>
+                    <td>${result.resultDate}</td>
+                    <td>${result.obtainedMarks}/${result.totalMarks}</td>
+                    <td>
+                        <span class="resultStatus ${passed ? "passed" : "failed"}">
+                            ${passed ? "Passed" : "Failed"}
+                        </span>
+                    </td>
+                </tr>
+            `;
+
+        }).join("");
+
+    } catch (error) {
+        console.error("Recent results loading error:", error);
+
+        resultTableBody.innerHTML = `
+            <tr>
+                <td colspan="4">Unable to load results.</td>
+            </tr>
+        `;
     }
 }
