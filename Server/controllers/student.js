@@ -181,7 +181,11 @@ const displayAvailableExams = async (req, res) => {
                 DATE_FORMAT(e.start_time, '%h:%i %p') AS exam_time,
                 e.duration,
                 e.total_marks,
-
+                (
+    SELECT COUNT(*)
+    FROM questions q
+    WHERE q.exam_id = e.exam_id
+) AS totalQuestions,
                 CASE
                     WHEN EXISTS (
                         SELECT 1
