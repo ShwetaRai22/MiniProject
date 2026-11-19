@@ -482,5 +482,236 @@ return res.status(201).json({
     }
 };
 
+const submitExam = async (req, res) => {
+    try {
+        const studentId = req.session.student.student_id;
+        const { attemptId, answers } = req.body;
 
-module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions,displayExamQuestions,startExam};
+        // Validate submitted data
+        if (!attemptId || !Array.isArray(answers)) {
+            return res.status(400).json({
+                success: false,
+                msg: "Invalid exam submission data."
+            });
+        }
+
+        // Verify that this attempt belongs to the logged-in student
+        const [attempts] = await db.query(
+            `SELECT attempt_id, exam_id, status
+             FROM exam_attempts
+             WHERE attempt_id = ?
+             AND student_id = ?
+             LIMIT 1`,
+            [attemptId, studentId]
+        );
+
+        if (attempts.length === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "Exam attempt not found."
+            });
+        }
+
+        if (attempts[0].status !== "in_progress") {
+            return res.status(400).json({
+                success: false,
+                msg: "This exam has already been submitted."
+            });
+        }
+
+        // Fetch questions and their correct options
+const [examQuestions] = await db.query(
+    `SELECT
+        q.question_id,
+        q.marks,
+        o.option_id,
+        o.is_correct
+     FROM questions q
+     LEFT JOIN options o
+        ON q.question_id = o.question_id
+     WHERE q.exam_id = ?`,
+    [attempts[0].exam_id]
+);
+
+if (examQuestions.length === 0) {
+    return res.status(400).json({
+        success: false,
+        msg: "No questions found for this exam."
+    });
+}
+
+// Group options under their respective questions
+const questionMap = new Map();
+
+examQuestions.forEach(row => {
+    if (!questionMap.has(row.question_id)) {
+        questionMap.set(row.question_id, {
+            marks: row.marks,
+            options: []
+        });
+    }
+
+    if (row.option_id !== null) {
+        questionMap.get(row.question_id).options.push({
+            option_id: row.option_id,
+            is_correct: row.is_correct
+        });
+    }
+});
+
+// Validate submitted answers
+const submittedQuestionIds = new Set();
+
+for (const answer of answers) {
+    const questionId = Number(answer.questionId);
+
+    if (
+        !questionMap.has(questionId) ||
+        submittedQuestionIds.has(questionId)
+    ) {
+        return res.status(400).json({
+            success: false,
+            msg: "Invalid or duplicate question in submission."
+        });
+    }
+
+    submittedQuestionIds.add(questionId);
+
+    if (answer.optionId !== null) {
+        const optionId = Number(answer.optionId);
+
+        const validOption = questionMap.get(questionId).options.some(
+            option => option.option_id === optionId
+        );
+
+        if (!validOption) {
+            return res.status(400).json({
+                success: false,
+                msg: "Invalid option selected."
+            });
+        }
+    }
+}
+
+if (submittedQuestionIds.size !== questionMap.size) {
+    return res.status(400).json({
+        success: false,
+        msg: "Some questions are missing from the submission."
+    });
+}
+
+// Calculate marks and prepare answers for database insertion
+let obtainedMarks = 0;
+let correct = 0;
+let incorrect = 0;
+let unanswered = 0;
+
+const answerRows = [];
+
+for (const answer of answers) {
+    const question = questionMap.get(Number(answer.questionId));
+
+    if (answer.optionId === null) {
+        unanswered++;
+        continue;
+    }
+
+    const selectedOption = question.options.find(
+        option => option.option_id === Number(answer.optionId)
+    );
+
+    const isCorrect = selectedOption.is_correct === 1;
+
+    if (isCorrect) {
+        correct++;
+        obtainedMarks += question.marks;
+    } else {
+        incorrect++;
+    }
+
+    answerRows.push([
+        attemptId,
+        Number(answer.questionId),
+        Number(answer.optionId),
+        isCorrect ? 1 : 0
+    ]);
+}
+
+// Calculate total marks from all exam questions
+const totalMarks = Array.from(questionMap.values()).reduce(
+    (total, question) => total + question.marks,
+    0
+);
+// Get the exam's passing marks
+const [examDetails] = await db.query(
+    `SELECT passing_marks
+     FROM exams
+     WHERE exam_id = ?`,
+    [attempts[0].exam_id]
+);
+
+const percentage = totalMarks > 0
+    ? (obtainedMarks / totalMarks) * 100
+    : 0;
+
+const resultStatus = obtainedMarks >= examDetails[0].passing_marks
+    ? "Pass"
+    : "Fail";
+
+    // Save submitted answers in the database
+if (answerRows.length > 0) {
+    await db.query(
+        `INSERT INTO exam_answers
+            (attempt_id, question_id, option_id, is_correct)
+         VALUES ?`,
+        [answerRows]
+    );
+}
+   // Save the student's final result
+await db.query(
+    `INSERT INTO results
+        (attempt_id, total_marks, obtained_marks, percentage, grade)
+     VALUES (?, ?, ?, ?, ?)`,
+    [
+        attemptId,
+        totalMarks,
+        obtainedMarks,
+        percentage.toFixed(2),
+        resultStatus
+    ]
+);
+// Mark the exam attempt as completed
+await db.query(
+    `UPDATE exam_attempts
+     SET status = 'completed',
+         end_time = NOW()
+     WHERE attempt_id = ?
+     AND student_id = ?
+     AND status = 'in_progress'`,
+    [attemptId, studentId]
+); 
+
+return res.status(200).json({
+    success: true,
+    msg: "Exam submitted successfully.",
+    result: {
+        totalMarks,
+        obtainedMarks,
+        percentage: Number(percentage.toFixed(2)),
+        status: resultStatus,
+        correct,
+        incorrect,
+        unanswered,
+        totalQuestions: questionMap.size
+    }
+});
+} catch (error) {
+        console.error("Submit exam error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to submit exam."
+        });
+    }
+};
+module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions,displayExamQuestions,startExam,submitExam };

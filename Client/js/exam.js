@@ -329,111 +329,76 @@ confirmSubmit.addEventListener("click", () => {
 // Finish Examination
 
 
-function finishExam() {
 
-    // Prevent the exam from being submitted more than once
+async function finishExam() {
+
+    // Prevent duplicate submissions
     if (examSubmitted) return;
 
     examSubmitted = true;
-
     clearInterval(timerInterval);
-
     submitModal.hidden = true;
 
-    let correct = 0;
-    let incorrect = 0;
-    let unanswered = 0;
-    let obtainedMarks = 0;
+    // Prepare all answers with actual database option IDs
+    const submittedAnswers = questions.map((question, index) => ({
+        questionId: question.question_id,
+        optionId: answers[index] === null
+            ? null
+            : question.optionIds[answers[index]]
+    }));
 
-    answerReviewContainer.innerHTML = "";
-
-    questions.forEach((question, index) => {
-
-        const selectedAnswer = answers[index];
-        const correctAnswer = question.correctAnswer;
-
-        let status = "";
-
-        if (selectedAnswer === null) {
-            unanswered++;
-            status = "Unanswered";
-        }
-        else if (selectedAnswer === correctAnswer) {
-            correct++;
-            obtainedMarks += question.marks;
-            status = "Correct";
-        }
-        else {
-            incorrect++;
-            status = "Incorrect";
-        }
-
-        const reviewItem = document.createElement("div");
-        reviewItem.className = "reviewItem";
-
-        const questionHeading = document.createElement("h4");
-        questionHeading.textContent =
-            `Question ${index + 1}: ${question.question}`;
-
-        const selectedText = document.createElement("p");
-        selectedText.textContent =
-            `Your Answer: ${selectedAnswer === null
-                ? "Not Answered"
-                : question.options[selectedAnswer]
-            }`;
-
-        const correctText = document.createElement("p");
-        correctText.textContent =
-            `Correct Answer: ${question.options[correctAnswer]}`;
-
-        const statusText = document.createElement("strong");
-        statusText.textContent = status;
-
-        statusText.className =
-            status.toLowerCase();
-
-        reviewItem.append(
-            questionHeading,
-            selectedText,
-            correctText,
-            statusText
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/student/submitExam`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    attemptId,
+                    answers: submittedAnswers
+                })
+            }
         );
 
-        answerReviewContainer.appendChild(reviewItem);
+        const data = await response.json();
 
-    });
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to submit exam.");
+        }
 
-    const totalMarks = questions.reduce(
-        (total, question) => total + question.marks,
-        0
-    );
+        // Display backend-calculated results
+        const result = data.result;
 
-    const percentage = totalMarks > 0
-        ? (obtainedMarks / totalMarks) * 100
-        : 0;
+        resultScore.textContent =
+            `${result.obtainedMarks} / ${result.totalMarks}`;
 
-    resultScore.textContent =
-        `${obtainedMarks} / ${totalMarks}`;
+        resultPercentage.textContent =
+            `${result.percentage.toFixed(2)}%`;
 
-    resultPercentage.textContent =
-        `${percentage.toFixed(2)}%`;
+        resultStatus.textContent = result.status;
 
-    resultStatus.textContent =
-        percentage >= 40 ? "Passed" : "Failed";
+        resultCorrect.textContent = result.correct;
+        resultIncorrect.textContent = result.incorrect;
+        resultUnanswered.textContent = result.unanswered;
+        resultTotal.textContent = result.totalQuestions;
 
-    resultCorrect.textContent = correct;
-    resultIncorrect.textContent = incorrect;
-    resultUnanswered.textContent = unanswered;
-    resultTotal.textContent = questions.length;
+        answerReviewContainer.innerHTML = "";
 
-    resultModal.hidden = false;
+        resultModal.hidden = false;
 
-    lucide.createIcons();
+        lucide.createIcons();
+
+    } catch (error) {
+        console.error("Submit exam error:", error);
+        alert(error.message);
+
+        examSubmitted = false;
+    }
 }
 
-resultDone.addEventListener("click", () => {
-    window.location.href = "dashboard.html";
-});
 
 loadExamQuestions();
 
