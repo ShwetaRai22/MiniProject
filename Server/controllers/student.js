@@ -428,28 +428,20 @@ const startExam = async (req, res) => {
 
         // Create a new attempt only if the exam is live and has questions
         const [result] = await db.query(
-            `INSERT INTO exam_attempts
-                (student_id, exam_id, start_time, end_time, status)
-             SELECT
-                ?,
-                e.exam_id,
-                NOW(),
-                LEAST(
-                    DATE_ADD(NOW(), INTERVAL e.duration MINUTE),
-                    e.end_time
-                ),
-                'in_progress'
-             FROM exams e
-             WHERE e.exam_id = ?
-             AND e.status != 'draft'
-             AND NOW() BETWEEN e.start_time AND e.end_time
-             AND EXISTS (
-                 SELECT 1
-                 FROM questions q
-                 WHERE q.exam_id = e.exam_id
-             )`,
-            [studentId, examId]
-        );
+    `INSERT INTO exam_attempts
+        (student_id, exam_id, start_time, end_time, status)
+     SELECT ?, e.exam_id, NOW(),
+        DATE_ADD(NOW(), INTERVAL e.duration MINUTE),
+        'in_progress'
+     FROM exams e
+     WHERE e.exam_id = ?
+       AND e.status != 'draft'
+       AND NOW() BETWEEN e.start_time AND e.end_time
+       AND EXISTS (
+           SELECT 1 FROM questions q WHERE q.exam_id = e.exam_id
+       )`,
+    [studentId, examId]
+);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({
