@@ -1,121 +1,64 @@
 
-// Temporary sample result data
-// Later, this data will come from the backend API.
-
-const results = [
-
-    {
-        id: 1,
-        name: "Mathematics Examination",
-        subject: "Mathematics",
-        date: "20 October 2026",
-        marksObtained: 85,
-        totalMarks: 100,
-        percentage: 85,
-        status: "passed"
-    },
-
-    {
-        id: 2,
-        name: "Computer Science Test",
-        subject: "Computer Science",
-        date: "15 October 2026",
-        marksObtained: 72,
-        totalMarks: 100,
-        percentage: 72,
-        status: "passed"
-    },
-
-    {
-        id: 3,
-        name: "English Assessment",
-        subject: "English",
-        date: "10 October 2026",
-        marksObtained: 28,
-        totalMarks: 50,
-        percentage: 56,
-        status: "passed"
-    },
-
-    {
-        id: 4,
-        name: "Database Management Exam",
-        subject: "DBMS",
-        date: "05 October 2026",
-        marksObtained: 35,
-        totalMarks: 100,
-        percentage: 35,
-        status: "failed"
-    },
-
-    {
-        id: 5,
-        name: "Programming Fundamentals",
-        subject: "Programming",
-        date: "28 September 2026",
-        marksObtained: 65,
-        totalMarks: 75,
-        percentage: 86.67,
-        status: "passed"
-    },
-
-    {
-        id: 6,
-        name: "Operating Systems Test",
-        subject: "Operating Systems",
-        date: "20 September 2026",
-        marksObtained: 20,
-        totalMarks: 50,
-        percentage: 40,
-        status: "failed"
-    }
-
-];
-
-
-// DOM Elements
-
 const resultGrid = document.getElementById("resultGrid");
-
 const filterButtons = document.querySelectorAll(".filterBtn");
-
 const noResults = document.getElementById("noResults");
 
-
-// Summary Elements
-
 const totalExams = document.getElementById("totalExams");
-
 const passedExams = document.getElementById("passedExams");
-
 const failedExams = document.getElementById("failedExams");
 
+let results = [];
 
-// Calculate Summary
+// Fetch results from backend
+async function loadStudentResults() {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/api/student/results`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
 
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to load results.");
+        }
+
+        results = data.results.map(result => ({
+            ...result,
+            status: result.status.toLowerCase()
+        }));
+
+        updateSummary();
+        displayResults(results);
+
+    } catch (error) {
+        console.error("Load student results error:", error);
+        alert(error.message);
+    }
+}
+
+// Update summary cards
 function updateSummary() {
 
     const total = results.length;
 
     const passed = results.filter(
-        result => result.status === "passed"
+        result => result.status === "pass"
     ).length;
 
     const failed = results.filter(
-        result => result.status === "failed"
+        result => result.status === "fail"
     ).length;
 
     totalExams.textContent = total;
-
     passedExams.textContent = passed;
-
     failedExams.textContent = failed;
-
 }
 
-
-// Display Result Cards
-
+// Display result cards
 function displayResults(resultList) {
 
     resultGrid.innerHTML = "";
@@ -129,120 +72,81 @@ function displayResults(resultList) {
         card.classList.add("resultCard");
 
         card.innerHTML = `
-
             <div class="cardHeader">
-
-                <h3>${result.name}</h3>
+                <h3>${result.examName}</h3>
 
                 <span class="resultStatus ${result.status}">
-                    ${result.status === "passed" ? "Passed" : "Failed"}
+                    ${result.status === "pass" ? "Passed" : "Failed"}
                 </span>
-
             </div>
-
 
             <p class="subject">
                 Subject: ${result.subject}
             </p>
 
-
             <div class="marksSection">
 
                 <div class="marksHeading">
-
                     <p>Marks Obtained</p>
 
                     <h2>
-                        ${result.marksObtained}/${result.totalMarks}
+                        ${result.obtainedMarks}/${result.totalMarks}
                     </h2>
-
                 </div>
 
-
                 <div class="progressTrack">
-
                     <div
                         class="progressFill ${result.status}"
                         style="width: ${result.percentage}%">
                     </div>
-
                 </div>
 
             </div>
-
 
             <div class="resultInfo">
 
                 <div class="infoItem">
-
                     <p>Exam Date</p>
-
-                    <h4>${result.date}</h4>
-
+                    <h4>${result.resultDate}</h4>
                 </div>
 
-
                 <div class="infoItem">
-
                     <p>Percentage</p>
-
-                    <h4>${result.percentage.toFixed(2)}%</h4>
-
+                    <h4>${Number(result.percentage).toFixed(2)}%</h4>
                 </div>
 
             </div>
-
         `;
 
         resultGrid.appendChild(card);
-
     });
-
 }
 
-
-// Filter Results
-
+// Filter results
 filterButtons.forEach(button => {
 
     button.addEventListener("click", () => {
-
-        // Remove active class from all buttons
 
         filterButtons.forEach(btn => {
             btn.classList.remove("active");
         });
 
-
-        // Activate selected button
-
         button.classList.add("active");
-
 
         const selectedFilter = button.dataset.filter;
 
-
         if (selectedFilter === "all") {
-
             displayResults(results);
-
         } else {
-
             const filteredResults = results.filter(
-                result => result.status === selectedFilter
+                result => result.status ===
+                    (selectedFilter === "passed" ? "pass" : "fail")
             );
 
             displayResults(filteredResults);
-
         }
-
     });
-
 });
 
-
-// Initial Page Load
-
-updateSummary();
-
-displayResults(results);
+// Initial page load
+loadStudentResults();

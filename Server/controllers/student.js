@@ -706,4 +706,48 @@ return res.status(200).json({
         });
     }
 };
-module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions,displayExamQuestions,startExam,submitExam };
+
+
+const displayStudentResults = async (req, res) => {
+    try {
+        const studentId = req.session.student.student_id;
+
+        const [results] = await db.query(
+            `SELECT
+                r.result_id,
+                e.title AS examName,
+                s.name AS subject,
+                r.total_marks AS totalMarks,
+                r.obtained_marks AS obtainedMarks,
+                r.percentage,
+                r.grade AS status,
+                DATE_FORMAT(r.created_at, '%d %M %Y') AS resultDate
+             FROM results r
+             JOIN exam_attempts ea
+                ON r.attempt_id = ea.attempt_id
+             JOIN exams e
+                ON ea.exam_id = e.exam_id
+             JOIN subjects s
+                ON e.subject_id = s.subject_id
+             WHERE ea.student_id = ?
+             ORDER BY r.created_at DESC`,
+            [studentId]
+        );
+
+        return res.status(200).json({
+            success: true,
+            msg: "Student results retrieved successfully.",
+            results
+        });
+
+    } catch (error) {
+        console.error("Display student results error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to retrieve student results."
+        });
+    }
+};
+
+module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions,displayExamQuestions,startExam,submitExam,displayStudentResults};

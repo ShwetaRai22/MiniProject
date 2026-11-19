@@ -398,6 +398,9 @@ async function finishExam() {
         examSubmitted = false;
     }
 }
+resultDone.addEventListener("click", () => {
+    window.location.href = "dashboard.html";
+});
 
 
 loadExamQuestions();
