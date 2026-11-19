@@ -388,4 +388,99 @@ const displayExamQuestions = async (req, res) => {
     }
 };
 
-module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions,displayExamQuestions};
+
+const startExam = async (req, res) => {
+    try {
+        const studentId = req.session.student.student_id;
+        const examId = Number(req.body.examId);
+
+        if (!Number.isInteger(examId) || examId <= 0) {
+            return res.status(400).json({
+                success: false,
+                msg: "Valid exam ID is required."
+            });
+        }
+
+        // Check whether this student already has an active attempt
+        const [existingAttempts] = await db.query(
+    `SELECT
+        attempt_id,
+        TIMESTAMPDIFF(SECOND, NOW(), end_time) AS remainingSeconds
+     FROM exam_attempts
+     WHERE student_id = ?
+     AND exam_id = ?
+     AND status = 'in_progress'
+     AND end_time > NOW()
+     ORDER BY attempt_id DESC
+     LIMIT 1`,
+    [studentId, examId]
+);
+
+        // Reuse the existing attempt if the student refreshes the page
+        if (existingAttempts.length > 0) {
+           return res.status(200).json({
+    success: true,
+    msg: "Existing exam attempt retrieved.",
+    attemptId: existingAttempts[0].attempt_id,
+    remainingSeconds: existingAttempts[0].remainingSeconds
+});
+        }
+
+        // Create a new attempt only if the exam is live and has questions
+        const [result] = await db.query(
+            `INSERT INTO exam_attempts
+                (student_id, exam_id, start_time, end_time, status)
+             SELECT
+                ?,
+                e.exam_id,
+                NOW(),
+                LEAST(
+                    DATE_ADD(NOW(), INTERVAL e.duration MINUTE),
+                    e.end_time
+                ),
+                'in_progress'
+             FROM exams e
+             WHERE e.exam_id = ?
+             AND e.status != 'draft'
+             AND NOW() BETWEEN e.start_time AND e.end_time
+             AND EXISTS (
+                 SELECT 1
+                 FROM questions q
+                 WHERE q.exam_id = e.exam_id
+             )`,
+            [studentId, examId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "Exam is not live or has no questions."
+            });
+        }
+
+        const [newAttempt] = await db.query(
+    `SELECT TIMESTAMPDIFF(SECOND, NOW(), end_time) AS remainingSeconds
+     FROM exam_attempts
+     WHERE attempt_id = ?`,
+    [result.insertId]
+);
+
+return res.status(201).json({
+    success: true,
+    msg: "Exam attempt started successfully.",
+    attemptId: result.insertId,
+    remainingSeconds: newAttempt[0].remainingSeconds
+});
+
+    } catch (error) {
+        console.error("Start exam error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to start the exam."
+        });
+    }
+};
+
+
+module.exports={displayDashboard,displayProfile,updateProfile,studentLogout,displayAvailableExams,displayExamInstructions,displayExamQuestions,startExam};

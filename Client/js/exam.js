@@ -35,138 +35,80 @@ let currentQuestion = 0;
 let remainingTime = 30 * 60;
 let timerInterval;
 let examSubmitted = false;
+let questions = [];
+let answers = [];
+let attemptId = null;
 
-// Sample Questions
+async function loadExamQuestions() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const examId = params.get("exam_id");
 
-const questions = [
+        if (!examId) {
+            throw new Error("Exam ID is missing.");
+        }
+        const startResponse = await fetch(
+            `${API_BASE_URL}/api/student/startExam`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({ examId })
+            }
+        );
 
-    {
-        question: "Which language is primarily used to structure web pages?",
-        options: [
-            "CSS",
-            "HTML",
-            "JavaScript",
-            "Python"
-        ],
-        marks: 1,
-        correctAnswer:1
-    },
+        const startData = await startResponse.json();
 
-    {
-        question: "Which HTML tag is used to create a hyperlink?",
-        options: [
-            "<link>",
-            "<href>",
-            "<a>",
-            "<hyperlink>"
-        ],
-        marks: 1,
-        correctAnswer: 2
-    },
+        if (!startResponse.ok) {
+            throw new Error(startData.msg || "Unable to start exam.");
+        }
 
-    {
-        question: "Which CSS property is used to change the text color?",
-        options: [
-            "font-style",
-            "background-color",
-            "color",
-            "text-decoration"
-        ],
-        marks: 1,
-     correctAnswer: 2
-    },
+        attemptId = startData.attemptId;
+        remainingTime = startData.remainingSeconds;
 
-    {
-        question: "Which keyword is used to declare a variable in JavaScript?",
-        options: [
-            "var",
-            "define",
-            "int",
-            "string"
-        ],
-        marks: 1,
-         correctAnswer: 0
-    },
+        const response = await fetch(
+            `${API_BASE_URL}/api/student/examQuestions?exam_id=${encodeURIComponent(examId)}`,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
 
-    {
-        question: "Which symbol is used for single-line comments in JavaScript?",
-        options: [
-            "<!-- -->",
-            "//",
-            "##",
-            "**"
-        ],
-        marks: 1,
-         correctAnswer: 1
-    },
+        const data = await response.json();
 
-    {
-        question: "Which HTML attribute specifies an image source?",
-        options: [
-            "href",
-            "link",
-            "src",
-            "alt"
-        ],
-        marks: 1,
-         correctAnswer: 2
-    },
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                window.location.href = "../auth/auth.html";
+                return;
+            }
 
-    {
-        question: "Which CSS layout system is designed for one-dimensional layouts?",
-        options: [
-            "Grid",
-            "Flexbox",
-            "Float",
-            "Position"
-        ],
-        marks: 1,
-         correctAnswer: 1
-    },
+            throw new Error(data.msg || "Unable to load exam questions.");
+        }
 
-    {
-        question: "Which method selects an element by its ID in JavaScript?",
-        options: [
-            "getElementById()",
-            "getElementsByClass()",
-            "queryAll()",
-            "selectId()"
-        ],
-        marks: 1,
-         correctAnswer: 0
-    },
+        // Store questions received from the backend
+        questions = data.questions.map(question => ({
+            question_id: question.question_id,
+            question: question.question_text,
+            marks: question.marks,
+            options: question.options.map(option => option.option_text),
+            optionIds: question.options.map(option => option.option_id)
+        }));
 
-    {
-        question: "What does CSS stand for?",
-        options: [
-            "Computer Style Sheets",
-            "Creative Style System",
-            "Cascading Style Sheets",
-            "Colorful Style Sheets"
-        ],
-        marks: 1,
-         correctAnswer: 2
-    },
+        // Initialize student answers
+        answers = new Array(questions.length).fill(null);
 
-    {
-        question: "Which HTML element is used to create an unordered list?",
-        options: [
-            "<ol>",
-            "<ul>",
-            "<li>",
-            "<list>"
-        ],
-        marks: 1,
-         correctAnswer: 1
+        // Display questions
+        createQuestionGrid();
+        displayQuestion();
+        startTimer();
+
+    } catch (error) {
+        console.error("Load exam questions error:", error);
+        alert(error.message);
     }
-
-];
-
-
-// Store Student Answers
-
-const answers = new Array(questions.length).fill(null);
-
+}
 
 // Create Question Navigation Buttons
 
@@ -435,10 +377,9 @@ function finishExam() {
 
         const selectedText = document.createElement("p");
         selectedText.textContent =
-            `Your Answer: ${
-                selectedAnswer === null
-                    ? "Not Answered"
-                    : question.options[selectedAnswer]
+            `Your Answer: ${selectedAnswer === null
+                ? "Not Answered"
+                : question.options[selectedAnswer]
             }`;
 
         const correctText = document.createElement("p");
@@ -494,11 +435,5 @@ resultDone.addEventListener("click", () => {
     window.location.href = "dashboard.html";
 });
 
-// Initial Setup
-
-createQuestionGrid();
-
-displayQuestion();
-
-startTimer();
+loadExamQuestions();
 
