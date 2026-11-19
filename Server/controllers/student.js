@@ -251,30 +251,29 @@ const displayExamInstructions = async (req, res) => {
         }
 
         const [exams] = await db.query(
-            `SELECT
-                e.exam_id,
-                e.title,
-                e.duration,
-                e.total_marks,
-                (
-    SELECT COUNT(*)
-    FROM questions q
-    WHERE q.exam_id = e.exam_id
-) AS totalQuestions,
-                COUNT(q.question_id) AS totalQuestions
-            FROM exams e
-            LEFT JOIN questions q
-                ON e.exam_id = q.exam_id
-            WHERE e.exam_id = ?
-                AND e.status != 'draft'
-                AND NOW() BETWEEN e.start_time AND e.end_time
-            GROUP BY
-                e.exam_id,
-                e.title,
-                e.duration,
-                e.total_marks`,
-            [examId]
-        );
+    `SELECT
+        e.exam_id,
+        e.title,
+        e.duration,
+        e.total_marks,
+        COUNT(q.question_id) AS totalQuestions
+
+    FROM exams e
+
+    LEFT JOIN questions q
+        ON e.exam_id = q.exam_id
+
+    WHERE e.exam_id = ?
+        AND e.status != 'draft'
+        AND NOW() BETWEEN e.start_time AND e.end_time
+
+    GROUP BY
+        e.exam_id,
+        e.title,
+        e.duration,
+        e.total_marks`,
+    [examId]
+);
 
         if (exams.length === 0) {
             return res.status(404).json({

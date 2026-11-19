@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async (req, res) => {
             }
         );
         const data = await response.json();
+      
         if (!response) {
             res.status(401).json({
                 success: false,
@@ -40,7 +41,7 @@ async function loadAvailableExams() {
         );
 
         const data = await response.json();
-
+console.log("First exam details:", data.exams[0]);
         if (!response.ok) {
             throw new Error(data.msg || "Unable to load exams.");
         }
