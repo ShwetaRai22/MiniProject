@@ -25,18 +25,21 @@ const displayDashboard = async (req, res) => {
         );
 
         const [[examCount]] = await db.query(
-            `SELECT COUNT(*) AS totalExams
-             FROM exams
-             WHERE admin_id = ?`,
-            [adminId]
-        );
+    `SELECT COUNT(*) AS totalExams
+     FROM exams
+     WHERE admin_id = ?
+     AND is_deleted = 0`,
+    [adminId]
+);
 
         const [[publishedCount]] = await db.query(
-            `SELECT COUNT(*) AS publishedExams
-             FROM exams
-             WHERE admin_id = ? AND status = 'published'`,
-            [adminId]
-        );
+    `SELECT COUNT(*) AS publishedExams
+     FROM exams
+     WHERE admin_id = ?
+     AND is_deleted = 0
+     AND status IN ('scheduled', 'live', 'upcoming', 'completed')`,
+    [adminId]
+);
 const [recentExams] = await db.query(
     `SELECT
         e.exam_id,
