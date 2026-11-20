@@ -669,7 +669,7 @@ const displayAdminResults = async (req, res) => {
         const [results] = await db.query(
             `SELECT
                 ea.attempt_id,
-                s.student_id,
+                s.student_id AS studentId,
                 s.username AS studentName,
                 e.exam_id,
                 e.title AS exam,

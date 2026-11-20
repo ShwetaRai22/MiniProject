@@ -15,7 +15,7 @@ const closeModalBottom = document.getElementById("closeModalBottom");
 
 // Sample Results Data
 
-const results = [];
+let results = [];
 
 async function loadAdminResults() {
     try {
