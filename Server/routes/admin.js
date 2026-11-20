@@ -3,7 +3,7 @@ const express= require("express");
 const router=express.Router();
 
 const {checkAdminAuth}=require('../middleware/authMiddleware');
-const {displayDashboard,displayProfile, updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam,getAllStudents,deleteStudent}=require('../controllers/admin');
+const {displayDashboard,displayProfile, updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam,getAllStudents,deleteStudent,displayAdminResults}=require('../controllers/admin');
 
 router.get('/dashboard',checkAdminAuth,displayDashboard);
 router.get('/profile',checkAdminAuth,displayProfile);
@@ -17,4 +17,5 @@ router.put('/updateExamStatus',checkAdminAuth,updateExamStatus);
 router.delete('/deleteExam',checkAdminAuth,deleteExam);
 router.get('/getAllStudents',checkAdminAuth,getAllStudents);
 router.put('/deleteStudent', checkAdminAuth, deleteStudent);
+router.get('/results', checkAdminAuth, displayAdminResults);
 module.exports=router;

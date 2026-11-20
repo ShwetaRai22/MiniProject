@@ -15,81 +15,34 @@ const closeModalBottom = document.getElementById("closeModalBottom");
 
 // Sample Results Data
 
-const results = [
-    {
-        studentId: "STU001",
-        studentName: "Student One",
-        exam: "Programming Fundamentals",
-        score: 85,
-        totalMarks: 100,
-        status: "completed",
-        date: "20 Oct 2026",
-        correctAnswers: 26,
-        incorrectAnswers: 4
-    },
+const results = [];
 
-    {
-        studentId: "STU002",
-        studentName: "Student Two",
-        exam: "Database Management",
-        score: 72,
-        totalMarks: 100,
-        status: "completed",
-        date: "22 Oct 2026",
-        correctAnswers: 22,
-        incorrectAnswers: 8
-    },
+async function loadAdminResults() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/admin/results`, {
+            method: "GET",
+            credentials: "include"
+        });
 
-    {
-        studentId: "STU003",
-        studentName: "Student Three",
-        exam: "Web Development",
-        score: null,
-        totalMarks: 100,
-        status: "in-progress",
-        date: "25 Oct 2026",
-        correctAnswers: null,
-        incorrectAnswers: null
-    },
+        const data = await response.json();
 
-    {
-        studentId: "STU004",
-        studentName: "Student Four",
-        exam: "Programming Fundamentals",
-        score: 91,
-        totalMarks: 100,
-        status: "completed",
-        date: "20 Oct 2026",
-        correctAnswers: 28,
-        incorrectAnswers: 2
-    },
+        if (!response.ok) {
+            throw new Error(data.msg || "Unable to load results.");
+        }
 
-    {
-        studentId: "STU005",
-        studentName: "Student Five",
-        exam: "Database Management",
-        score: 65,
-        totalMarks: 100,
-        status: "completed",
-        date: "22 Oct 2026",
-        correctAnswers: 20,
-        incorrectAnswers: 10
-    },
+        results = data.results;
 
-    {
-        studentId: "STU006",
-        studentName: "Student Six",
-        exam: "Web Development",
-        score: null,
-        totalMarks: 100,
-        status: "in-progress",
-        date: "25 Oct 2026",
-        correctAnswers: null,
-        incorrectAnswers: null
+        updateSummary();
+        populateExamFilter();
+        displayResults(results);
+
+    } catch (error) {
+        console.error("Admin results loading error:", error);
+        resultsTableBody.innerHTML = "";
+        noResultsMessage.hidden = false;
+        noResultsMessage.textContent = "Unable to load results.";
     }
-];
-
-
+}
 // Update Summary Cards
 
 function updateSummary() {
@@ -336,9 +289,8 @@ statusFilter.addEventListener("change", filterResults);
 
 
 // Initial Setup
+// Initial Setup
 
 resultModal.hidden = true;
 
-updateSummary();
-populateExamFilter();
-displayResults(results);
+loadAdminResults();

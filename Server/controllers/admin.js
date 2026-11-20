@@ -661,5 +661,64 @@ const deleteStudent = async (req, res) => {
         });
     }
 };
-    
-module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam,getAllStudents,deleteStudent};
+
+const displayAdminResults = async (req, res) => {
+    try {
+        const adminId = req.session.admin.admin_id;
+
+        const [results] = await db.query(
+            `SELECT
+                ea.attempt_id,
+                s.student_id,
+                s.username AS studentName,
+                e.exam_id,
+                e.title AS exam,
+                e.total_marks AS totalMarks,
+                r.obtained_marks AS score,
+                r.percentage,
+                r.grade AS resultStatus,
+                CASE
+                    WHEN ea.status = 'in_progress' THEN 'in-progress'
+                    ELSE 'completed'
+                END AS status,
+                DATE_FORMAT(
+                    COALESCE(r.created_at, ea.start_time),
+                    '%d %b %Y'
+                ) AS date,
+                (
+                    SELECT COUNT(*)
+                    FROM exam_answers a
+                    WHERE a.attempt_id = ea.attempt_id
+                    AND a.is_correct = 1
+                ) AS correctAnswers,
+                (
+                    SELECT COUNT(*)
+                    FROM exam_answers a
+                    WHERE a.attempt_id = ea.attempt_id
+                    AND a.is_correct = 0
+                ) AS incorrectAnswers
+            FROM exam_attempts ea
+            JOIN students s ON ea.student_id = s.student_id
+            JOIN exams e ON ea.exam_id = e.exam_id
+            LEFT JOIN results r ON ea.attempt_id = r.attempt_id
+            WHERE e.admin_id = ?
+            ORDER BY ea.created_at DESC`,
+            [adminId]
+        );
+
+        return res.status(200).json({
+            success: true,
+            msg: "Admin results retrieved successfully.",
+            results
+        });
+
+    } catch (error) {
+        console.error("Display admin results error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Unable to retrieve admin results."
+        });
+    }
+};
+module.exports={displayDashboard, displayProfile,updateProfile,adminLogout,createExam,addQuestion,getAdminExams,displayAdminExams,updateExamStatus,deleteExam,getAllStudents,deleteStudent,displayAdminResults};

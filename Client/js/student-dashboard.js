@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async (req, res) => {
 await loadAvailableExams();
 await loadRecentResults();
 });
+
 async function loadAvailableExams() {
     const examList = document.getElementById("examList");
 
@@ -42,21 +43,28 @@ async function loadAvailableExams() {
         );
 
         const data = await response.json();
-        const availableExamCount = document.getElementById("availableExamCount");
 
-availableExamCount.textContent = data.exams.filter(
-    exam => exam.status !== "completed"
-).length;
         if (!response.ok) {
             throw new Error(data.msg || "Unable to load exams.");
         }
 
-        if (data.exams.length === 0) {
+        // Filter out completed exams
+        const availableExams = data.exams.filter(
+            exam => exam.status !== "completed"
+        );
+
+        // Update Available Exams count
+        const availableExamCount = document.getElementById("availableExamCount");
+        availableExamCount.textContent = availableExams.length;
+
+        // Check if any available exams exist
+        if (availableExams.length === 0) {
             examList.innerHTML = "<p>No available exams right now.</p>";
             return;
         }
 
-        examList.innerHTML = data.exams.slice(0, 3).map(exam => `
+        // Display only the first 3 available exams
+        examList.innerHTML = availableExams.slice(0, 3).map(exam => `
             <div class="examCard">
 
                 <div class="examTop">
@@ -87,7 +95,7 @@ availableExamCount.textContent = data.exams.filter(
 
                 <a href="instruction.html?exam_id=${encodeURIComponent(exam.exam_id)}"
                     class="startExam">
-                    ${exam.status === "completed" ? "View Exam" : "Start Exam"}
+                    Start Exam
                     <i data-lucide="arrow-right"></i>
                 </a>
 
@@ -101,6 +109,7 @@ availableExamCount.textContent = data.exams.filter(
         examList.innerHTML = "<p>Unable to load available exams.</p>";
     }
 }
+
 
 async function loadRecentResults() {
 
