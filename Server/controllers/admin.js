@@ -491,6 +491,7 @@ const displayAdminExams = async (req, res) => {
             LEFT JOIN questions q
                 ON e.exam_id = q.exam_id
             WHERE e.admin_id = ?
+            AND e.is_deleted = 0
             GROUP BY e.exam_id
             ORDER BY e.created_at DESC`,
             [adminId]
@@ -575,8 +576,11 @@ const deleteExam = async (req, res) => {
         }
 
         const [result] = await db.query(
-            `DELETE FROM exams
-             WHERE exam_id = ? AND admin_id = ?`,
+            `UPDATE exams
+             SET is_deleted = 1
+             WHERE exam_id = ?
+             AND admin_id = ?
+             AND is_deleted = 0`,
             [examId, adminId]
         );
 
@@ -600,7 +604,7 @@ const deleteExam = async (req, res) => {
             msg: "Unable to delete exam."
         });
     }
-}
+};
 
 
 const getAllStudents = async (req, res) => {
