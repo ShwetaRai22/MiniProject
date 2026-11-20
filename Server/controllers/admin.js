@@ -37,18 +37,27 @@ const displayDashboard = async (req, res) => {
              WHERE admin_id = ? AND status = 'published'`,
             [adminId]
         );
-
-        const [recentExams] = await db.query(
+const [recentExams] = await db.query(
     `SELECT
         e.exam_id,
         e.title,
         DATE_FORMAT(e.start_time, '%Y-%m-%d') AS exam_date,
-        e.status,
+
+        CASE
+            WHEN e.status = 'draft' THEN 'draft'
+            WHEN NOW() < e.start_time THEN 'upcoming'
+            WHEN NOW() BETWEEN e.start_time AND e.end_time THEN 'live'
+            ELSE 'completed'
+        END AS status,
+
         COUNT(q.question_id) AS total_questions
+
      FROM exams e
      LEFT JOIN questions q
         ON e.exam_id = q.exam_id
+
      WHERE e.admin_id = ?
+
      GROUP BY e.exam_id
      ORDER BY e.created_at DESC
      LIMIT 5`,
